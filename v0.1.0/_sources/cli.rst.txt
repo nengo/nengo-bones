@@ -1,0 +1,28 @@
+**********************
+Command line interface
+**********************
+
+In general, the only command that downstream repos will ever need to run is
+
+.. code-block:: bash
+
+    generate-bones
+
+from the root directory containing ``.nengobones.yml``.  This updates all of
+the templated files that need to be manually updated and committed to the
+downstream repository.  Note that there are other files that
+``generate-bones`` can generate, but this is done automatically
+(i.e., dynamically) by ``nengo-bones`` during continuous integration.
+
+However, it may be helpful when debugging a ``.nengobones.yml`` configuration
+to be able to see the rendered output, so we expose all the ``nengo-bones``
+functionality through different command line options, which can be found
+below.
+
+.. click:: nengo_bones.scripts.generate_bones:main
+    :prog: generate-bones
+    :show-nested:
+
+.. click:: nengo_bones.scripts.check_bones:main
+    :prog: check-bones
+    :show-nested:

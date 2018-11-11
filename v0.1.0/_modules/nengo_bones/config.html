@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>nengo_bones.config &#8212; Nengo Bones 0.1.0 docs</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/mmenu.all.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/components.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/nengo.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+<script type="text/javascript" src="https://cdn.crate.io/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/js/modernizr.js"></script>
+    <script type="text/javascript" src="../../_static/js/underscore.min.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/searchtools.js"></script>
+    <script type="text/javascript" src="../../_static/js/webflow.js"></script>
+    <script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../_static/js/mmenu.all.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/fontawesome.js"></script>
+    <script type="text/javascript" src="../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+<header class="header-nav">
+  <div class="container">
+    <div class="navbar w-nav" data-animation="default" data-collapse="small" data-contain="1" data-duration="400">
+      <a class="brand w-nav-brand" href="https://www.nengo.ai/">
+        <img src="https://www.nengo.ai/design/_images/general-full-light.svg" width="120">
+      </a>
+      <nav class="w-nav-menu main-nav" role="navigation">
+        <div class="dropdownBackground">
+          <span class="arrow"></span>
+        </div>
+        <ul id="menu-top-navigation" class="menu">
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/overview.html">Overview</a>
+            <ul class="sub-menu">
+                <li class="menu-item"><a href="https://www.nengo.ai/quickstart.html">Quick Start</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/documentation.html">Documentation</a>
+            <table class="sub-menu">
+              <tr>
+                <td class="menu-heading">Core</td>
+                <td class="menu-heading">Backends</td>
+                <td class="menu-heading">Add-ons</td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo">Nengo</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-fpga">Nengo FPGA</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-examples">Nengo Examples</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-dl/">Nengo DL</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-loihi">Nengo Loihi</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-extras/">Nengo Extras</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-gui">Nengo GUI</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-mpi">Nengo MPI</a></td>
+                <td class="menu-item"><a href="https://arvoelke.github.io/nengolib-docs/">Nengo Lib</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-spa/">Nengo SPA</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-ocl">Nengo OpenCL</a></td>
+                <td class="menu-item"></td>
+              </tr>
+              <tr>
+                <td class="menu-item"></td>
+                <td class="menu-item"><a href="https://github.com/project-rig/nengo_spinnaker">Nengo SpiNNaker</a></td>
+                <td class="menu-item"></td>
+              </tr>
+            </table>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/community.html">Community</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://forum.nengo.ai/">Forum</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/publications.html">Publications</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/summerschool.html">Summer School</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/videos.html">Videos</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/people.html">People</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/projects.html">Development</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/contributing.html">Contributor Guide</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/projects.html">Ecosystem</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/README.html">About</a></li>
+          <li class="btn-link w-nav-link menu-item"><a href="https://www.nengo.ai/download.html">Download</a></li>
+        </ul>
+      </nav>
+
+      <div id="mobile-nav" class="mm-menu">
+        <ul class="offcanvas-menu">
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/overview.html">Overview</a></li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/documentation.html">Documentation</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/quickstart.html">Quick Start</a></li>
+              <li class="menu-item"><a href="http://www.nengo.ai/nengo">NengoCore</a></li>
+              <li class="menu-item"><a href="https://github.com/nengo/nengo-gui#nengo-gui">NengoGUI</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/community.html">Community</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://forum.nengo.ai/">Forum</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/summerschool.html">Summer School</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/people.html">People</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/projects.html">Development</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/contributing.html">Contributor Guide</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/projects.html">Ecosystem</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/README.html">About</a></li>
+          <li class="btn-link w-nav-link menu-item"><a href="https://www.nengo.ai/download.html">Download</a></li>
+        </ul>
+      </div>
+
+      <a href="#mobile-nav" class="fa fa-bars mobile-nav-button"></a>
+    </div>
+  </div>
+</header>
+
+<div class="w-section section border-top">
+  <div class="container">
+    <div class="row" id="_modules/nengo_bones/config">
+      <div class="col-md-4 col-lg-3">
+        <aside class="wrapper-navleft"><div role="complementary" class="bs-docs-sidebar hidden-print" id="nav-affix">
+  <ul class="bs-docs-sidenav bs-sidenav nav" role="complementary">
+    <a href="../../index.html">
+      <img class="logo" src="https://www.nengo.ai/design/_images/general-full-light.svg" alt="Nengo Bones" width="200" />
+    </a>
+    <ul class="toctree nav nav-list">
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">API reference</a></li>
+</ul>
+
+    </ul>
+  </ul>
+<form id="form-search" class="form-search" action="../../search.html" method="get">
+  <div class="form-group">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+  </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form></div>
+          
+        </aside>
+      </div>
+      <div class="col-md-8 col-lg-9">
+        <div class="body wrapper-content-right">
+          
+<div class="version-select-container">
+    <div data-delay="0" class="w-dropdown">
+        <div class="w-dropdown-toggle toggle">
+            <div class="toggle-text">v0.1.0</div>
+            <div class="w-icon-dropdown-toggle toggle-icon"></div>
+        </div>
+        <nav class="w-dropdown-list dropdown-list">
+            
+            
+                <a href="../../../_modules/nengo_bones/config.html" class="w-dropdown-link">latest</a>
+            
+
+            
+                
+                <div class="w-dropdown-link">v0.1.0</div>
+                
+            
+        </nav>
+    </div>
+</div>
+
+          
+  <h1>Source code for nengo_bones.config</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Handles the processing of nengo-bones configuration settings.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+
+<div class="viewcode-block" id="find_config"><a class="viewcode-back" href="../../reference.html#nengo_bones.config.find_config">[docs]</a><span class="k">def</span> <span class="nf">find_config</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds the default nengo-bones config file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    conf_file : str</span>
+<span class="sd">        Path to the default config file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># for now, assume that config file is in cwd</span>
+    <span class="n">conf_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;.nengobones.yml&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">conf_file</span></div>
+
+
+<div class="viewcode-block" id="fill_defaults"><a class="viewcode-back" href="../../reference.html#nengo_bones.config.fill_defaults">[docs]</a><span class="k">def</span> <span class="nf">fill_defaults</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills in default values in a loaded config (in-place).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    config : dict</span>
+<span class="sd">        Dictionary containing configuration values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;travis_yml&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;travis_yml&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;python_version&quot;</span><span class="p">,</span> <span class="s2">&quot;3.6&quot;</span><span class="p">)</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;travis_yml&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;global_vars&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;travis_yml&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;pypi_user&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;travis_yml&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;deploy_dists&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;sdist&quot;</span><span class="p">])</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;travis_yml&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;bones_install&quot;</span><span class="p">,</span> <span class="s2">&quot;nengo-bones&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;codecov_yml&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;codecov_yml&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;skip_appveyor&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;codecov_yml&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;abs_target&quot;</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;codecov_yml&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;diff_target&quot;</span><span class="p">,</span> <span class="s2">&quot;100%&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_config"><a class="viewcode-back" href="../../reference.html#nengo_bones.config.validate_config">[docs]</a><span class="k">def</span> <span class="nf">validate_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validates a populated config dict.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    config : dict</span>
+<span class="sd">        Dictionary containing configuration values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mandatory</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pkg_name&quot;</span><span class="p">,</span> <span class="s2">&quot;repo_name&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s2">&quot;travis_yml&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">mandatory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;travis_yml.jobs&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">mandatory</span><span class="p">:</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Config file must define </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entry</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;ci_scripts&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ci_config</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ci_scripts&quot;</span><span class="p">]:</span>
+            <span class="n">validate_ci_config</span><span class="p">(</span><span class="n">ci_config</span><span class="p">)</span></div>
+
+    <span class="c1"># TODO: check that there aren&#39;t unused config options in yml</span>
+
+
+<div class="viewcode-block" id="validate_ci_config"><a class="viewcode-back" href="../../reference.html#nengo_bones.config.validate_ci_config">[docs]</a><span class="k">def</span> <span class="nf">validate_ci_config</span><span class="p">(</span><span class="n">ci_config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validates an entry in the ci_scripts list of a config dict.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ci_config : dict</span>
+<span class="sd">        Dictionary containing ci_scripts configuration values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;template&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ci_config</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Script config must define &#39;template&#39; &quot;</span>
+                       <span class="s2">&quot;(for entry </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">ci_config</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># make sure that people don&#39;t accidentally do</span>
+        <span class="c1"># pip_install: dependency (which gives a string), rather than</span>
+        <span class="c1"># pip_install:</span>
+        <span class="c1">#   - dependency</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;pip_install&quot;</span><span class="p">,</span> <span class="s2">&quot;conda_install&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ci_config</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> should be a list, found &#39;</span><span class="si">%s</span><span class="s2">&#39;; did you forget &quot;</span>
+                    <span class="s2">&quot;to add &#39;-&#39; before each dependency?&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">key</span><span class="p">,</span> <span class="n">ci_config</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="load_config"><a class="viewcode-back" href="../../reference.html#nengo_bones.config.load_config">[docs]</a><span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="n">conf_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads config values from a file and applies defaults/validation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    conf_file : str</span>
+<span class="sd">        Filepath for config file (if None, will load the default returned by</span>
+<span class="sd">        `.find_config`).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    config : dict</span>
+<span class="sd">        Dictionary containing configuration values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">conf_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">conf_file</span> <span class="o">=</span> <span class="n">find_config</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">conf_file</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Could not find conf_file: </span><span class="si">%s</span><span class="se">\n\n</span><span class="s2">Perhaps you are &quot;</span>
+                           <span class="s2">&quot;not in the project&#39;s root directory?&quot;</span> <span class="o">%</span> <span class="n">conf_file</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">conf_file</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">validate_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="n">fill_defaults</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">config</span></div>
+</pre></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div><footer class="footer">
+  <div class="w-container">
+    <div class="w-clearfix">
+      <div class="w-row search">
+<form id="form-search" class="form-search" action="../../search.html" method="get">
+  <div class="form-group">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+  </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form></div>
+      <div class="w-row mobileAlign">
+        <div class="w-col w-col-2 footer-menu">
+          <p class="menu-Label">ABR, Inc.</p>
+          <ul class="vertical-menu">
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/products/">Products</a></li>
+            <li class="footer-listitem-new "><a href="https://appliedbrainresearch.com/services/">Services</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/research/">Research</a></li>
+          </ul>
+        </div>
+        <div class="w-col w-col-2 footer-menu">
+          <p class="menu-Label">About Us</p>
+          <ul class="vertical-menu">
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/">Contact</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/#team">Team</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/#culture">Culture</a></li>
+          </ul>
+        </div>
+        <a class="brand footer-brand" href="https://appliedbrainresearch.com">
+          <img src="https://appliedbrainresearch.com/img/logo-light-notext.svg" width="80">
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+  </body>
+</html>

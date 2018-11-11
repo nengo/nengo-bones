@@ -1,0 +1,1540 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Configuration options &#8212; Nengo Bones 0.1.0 docs</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/mmenu.all.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/components.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/nengo.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+<script type="text/javascript" src="https://cdn.crate.io/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/modernizr.js"></script>
+    <script type="text/javascript" src="../_static/js/underscore.min.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/searchtools.js"></script>
+    <script type="text/javascript" src="../_static/js/webflow.js"></script>
+    <script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../_static/js/mmenu.all.min.js"></script>
+    <script type="text/javascript" src="../_static/js/fontawesome.js"></script>
+    <script type="text/javascript" src="../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API reference" href="../reference.html" />
+    <link rel="prev" title="Examples" href="../examples.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+<header class="header-nav">
+  <div class="container">
+    <div class="navbar w-nav" data-animation="default" data-collapse="small" data-contain="1" data-duration="400">
+      <a class="brand w-nav-brand" href="https://www.nengo.ai/">
+        <img src="https://www.nengo.ai/design/_images/general-full-light.svg" width="120">
+      </a>
+      <nav class="w-nav-menu main-nav" role="navigation">
+        <div class="dropdownBackground">
+          <span class="arrow"></span>
+        </div>
+        <ul id="menu-top-navigation" class="menu">
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/overview.html">Overview</a>
+            <ul class="sub-menu">
+                <li class="menu-item"><a href="https://www.nengo.ai/quickstart.html">Quick Start</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/documentation.html">Documentation</a>
+            <table class="sub-menu">
+              <tr>
+                <td class="menu-heading">Core</td>
+                <td class="menu-heading">Backends</td>
+                <td class="menu-heading">Add-ons</td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo">Nengo</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-fpga">Nengo FPGA</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-examples">Nengo Examples</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-dl/">Nengo DL</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-loihi">Nengo Loihi</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-extras/">Nengo Extras</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-gui">Nengo GUI</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-mpi">Nengo MPI</a></td>
+                <td class="menu-item"><a href="https://arvoelke.github.io/nengolib-docs/">Nengo Lib</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-spa/">Nengo SPA</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-ocl">Nengo OpenCL</a></td>
+                <td class="menu-item"></td>
+              </tr>
+              <tr>
+                <td class="menu-item"></td>
+                <td class="menu-item"><a href="https://github.com/project-rig/nengo_spinnaker">Nengo SpiNNaker</a></td>
+                <td class="menu-item"></td>
+              </tr>
+            </table>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/community.html">Community</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://forum.nengo.ai/">Forum</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/publications.html">Publications</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/summerschool.html">Summer School</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/videos.html">Videos</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/people.html">People</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/projects.html">Development</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/contributing.html">Contributor Guide</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/projects.html">Ecosystem</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/README.html">About</a></li>
+          <li class="btn-link w-nav-link menu-item"><a href="https://www.nengo.ai/download.html">Download</a></li>
+        </ul>
+      </nav>
+
+      <div id="mobile-nav" class="mm-menu">
+        <ul class="offcanvas-menu">
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/overview.html">Overview</a></li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/documentation.html">Documentation</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/quickstart.html">Quick Start</a></li>
+              <li class="menu-item"><a href="http://www.nengo.ai/nengo">NengoCore</a></li>
+              <li class="menu-item"><a href="https://github.com/nengo/nengo-gui#nengo-gui">NengoGUI</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/community.html">Community</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://forum.nengo.ai/">Forum</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/summerschool.html">Summer School</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/people.html">People</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/projects.html">Development</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/contributing.html">Contributor Guide</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/projects.html">Ecosystem</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/README.html">About</a></li>
+          <li class="btn-link w-nav-link menu-item"><a href="https://www.nengo.ai/download.html">Download</a></li>
+        </ul>
+      </div>
+
+      <a href="#mobile-nav" class="fa fa-bars mobile-nav-button"></a>
+    </div>
+  </div>
+</header>
+
+<div class="w-section section border-top">
+  <div class="container">
+    <div class="row" id="examples/configuration">
+      <div class="col-md-4 col-lg-3">
+        <aside class="wrapper-navleft"><div role="complementary" class="bs-docs-sidebar hidden-print" id="nav-affix">
+  <ul class="bs-docs-sidenav bs-sidenav nav" role="complementary">
+    <a href="../index.html">
+      <img class="logo" src="https://www.nengo.ai/design/_images/general-full-light.svg" alt="Nengo Bones" width="200" />
+    </a>
+    <ul class="toctree nav nav-list">
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command line interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#CI-scripts">CI scripts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Test-script-options">Test script options</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#TravisCI-config">TravisCI config</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Global-variables">Global variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Jobs">Jobs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Automatic-deployment">Automatic deployment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Python-environment-setup">Python environment setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Build-steps">Build steps</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Codecov-config">Codecov config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">API reference</a></li>
+</ul>
+
+    </ul>
+  </ul>
+<form id="form-search" class="form-search" action="../search.html" method="get">
+  <div class="form-group">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+  </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form></div>
+          
+        </aside>
+      </div>
+      <div class="col-md-8 col-lg-9">
+        <div class="body wrapper-content-right">
+          
+<div class="version-select-container">
+    <div data-delay="0" class="w-dropdown">
+        <div class="w-dropdown-toggle toggle">
+            <div class="toggle-text">v0.1.0</div>
+            <div class="w-icon-dropdown-toggle toggle-icon"></div>
+        </div>
+        <nav class="w-dropdown-list dropdown-list">
+            
+            
+                <a href="../../examples/configuration.html" class="w-dropdown-link">latest</a>
+            
+
+            
+                
+                <div class="w-dropdown-link">v0.1.0</div>
+                
+            
+        </nav>
+    </div>
+</div>
+
+          
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Configuration-options">
+<h1>Configuration options<a class="headerlink" href="#Configuration-options" title="Permalink to this headline">¶</a></h1>
+<p>All Nengo Bones configuration is done through the <code class="docutils literal notranslate"><span class="pre">.nengobones.yml</span></code> file. In this notebook we will demonstrate the different configuration options available and how to use them to customize behaviour for different use cases.</p>
+<p>First we’ll define some utility functions we’ll use throughout this notebook:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">write_yml</span><span class="p">(</span><span class="n">contents</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a sample .nengo.yml file from a string.&quot;&quot;&quot;</span>
+
+    <span class="n">nengo_yml</span> <span class="o">=</span> <span class="s2">&quot;pkg_name: example</span><span class="se">\n</span><span class="s2">repo_name: nengo-bones/example</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">nengo_yml</span> <span class="o">+=</span> <span class="n">contents</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.nengobones.yml&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">nengo_yml</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">display_contents</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display the contents of a file.</span>
+
+<span class="sd">    The &#39;sections&#39; argument filters the file to show only the</span>
+<span class="sd">    specified sections.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+    <span class="c1"># strip out blank lines</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">sections</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">display_data</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># pull out only the requested sections</span>
+        <span class="n">display_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;&quot;$COMMAND&quot; == &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">line</span>
+                        <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">sec</span><span class="p">)):</span>
+                    <span class="n">section_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+                    <span class="k">break</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">section_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
+                    <span class="n">section_data</span> <span class="o">=</span> <span class="n">section_data</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">break</span>
+            <span class="n">display_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">section_data</span><span class="p">)</span>
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">display_data</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="CI-scripts">
+<h2>CI scripts<a class="headerlink" href="#CI-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Nengo Bones uses a continuous integration (CI) setup wherein build jobs are associated with different shell scripts, and each script defines commands to be executed at different stages during the build process. These scripts are configured through the <code class="docutils literal notranslate"><span class="pre">ci_scripts</span></code> section of <code class="docutils literal notranslate"><span class="pre">.nengobones.yml</span></code>. The basic step is to add an entry with <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">template:</span> <span class="pre">scriptname</span></code> for each script template that we want to be rendered. As an example, in this section we will use the “test” template, but all the
+options we describe here work for any of the templated scripts.</p>
+<p>Normally the <code class="docutils literal notranslate"><span class="pre">.nengobones.yml</span></code> file is a text file sitting in the root directory of the repository. For demonstration purposes, in this notebook we will be generating different config files on-the-fly using the utility functions from above.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ci_scripts:</span>
+<span class="s2">    - template: test</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>  <span class="c1"># create .nengobones.yml file</span>
+<span class="o">!</span>generate-bones ci-scripts   # call the generate-bones script
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test.sh&quot;</span><span class="p">)</span>  <span class="c1"># display the contents of the generated file</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+#!/usr/bin/env bash
+# Automatically generated by nengo-bones, do not edit this file directly
+# Version: 0.1.0
+NAME=$0
+COMMAND=$1
+STATUS=0  # used to exit with non-zero status if any command fails
+exe() {
+    echo &#34;\$ $*&#34;;
+    # remove empty spaces from args
+    args=( &#34;$@&#34; )
+    for i in &#34;${!args[@]}&#34;; do
+      [ -n &#34;${args[$i]}&#34; ] || unset &#34;args[$i]&#34;
+    done
+    &#34;${args[@]}&#34; || STATUS=1;
+}
+if [[ ! -e example ]]; then
+    echo &#34;Run this script from the root directory of this repository&#34;
+    exit 1
+fi
+if [[ &#34;$COMMAND&#34; == &#34;install&#34; ]]; then
+    :
+    exe pip install &#34;pytest&gt;=3.6.0&#34; &#34;pytest-xdist&gt;=1.16.0&#34;
+    exe pip install -e &#34;.[tests]&#34;
+elif [[ &#34;$COMMAND&#34; == &#34;after_install&#34; ]]; then
+    :
+elif [[ &#34;$COMMAND&#34; == &#34;before_script&#34; ]]; then
+    :
+elif [[ &#34;$COMMAND&#34; == &#34;script&#34; ]]; then
+    # shellcheck disable=SC2086
+    exe pytest example -v -n 2 --color=yes --durations 20 $TEST_ARGS
+elif [[ &#34;$COMMAND&#34; == &#34;before_cache&#34; ]]; then
+    exe conda clean --all
+elif [[ &#34;$COMMAND&#34; == &#34;after_success&#34; ]]; then
+    :
+elif [[ &#34;$COMMAND&#34; == &#34;after_failure&#34; ]]; then
+    :
+elif [[ &#34;$COMMAND&#34; == &#34;before_deploy&#34; ]]; then
+    :
+elif [[ &#34;$COMMAND&#34; == &#34;after_deploy&#34; ]]; then
+    :
+elif [[ &#34;$COMMAND&#34; == &#34;after_script&#34; ]]; then
+    :
+elif [[ -z &#34;$COMMAND&#34; ]]; then
+    echo &#34;$NAME requires a command like &#39;install&#39; or &#39;script&#39;&#34;
+else
+    echo &#34;$NAME does not define $COMMAND&#34;
+fi
+if [[ &#34;$COMMAND&#34; != &#34;script&#34; &amp;&amp; -n &#34;$TRAVIS&#34; &amp;&amp; &#34;$STATUS&#34; -ne &#34;0&#34; ]]; then
+    travis_terminate &#34;$STATUS&#34;
+fi
+exit &#34;$STATUS&#34;
+</pre></div></div>
+</div>
+<p>There is a lot of information in that file that we don’t really need to worry about (that’s the whole point of Nengo Bones, to take care of those details for us). We can see that the overall structure is made up of behaviour defined for different build stages (e.g. “install”, “after_install”, “before_script”, etc.). In most cases all the important action happens in the “install” and “script” stages:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test.sh&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;script&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+if [[ &#34;$COMMAND&#34; == &#34;install&#34; ]]; then
+    :
+    exe pip install &#34;pytest&gt;=3.6.0&#34; &#34;pytest-xdist&gt;=1.16.0&#34;
+    exe pip install -e &#34;.[tests]&#34;
+elif [[ &#34;$COMMAND&#34; == &#34;script&#34; ]]; then
+    # shellcheck disable=SC2086
+    exe pytest example -v -n 2 --color=yes --durations 20 $TEST_ARGS
+</pre></div></div>
+</div>
+<p>In the “install” stage we install any of the package requirements needed to run the script. In this case we can see we’re installing <code class="docutils literal notranslate"><span class="pre">pytest</span></code>, <code class="docutils literal notranslate"><span class="pre">pytest-xdist</span></code>, and the current package (including any optional dependencies defined in the <code class="docutils literal notranslate"><span class="pre">[tests]</span></code> <code class="docutils literal notranslate"><span class="pre">extra_requires</span></code> directive).</p>
+<p>If we need to add extra packages to this default installation, that can be done with the <code class="docutils literal notranslate"><span class="pre">pip_install</span></code> or <code class="docutils literal notranslate"><span class="pre">conda_install</span></code> configuration options (to install packages through <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code>, respectively):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ci_scripts:</span>
+<span class="s2">    - template: test</span>
+<span class="s2">      pip_install:</span>
+<span class="s2">          - an-extra-pip-package</span>
+<span class="s2">      conda_install:</span>
+<span class="s2">          - an-extra-conda-package</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones ci-scripts
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test.sh&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;install&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+if [[ &#34;$COMMAND&#34; == &#34;install&#34; ]]; then
+    exe conda install -q &#34;an-extra-conda-package&#34;
+    exe pip install &#34;an-extra-pip-package&#34;
+    exe pip install &#34;pytest&gt;=3.6.0&#34; &#34;pytest-xdist&gt;=1.16.0&#34;
+    exe pip install -e &#34;.[tests]&#34;
+</pre></div></div>
+</div>
+<p>Note that requirements should generally be added to the package requirements defined in <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> (in which case they would be automatically installed in the <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">&quot;.[tests]&quot;</span></code> step). That way anyone can easily install the necessary packages and run the tests without having to go through the CI scripts. The <code class="docutils literal notranslate"><span class="pre">pip_install</span></code> and <code class="docutils literal notranslate"><span class="pre">conda_install</span></code> options are only necessary if that isn’t feasible for some reason.</p>
+<p>The “script” stage is where the main work of the script is done. In the case of the “test” script, this means calling <code class="docutils literal notranslate"><span class="pre">pytest</span></code> to run the test suite:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test.sh&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;script&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+elif [[ &#34;$COMMAND&#34; == &#34;script&#34; ]]; then
+    # shellcheck disable=SC2086
+    exe pytest example -v -n 2 --color=yes --durations 20 $TEST_ARGS
+</pre></div></div>
+</div>
+<p>Ignore the <code class="docutils literal notranslate"><span class="pre">$TEST_ARGS</span></code> part for now. We will cover that when we come to the <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> configuration.</p>
+<p>As with the “install” stage, the “script” stage can also be customized if we want to add extra commands, either before or after the main script body:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ci_scripts:</span>
+<span class="s2">    - template: test</span>
+<span class="s2">      pre_commands:</span>
+<span class="s2">          - echo &quot;this command will run at the beginning&quot;</span>
+<span class="s2">      post_commands:</span>
+<span class="s2">          - echo &quot;this command will run at the end&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones ci-scripts
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test.sh&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;script&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+elif [[ &#34;$COMMAND&#34; == &#34;script&#34; ]]; then
+    exe echo &#34;this command will run at the beginning&#34;
+    # shellcheck disable=SC2086
+    exe pytest example -v -n 2 --color=yes --durations 20 $TEST_ARGS
+    exe echo &#34;this command will run at the end&#34;
+</pre></div></div>
+</div>
+<p>We can also use the same template multiple times, passing different options to generate different output scripts. In this case we need to use the <code class="docutils literal notranslate"><span class="pre">output_name</span></code> config option to distinguish different rendered scripts:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ci_scripts:</span>
+<span class="s2">    - template: test</span>
+<span class="s2">      pre_commands:</span>
+<span class="s2">          - echo &quot;this is test&quot;</span>
+<span class="s2">    - template: test</span>
+<span class="s2">      output_name: test2</span>
+<span class="s2">      pre_commands:</span>
+<span class="s2">          - echo &quot;this is test2&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones ci-scripts
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Contents of test.sh&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------&quot;</span><span class="p">)</span>
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test.sh&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;script&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Contents of test2.sh&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------&quot;</span><span class="p">)</span>
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test2.sh&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;script&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Contents of test.sh
+-------------------
+elif [[ &#34;$COMMAND&#34; == &#34;script&#34; ]]; then
+    exe echo &#34;this is test&#34;
+    # shellcheck disable=SC2086
+    exe pytest example -v -n 2 --color=yes --durations 20 $TEST_ARGS
+
+Contents of test2.sh
+--------------------
+elif [[ &#34;$COMMAND&#34; == &#34;script&#34; ]]; then
+    exe echo &#34;this is test2&#34;
+    # shellcheck disable=SC2086
+    exe pytest example -v -n 2 --color=yes --durations 20 $TEST_ARGS
+</pre></div></div>
+</div>
+<div class="section" id="Test-script-options">
+<h3>Test script options<a class="headerlink" href="#Test-script-options" title="Permalink to this headline">¶</a></h3>
+<p>The “test” script also has some configuration options specific to that script. First, we can collect coverage information while tests are running by setting <code class="docutils literal notranslate"><span class="pre">coverage:</span> <span class="pre">true</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ci_scripts:</span>
+<span class="s2">    - template: test</span>
+<span class="s2">      coverage: true</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones ci-scripts
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test.sh&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;script&quot;</span><span class="p">,</span> <span class="s2">&quot;after_script&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+if [[ &#34;$COMMAND&#34; == &#34;install&#34; ]]; then
+    :
+    exe pip install &#34;pytest&gt;=3.6.0&#34; &#34;pytest-xdist&gt;=1.16.0&#34;
+    exe pip install &#34;pytest-cov&gt;=2.6.0&#34;
+    exe pip install -e &#34;.[tests]&#34;
+elif [[ &#34;$COMMAND&#34; == &#34;script&#34; ]]; then
+    # shellcheck disable=SC2086
+    exe pytest example -v -n 2 --color=yes --durations 20 --cov=example --cov-append --cov-report=term-missing $TEST_ARGS
+elif [[ &#34;$COMMAND&#34; == &#34;after_script&#34; ]]; then
+    exe eval &#34;bash &lt;(curl -s https://codecov.io/bash)&#34;
+</pre></div></div>
+</div>
+<p>Note that the script is now installing extra packages, adding extra arguments to <code class="docutils literal notranslate"><span class="pre">pytest</span></code>, and uploading the results to <a class="reference external" href="https://codecov.io/">Codecov</a> at the end.</p>
+<p>Nengo backends also often want to run the core Nengo tests in addition to their own test suite. This can be accomplished by setting <code class="docutils literal notranslate"><span class="pre">nengo_tests:</span> <span class="pre">true</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ci_scripts:</span>
+<span class="s2">    - template: test</span>
+<span class="s2">      nengo_tests: true</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones ci-scripts
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;test.sh&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;script&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+elif [[ &#34;$COMMAND&#34; == &#34;script&#34; ]]; then
+    # shellcheck disable=SC2086
+    exe pytest example -v -n 2 --color=yes --durations 20 $TEST_ARGS
+    # shellcheck disable=SC2086
+    exe pytest --pyargs nengo -v -n 2 --color=yes --durations 20 $TEST_ARGS
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="TravisCI-config">
+<h2>TravisCI config<a class="headerlink" href="#TravisCI-config" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above, the general idea is that TravisCI will create a number of build jobs, and each job will call one of the scripts we generated. TravisCI is configured through its own <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> file, so what we will be doing is using <code class="docutils literal notranslate"><span class="pre">.nengobones.yml</span></code> to generate <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code>. This is done through the <code class="docutils literal notranslate"><span class="pre">travis_yml</span></code> section:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">travis_yml:</span>
+<span class="s2">    jobs: []</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Automatically generated by nengo-bones, do not edit this file directly
+# Version: 0.1.0
+language: python
+python:
+  - &#34;3.6&#34;
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+# cache:
+#   directories:
+#   - $HOME/miniconda
+dist: trusty
+env:
+  global:
+    - SCRIPT=&#34;test&#34;
+    - PYTHON_VERSION=&#34;3.6&#34;
+    - PIP_UPGRADE=&#34;true&#34;  # always upgrade to latest version
+    - PIP_UPGRADE_STRATEGY=&#34;eager&#34;  # upgrade all dependencies
+    - TEST_ARGS=&#34;&#34;
+    - COV_CORE_SOURCE=  # early start pytest-cov engine
+    - COV_CORE_CONFIG=.coveragerc
+    - COV_CORE_DATAFILE=.coverage.eager
+    - BRANCH_NAME=&#34;${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}&#34;
+jobs:
+  include:
+before_install:
+  # export travis_terminate for use in scripts
+  - export -f travis_terminate
+    _travis_terminate_linux
+    _travis_terminate_osx
+    _travis_terminate_unix
+    _travis_terminate_windows
+  # install/run nengo-bones
+  - pip install nengo-bones
+  - generate-bones --output-dir .ci --template-dir .ci ci-scripts
+  - check-bones
+  # set up conda
+  - export PATH=&#34;$HOME/miniconda/bin:$PATH&#34;
+  - if ! [[ -d $HOME/miniconda/envs/test ]]; then
+      rm -rf $HOME/miniconda;
+      wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+      bash miniconda.sh -b -p $HOME/miniconda;
+      conda update -q -y conda;
+      conda create -q -y -n test python=$PYTHON_VERSION pip;
+    else
+      conda update -q -y conda;
+    fi
+  - conda config --set always_yes yes --set changeps1 no
+  - source activate test
+  # upgrade pip
+  - pip install pip
+  # display environment info
+  - conda info -a
+  - conda list -e
+  - pip freeze
+install:
+  - .ci/$SCRIPT.sh install
+  - conda list -e
+  - pip freeze
+after_install:
+  - .ci/$SCRIPT.sh after_install
+before_script:
+  - .ci/$SCRIPT.sh before_script
+script:
+  - .ci/$SCRIPT.sh script
+before_cache:
+  - .ci/$SCRIPT.sh before_cache
+after_success:
+  - .ci/$SCRIPT.sh after_success
+after_failure:
+  - .ci/$SCRIPT.sh after_failure
+before_deploy:
+  - .ci/$SCRIPT.sh before_deploy
+after_deploy:
+  - .ci/$SCRIPT.sh after_deploy
+after_script:
+  - .ci/$SCRIPT.sh after_script
+</pre></div></div>
+</div>
+<p>As before, there is a lot of detail here that we don’t need to worry about because Nengo Bones will take care of it for us. The important part to understand is the overall structure.</p>
+<div class="section" id="Global-variables">
+<h3>Global variables<a class="headerlink" href="#Global-variables" title="Permalink to this headline">¶</a></h3>
+<p>First, we create some global variables:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;env&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+env:
+  global:
+    - SCRIPT=&#34;test&#34;
+    - PYTHON_VERSION=&#34;3.6&#34;
+    - PIP_UPGRADE=&#34;true&#34;  # always upgrade to latest version
+    - PIP_UPGRADE_STRATEGY=&#34;eager&#34;  # upgrade all dependencies
+    - TEST_ARGS=&#34;&#34;
+    - COV_CORE_SOURCE=  # early start pytest-cov engine
+    - COV_CORE_CONFIG=.coveragerc
+    - COV_CORE_DATAFILE=.coverage.eager
+    - BRANCH_NAME=&#34;${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}&#34;
+</pre></div></div>
+</div>
+<p>This shows the default variables. We can add arbitrary variables to this list through the <code class="docutils literal notranslate"><span class="pre">global_vars</span></code> option:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">travis_yml:</span>
+<span class="s2">    global_vars:</span>
+<span class="s2">        VAR0: val0</span>
+<span class="s2">        VAR1: val1</span>
+<span class="s2">    jobs: []</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;env&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+env:
+  global:
+    - SCRIPT=&#34;test&#34;
+    - PYTHON_VERSION=&#34;3.6&#34;
+    - PIP_UPGRADE=&#34;true&#34;  # always upgrade to latest version
+    - PIP_UPGRADE_STRATEGY=&#34;eager&#34;  # upgrade all dependencies
+    - TEST_ARGS=&#34;&#34;
+    - COV_CORE_SOURCE=  # early start pytest-cov engine
+    - COV_CORE_CONFIG=.coveragerc
+    - COV_CORE_DATAFILE=.coverage.eager
+    - BRANCH_NAME=&#34;${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}&#34;
+    - VAR0=&#34;val0&#34;
+    - VAR1=&#34;val1&#34;
+</pre></div></div>
+</div>
+<p>Note that these variables will be set in order, with later variables overwriting earlier ones. So if, for example, we wanted to change the default script, we could do that by setting:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">travis_yml:</span>
+<span class="s2">    global_vars:</span>
+<span class="s2">        SCRIPT: not-test</span>
+<span class="s2">    jobs: []</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;env&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+env:
+  global:
+    - SCRIPT=&#34;test&#34;
+    - PYTHON_VERSION=&#34;3.6&#34;
+    - PIP_UPGRADE=&#34;true&#34;  # always upgrade to latest version
+    - PIP_UPGRADE_STRATEGY=&#34;eager&#34;  # upgrade all dependencies
+    - TEST_ARGS=&#34;&#34;
+    - COV_CORE_SOURCE=  # early start pytest-cov engine
+    - COV_CORE_CONFIG=.coveragerc
+    - COV_CORE_DATAFILE=.coverage.eager
+    - BRANCH_NAME=&#34;${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}&#34;
+    - SCRIPT=&#34;not-test&#34;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Jobs">
+<h3>Jobs<a class="headerlink" href="#Jobs" title="Permalink to this headline">¶</a></h3>
+<p>The next important part of the <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> is the “jobs” section.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+jobs:
+  include:
+</pre></div></div>
+</div>
+<p>It is currently empty because we haven’t defined any jobs in our <code class="docutils literal notranslate"><span class="pre">.nengobones.yml</span></code>.</p>
+<p>This is done via the <code class="docutils literal notranslate"><span class="pre">jobs</span></code> section of <code class="docutils literal notranslate"><span class="pre">travis_yml</span></code>, which specifies the builds we want to run during CI. The most important part of each job is specifying which script we want to run. For example, we could create a single job that runs the “test” script:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">travis_yml:</span>
+<span class="s2">    jobs:</span>
+<span class="s2">        - script: test</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+jobs:
+  include:
+  -
+    env:
+      SCRIPT=&#34;test&#34;
+</pre></div></div>
+</div>
+<p>We can see that this causes the <code class="docutils literal notranslate"><span class="pre">$SCRIPT</span></code> variable to be set to <code class="docutils literal notranslate"><span class="pre">&quot;test&quot;</span></code>, which will then cause <code class="docutils literal notranslate"><span class="pre">test.sh</span></code> to be run during the various build steps.</p>
+<p>Similarly, we can set the <code class="docutils literal notranslate"><span class="pre">python_version</span></code> variable to change the Python version being used for that job. For example, we could create two jobs that run the test suite with different python versions:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">travis_yml:</span>
+<span class="s2">    jobs:</span>
+<span class="s2">        - script: test</span>
+<span class="s2">          python_version: 3.5</span>
+<span class="s2">        - script: test</span>
+<span class="s2">          python_version: 3.6</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+jobs:
+  include:
+  -
+    env:
+      SCRIPT=&#34;test&#34;
+      PYTHON_VERSION=&#34;3.5&#34;
+  -
+    env:
+      SCRIPT=&#34;test&#34;
+      PYTHON_VERSION=&#34;3.6&#34;
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">test_args</span></code> option sets the <code class="docutils literal notranslate"><span class="pre">$TEST_ARGS</span></code> environment variable that we saw in the <code class="docutils literal notranslate"><span class="pre">test.sh</span></code> script above. Recall that this will be passed to the <code class="docutils literal notranslate"><span class="pre">pytest</span></code> command, like <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">my_project</span> <span class="pre">...</span> <span class="pre">$TEST_ARGS</span></code>. This can be useful for projects that define custom pytest arguments that they might want to set for different jobs, e.g.:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">travis_yml:</span>
+<span class="s2">    jobs:</span>
+<span class="s2">        - script: test</span>
+<span class="s2">          test_args: --do-a-special-test</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+jobs:
+  include:
+  -
+    env:
+      SCRIPT=&#34;test&#34;
+      TEST_ARGS=&#34;--do-a-special-test&#34;
+</pre></div></div>
+</div>
+<p>Note that all these options are simply shortcuts for setting environment variables. We can also set arbitrary environment variables through the <code class="docutils literal notranslate"><span class="pre">env</span></code> option:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">travis_yml:</span>
+<span class="s2">    jobs:</span>
+<span class="s2">        - script: test</span>
+<span class="s2">          env:</span>
+<span class="s2">              VAR0: val0</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+jobs:
+  include:
+  -
+    env:
+      VAR0=&#34;val0&#34;
+      SCRIPT=&#34;test&#34;
+</pre></div></div>
+</div>
+<p>Any other options set for a job will be passed directly on to the <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> config for that job. This opens up a wide range of configuration options (see <a class="reference external" href="https://docs.travis-ci.com/">https://docs.travis-ci.com/</a> for more information). As an example, we could divide jobs into different stages through the <code class="docutils literal notranslate"><span class="pre">stage</span></code> option:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">travis_yml:</span>
+<span class="s2">    jobs:</span>
+<span class="s2">        - script: test</span>
+<span class="s2">          stage: stage 0</span>
+<span class="s2">        - script: docs</span>
+<span class="s2">          stage: stage 1</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+jobs:
+  include:
+  -
+    env:
+      SCRIPT=&#34;test&#34;
+    stage: stage 0
+  -
+    env:
+      SCRIPT=&#34;docs&#34;
+    stage: stage 1
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Automatic-deployment">
+<h3>Automatic deployment<a class="headerlink" href="#Automatic-deployment" title="Permalink to this headline">¶</a></h3>
+<p>Nengo Bones can also configure TravisCI to automatically deploy releases to PyPI. This is activated by setting the <code class="docutils literal notranslate"><span class="pre">pypi_user</span></code> option, which should be the username for the PyPI account that will be used to upload the releases. You will also need to go into the TravisCI settings for your repo and add a secure environment variable named <code class="docutils literal notranslate"><span class="pre">PYPI_TOKEN</span></code> containing that account’s password. Finally, you will need to make sure you are building the <code class="docutils literal notranslate"><span class="pre">deploy.sh</span></code> script by adding <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">template:</span> <span class="pre">deploy</span></code>
+to your <code class="docutils literal notranslate"><span class="pre">ci_scripts</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ci_scripts:</span>
+<span class="s2">    - template: test</span>
+<span class="s2">    - template: deploy</span>
+
+<span class="s2">travis_yml:</span>
+<span class="s2">    jobs:</span>
+<span class="s2">        - script: test</span>
+<span class="s2">    pypi_user: test_user</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+jobs:
+  include:
+  -
+    env:
+      SCRIPT=&#34;test&#34;
+  - stage: deploy
+    if: branch =~ ^release-candidate-* OR tag =~ ^v[0-9]*
+    env: SCRIPT=&#34;deploy&#34;
+    cache: false
+    deploy:
+      - provider: pypi
+        server: https://test.pypi.org/legacy/
+        user: test_user
+        password: $PYPI_TOKEN
+        distributions: &#34;sdist &#34;
+        on:
+          all_branches: true
+          condition: $TRAVIS_BRANCH =~ ^release-candidate-*
+          condition: $TRAVIS_TAG = &#34;&#34;
+      - provider: pypi
+        user: test_user
+        password: $PYPI_TOKEN
+        distributions: &#34;sdist &#34;
+        on:
+          all_branches: true
+          condition: $TRAVIS_TAG =~ ^v[0-9]*
+</pre></div></div>
+</div>
+<p>This will trigger an automatic PyPI release for any tagged commit. You can also do a test release by pushing to a branch named <code class="docutils literal notranslate"><span class="pre">release-candidate-x.y.z</span></code> (where <code class="docutils literal notranslate"><span class="pre">x.y.z</span></code> is the version number you want to test).</p>
+<p>The only other setting related to the automatic deployment is <code class="docutils literal notranslate"><span class="pre">deploy_dists</span></code>, which sets the distributions that will be built and uploaded with each release. We can see above that the default is an <code class="docutils literal notranslate"><span class="pre">sdist</span></code>-only release, but we could, for example, add wheels by modifying <code class="docutils literal notranslate"><span class="pre">deploy_dists</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">ci_scripts:</span>
+<span class="s2">    - template: test</span>
+<span class="s2">    - template: deploy</span>
+
+<span class="s2">travis_yml:</span>
+<span class="s2">    jobs:</span>
+<span class="s2">        - script: test</span>
+<span class="s2">    pypi_user: test_user</span>
+<span class="s2">    deploy_dists:</span>
+<span class="s2">        - sdist</span>
+<span class="s2">        - bdist_wheel</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones travis-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+jobs:
+  include:
+  -
+    env:
+      SCRIPT=&#34;test&#34;
+  - stage: deploy
+    if: branch =~ ^release-candidate-* OR tag =~ ^v[0-9]*
+    env: SCRIPT=&#34;deploy&#34;
+    cache: false
+    deploy:
+      - provider: pypi
+        server: https://test.pypi.org/legacy/
+        user: test_user
+        password: $PYPI_TOKEN
+        distributions: &#34;sdist bdist_wheel &#34;
+        on:
+          all_branches: true
+          condition: $TRAVIS_BRANCH =~ ^release-candidate-*
+          condition: $TRAVIS_TAG = &#34;&#34;
+      - provider: pypi
+        user: test_user
+        password: $PYPI_TOKEN
+        distributions: &#34;sdist bdist_wheel &#34;
+        on:
+          all_branches: true
+          condition: $TRAVIS_TAG =~ ^v[0-9]*
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Python-environment-setup">
+<h3>Python environment setup<a class="headerlink" href="#Python-environment-setup" title="Permalink to this headline">¶</a></h3>
+<p>The next section of the <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> file sets up the python environment:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;before_install&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+before_install:
+  # export travis_terminate for use in scripts
+  - export -f travis_terminate
+    _travis_terminate_linux
+    _travis_terminate_osx
+    _travis_terminate_unix
+    _travis_terminate_windows
+  # install/run nengo-bones
+  - pip install nengo-bones
+  - generate-bones --output-dir .ci --template-dir .ci ci-scripts
+  - check-bones
+  # set up conda
+  - export PATH=&#34;$HOME/miniconda/bin:$PATH&#34;
+  - if ! [[ -d $HOME/miniconda/envs/test ]]; then
+      rm -rf $HOME/miniconda;
+      wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+      bash miniconda.sh -b -p $HOME/miniconda;
+      conda update -q -y conda;
+      conda create -q -y -n test python=$PYTHON_VERSION pip;
+    else
+      conda update -q -y conda;
+    fi
+  - conda config --set always_yes yes --set changeps1 no
+  - source activate test
+  # upgrade pip
+  - pip install pip
+  # display environment info
+  - conda info -a
+  - conda list -e
+  - pip freeze
+</pre></div></div>
+</div>
+<p>Note that we are calling <code class="docutils literal notranslate"><span class="pre">generate-bones</span> <span class="pre">...</span> <span class="pre">ci-scripts</span></code> in this section in order to automatically generate all the scripts defined in the <code class="docutils literal notranslate"><span class="pre">.nengobones.yml</span></code> <code class="docutils literal notranslate"><span class="pre">ci_scripts</span></code> discussed above. We also call <code class="docutils literal notranslate"><span class="pre">check-bones</span></code>, which will give an error if any of the templated files are out of date.</p>
+<p>There are no configuration options for this section (although note that it is using the <code class="docutils literal notranslate"><span class="pre">$PYTHON_VERSION</span></code> variable we set in the global variables above).</p>
+</div>
+<div class="section" id="Build-steps">
+<h3>Build steps<a class="headerlink" href="#Build-steps" title="Permalink to this headline">¶</a></h3>
+<p>Finally we call our templated script in each of the build steps, which will execute the behaviour we defined in those scripts.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.travis.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span>
+    <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;after_install&quot;</span><span class="p">,</span> <span class="s2">&quot;before_script&quot;</span><span class="p">,</span> <span class="s2">&quot;script&quot;</span>
+<span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+install:
+  - .ci/$SCRIPT.sh install
+  - conda list -e
+  - pip freeze
+after_install:
+  - .ci/$SCRIPT.sh after_install
+before_script:
+  - .ci/$SCRIPT.sh before_script
+script:
+  - .ci/$SCRIPT.sh script
+...
+</pre></div></div>
+</div>
+<p>There are no configuration options for this section (instead this behaviour is controlled by configuring the ci scripts, as described in the <code class="docutils literal notranslate"><span class="pre">ci_scripts</span></code> section above).</p>
+</div>
+</div>
+<div class="section" id="Codecov-config">
+<h2>Codecov config<a class="headerlink" href="#Codecov-config" title="Permalink to this headline">¶</a></h2>
+<p>Nengo Bones will automatically upload coverage reports to <a class="reference external" href="https://codecov.io/">Codecov</a> if the <code class="docutils literal notranslate"><span class="pre">coverage:</span> <span class="pre">true</span></code> option is set on the test script config. Codecov reads the <code class="docutils literal notranslate"><span class="pre">.codecov.yml</span></code> configuration file, which Nengo Bones also has a template for and can be controlled through the <code class="docutils literal notranslate"><span class="pre">codecov_yml</span></code> option.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">codecov_yml: </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones codecov-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.codecov.yml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Automatically generated by nengo-bones, do not edit this file directly
+# Version: 0.1.0
+codecov:
+  ci:
+    - &#34;!ci.appveyor.com&#34;
+  notify:
+    require_ci_to_pass: no
+coverage:
+  status:
+    project:
+      default:
+        enabled: yes
+        target: auto
+    patch:
+      default:
+        enabled: yes
+        target: 100%
+    changes: no
+</pre></div></div>
+</div>
+<p>The first thing to be noted is the <code class="docutils literal notranslate"><span class="pre">!ci.appveyor.com</span></code> line. This tells Codecov not to wait for a coverage report from appveyor (generally we assume that all the coverage is being checked on TravisCI). This can be disabled by setting <code class="docutils literal notranslate"><span class="pre">skip_appveyor:</span> <span class="pre">false</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">codecov_yml:</span>
+<span class="s2">    skip_appveyor: false</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones codecov-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.codecov.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;codecov&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+codecov:
+  notify:
+    require_ci_to_pass: no
+</pre></div></div>
+</div>
+<p>The other configuration options have to do with the target coverage at either the project or patch level. These determine whether the codecov PR status checks will be marked as passing or failing. The “project” coverage is the total lines of code covered by tests for the whole project. The default value is “auto”, meaning that the status check will pass if the total coverage is &gt;= the coverage in the base branch of the PR. The “patch” coverage only looks at the lines of code modified in the PR.
+The default value is “100%”, meaning that every modified line of code needs to be covered by a test for the check to pass.</p>
+<p>These can be modified by the <code class="docutils literal notranslate"><span class="pre">abs_target</span></code> and <code class="docutils literal notranslate"><span class="pre">diff_target</span></code> config options, respectively:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nengobones_yml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">codecov_yml:</span>
+<span class="s2">    abs_target: 80%</span>
+<span class="s2">    diff_target: 90%</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">write_yml</span><span class="p">(</span><span class="n">nengobones_yml</span><span class="p">)</span>
+<span class="o">!</span>generate-bones codecov-yml
+<span class="n">display_contents</span><span class="p">(</span><span class="s2">&quot;.codecov.yml&quot;</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;coverage&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+coverage:
+  status:
+    project:
+      default:
+        enabled: yes
+        target: 80%
+    patch:
+      default:
+        enabled: yes
+        target: 90%
+    changes: no
+</pre></div></div>
+</div>
+</div>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div><footer class="footer">
+  <div class="w-container">
+    <div class="w-clearfix">
+      <div class="w-row search">
+<form id="form-search" class="form-search" action="../search.html" method="get">
+  <div class="form-group">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+  </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form></div>
+      <div class="w-row mobileAlign">
+        <div class="w-col w-col-2 footer-menu">
+          <p class="menu-Label">ABR, Inc.</p>
+          <ul class="vertical-menu">
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/products/">Products</a></li>
+            <li class="footer-listitem-new "><a href="https://appliedbrainresearch.com/services/">Services</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/research/">Research</a></li>
+          </ul>
+        </div>
+        <div class="w-col w-col-2 footer-menu">
+          <p class="menu-Label">About Us</p>
+          <ul class="vertical-menu">
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/">Contact</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/#team">Team</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/#culture">Culture</a></li>
+          </ul>
+        </div>
+        <a class="brand footer-brand" href="https://appliedbrainresearch.com">
+          <img src="https://appliedbrainresearch.com/img/logo-light-notext.svg" width="80">
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+  </body>
+</html>
