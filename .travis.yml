@@ -1,0 +1,90 @@
+language: minimal
+sudo: false
+notifications:
+  email:
+    - tbekolay@gmail.com
+cache:
+  directories:
+    - $HOME/miniconda
+
+env:
+  global:
+    - COVERAGE="false"
+    - STATIC="false"
+    - DOCS="false"
+    - DEPLOY="false"
+
+jobs:
+  include:
+    - stage: test
+      env: PYTHON="3.6" STATIC="true"
+    - env: PYTHON="2.7" COVERAGE="true"
+    - env: PYTHON="3.4"
+    - env: PYTHON="3.5"
+    - env: PYTHON="3.6" COVERAGE="true"
+    - env: PYTHON="3.6" DOCS="true"
+    - stage: deploy
+      if: branch =~ ^release-candidate-* OR tag =~ ^v[0-9]*
+      env: PYTHON="3.6" DEPLOY="true"
+      deploy:
+        - provider: pypi
+          server: https://test.pypi.org/legacy/
+          user: tbekolay
+          password: $PYPI_TOKEN
+          distributions: "sdist bdist_wheel"
+          on:
+            all_branches: true
+            condition: $TRAVIS_BRANCH =~ ^release-candidate-*
+            condition: $TRAVIS_TAG = ""
+        - provider: pypi
+          user: tbekolay
+          password: $PYPI_TOKEN
+          distributions: "sdist bdist_wheel"
+          on:
+            all_branches: true
+            condition: $TRAVIS_TAG =~ ^v[0-9]*
+
+before_install:
+  - chmod +x .ci/*.sh
+  - source .ci/conda.sh install
+
+install:
+  - if [[ "$COVERAGE" == "true" ]]; then
+      .ci/coverage.sh install;
+    fi
+  - if [[ "$DOCS" == "true" ]]; then
+      .ci/docs.sh install;
+    fi
+  - if [[ "$DEPLOY" == "true" ]]; then
+      .ci/deploy.sh install;
+    fi
+  - if [[ "$STATIC" == "true" ]]; then
+      .ci/static.sh install;
+    else
+      .ci/test.sh install;
+    fi
+
+script:
+  - if [[ "$STATIC" == "true" ]]; then
+      .ci/static.sh run;
+    elif [[ "$COVERAGE" == "true" ]]; then
+      .ci/coverage.sh run;
+    elif [[ -n "$TRAVIS_TAG" && "$DOCS" == "true" ]]; then
+      .ci/docs.sh run;
+    elif [[ "$DOCS" == "true" ]]; then
+      .ci/docs.sh check;
+    elif [[ "$DEPLOY" == "true" ]]; then
+      .ci/deploy.sh run;
+    else
+      .ci/test.sh run;
+    fi
+
+before_cache:
+  - conda clean --all
+
+after_success:
+  - if [[ "$COVERAGE" == "true" ]]; then
+      .ci/coverage.sh upload;
+    elif [[ -n "$TRAVIS_TAG" && "$DOCS" == "true" ]]; then
+      .ci/docs.sh upload;
+    fi
