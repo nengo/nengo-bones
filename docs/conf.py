@@ -9,7 +9,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.mathjax",
     "sphinx.ext.todo",
-    "nengo_sphinx_theme",
+    "nengo_sphinx_theme.ext.versions",
 ]
 
 # -- sphinx

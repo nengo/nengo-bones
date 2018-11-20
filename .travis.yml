@@ -69,10 +69,9 @@ script:
       .ci/static.sh run;
     elif [[ "$COVERAGE" == "true" ]]; then
       .ci/coverage.sh run;
-    elif [[ -n "$TRAVIS_TAG" && "$DOCS" == "true" ]]; then
-      .ci/docs.sh run;
     elif [[ "$DOCS" == "true" ]]; then
       .ci/docs.sh check;
+      .ci/docs.sh run;
     elif [[ "$DEPLOY" == "true" ]]; then
       .ci/deploy.sh run;
     else
@@ -85,6 +84,6 @@ before_cache:
 after_success:
   - if [[ "$COVERAGE" == "true" ]]; then
       .ci/coverage.sh upload;
-    elif [[ -n "$TRAVIS_TAG" && "$DOCS" == "true" ]]; then
+    elif [[ "$DOCS" == "true" ]]; then
       .ci/docs.sh upload;
     fi

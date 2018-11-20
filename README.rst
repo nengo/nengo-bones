@@ -26,3 +26,11 @@ so that projects can continue to have
 healthy bones as this repository develops.
 Doing this in an error-free way that relieves,
 rather than adds to, maintainer burden is tricky.
+
+Notes
+=====
+
+Some of the bones require the following steps
+to be done outside of the repository.
+
+1. Set up the ``GH_TOKEN`` environment variable through TravisCI.
