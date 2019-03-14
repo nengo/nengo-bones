@@ -1,0 +1,29 @@
+{% extends "base_script.sh.template" %}
+
+{% block install %}
+{{ super() }}
+    {# TODO: switch to templating requirements in setup.py, then remove these #}
+    exe pip install "pytest>=3.6.0" "pytest-xdist>=1.16.0"
+    {% if coverage %}
+    exe pip install "pytest-cov>=2.6.0"
+    {% endif %}
+    exe pip install -e ".[tests]"
+{% endblock %}
+
+{% block script %}
+    # shellcheck disable=SC2086
+    exe pytest {{ pkg_name }} -v -n 2 --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-append --cov-report=term-missing {%- endif %} $TEST_ARGS
+
+    {% if nengo_tests %}
+    # shellcheck disable=SC2086
+    exe pytest --pyargs nengo -v -n 2 --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-append --cov-report=term-missing {%- endif %} $TEST_ARGS
+    {% endif %}
+{% endblock %}
+
+{% block after_script %}
+    {% if coverage %}
+    exe eval "bash <(curl -s https://codecov.io/bash)"
+    {% else %}
+    :
+    {% endif %}
+{% endblock %}

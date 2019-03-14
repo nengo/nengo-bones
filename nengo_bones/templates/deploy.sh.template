@@ -1,0 +1,26 @@
+{% extends "base_script.sh.template" %}
+
+{% block install %}
+{{ super() }}
+    exe pip install "check-manifest" "collective.checkdocs"
+    exe pip install -e .
+{% endblock %}
+
+{% block script %}
+    exe check-manifest
+    exe python setup.py checkdocs
+    if [[ "$TRAVIS_TAG" == "" ]]; then
+        TAG=v$(cut -d'-' -f3 <<<"$TRAVIS_BRANCH")
+    else
+        TAG="$TRAVIS_TAG"
+    fi
+    exe python -c "from {{ pkg_name }} import version; \
+        assert version.dev is None, 'this is a dev version'"
+    exe python -c "from {{ pkg_name }} import version; \
+        assert 'v' + version.version == '$TAG', 'version does not match tag'"
+    exe python -c "from {{ pkg_name }} import version; \
+        assert any(line.startswith(version.version) \
+        and 'unreleased' not in line \
+        for line in open('CHANGES.rst').readlines()), \
+        'changelog not updated'"
+{% endblock %}

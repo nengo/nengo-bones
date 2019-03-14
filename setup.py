@@ -26,18 +26,23 @@ root = os.path.dirname(os.path.realpath(__file__))
 version = runpy.run_path(os.path.join(
     root, 'nengo_bones', 'version.py'))['version']
 
-install_requires = [
+install_requires = ["click>=7.0", "jinja2>=2.10", "pyyaml>=5.1"]
+tests_require = [
+    "codespell>=1.12.0",
+    "gitlint>=0.1.2",
+    "jupyter>=1.0.0",
+    "nbval>=0.6.0",
+    "pylint>=1.9.2",
+    "pytest>=3.6.0",
+    "pytest-cov>=2.6.0",
+    "pytest-xdist>=1.16.0",
 ]
 docs_require = [
-    "sphinx",
-    "nengo_sphinx_theme",
+    "nbsphinx>=0.2.13",
+    "nengo-sphinx-theme>=0.7.0",
+    "numpydoc>=0.6.0",
+    "sphinx>=1.8.0",
 ]
-optional_requires = [
-]
-tests_require = [
-    "pytest>=3.6",
-]
-
 
 setup(
     name="nengo-bones",
@@ -49,16 +54,17 @@ setup(
     license="Free for non-commercial use",
     description="Tools for managing Nengo projects",
     long_description=read("README.rst", "CHANGES.rst"),
-    setup_requires=["pytest-runner"] if testing else [] + install_requires,
     install_requires=install_requires,
     extras_require={
-        "all": docs_require + optional_requires + tests_require,
+        "all": docs_require + tests_require,
         "docs": docs_require,
-        "optional": optional_requires,
         "tests": tests_require,
     },
-    tests_require=tests_require,
-    classifiers=[
-        # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
-    ],
+    classifiers=[],  # TODO
+    entry_points="""
+        [console_scripts]
+        generate-bones=nengo_bones.scripts.generate_bones:main
+        check-bones=nengo_bones.scripts.check_bones:main
+    """,
+    include_package_data=True,
 )

@@ -1,0 +1,126 @@
+"""Handles the processing of nengo-bones configuration settings."""
+
+import os
+
+import yaml
+
+
+def find_config():
+    """
+    Finds the default nengo-bones config file.
+
+    Returns
+    -------
+    filename : str
+        File path for default config file.
+    """
+    # for now, assume that config file is in cwd
+    conf_file = os.path.join(os.getcwd(), ".nengobones.yml")
+
+    return conf_file
+
+
+def fill_defaults(config):
+    """
+    Fills in default values in a loaded config (in-place).
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary containing configuration values.
+    """
+    if "travis_yml" in config:
+        config["travis_yml"].setdefault("python_version", "3.6")
+        config["travis_yml"].setdefault("global_vars", {})
+        config["travis_yml"].setdefault("pypi_user", None)
+        config["travis_yml"].setdefault("deploy_dists", ["sdist"])
+
+    if "codecov_yml" in config:
+        config["codecov_yml"].setdefault("skip_appveyor", True)
+        config["codecov_yml"].setdefault("abs_target", "auto")
+        config["codecov_yml"].setdefault("diff_target", "100%")
+
+
+def validate_config(config):
+    """
+    Apply validation to a populated config dict.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary containing configuration values.
+    """
+    mandatory = ["pkg_name", "repo_name"]
+    if "travis_yml" in config:
+        mandatory.append("travis_yml.jobs")
+
+    for entry in mandatory:
+        tmp = config
+        for key in entry.split("."):
+            try:
+                tmp = tmp[key]
+            except KeyError:
+                raise KeyError("Config file must define %s" % entry)
+
+    if "ci_scripts" in config:
+        for ci_config in config["ci_scripts"]:
+            validate_ci_config(ci_config)
+
+    # TODO: check that there aren't unused config options in yml
+
+
+def validate_ci_config(ci_config):
+    """
+    Validates an entry in the ci_scripts list of a config dict.
+
+    Parameters
+    ----------
+    ci_config : dict
+        Dictionary containing ci_scripts configuration values.
+    """
+    if "template" not in ci_config:
+        raise KeyError("Script config must define 'template' "
+                       "(for entry %s)" % ci_config)
+
+    try:
+        # make sure that people don't accidentally do
+        # pip_install: dependency (which gives a string), rather than
+        # pip_install:
+        #   - dependency
+        for key in ("pip_install", "conda_install"):
+            if not isinstance(ci_config[key], list):
+                raise TypeError(
+                    "%s should be a list, found '%s'; did you forget "
+                    "to add '-' before each dependency?" % (
+                        key, ci_config[key]))
+    except KeyError:
+        pass
+
+
+def load_config(conf_file=None):
+    """
+    Load config values from file and apply defaults/validation.
+
+    Parameters
+    ----------
+    conf_file : str
+        Filepath for config file (if None, will load the default returned by
+        `.find_config`.
+
+    Returns
+    -------
+    config : dict
+        Dictionary containing configuration values.
+    """
+
+    if conf_file is None:
+        conf_file = find_config()
+
+    with open(str(conf_file)) as f:
+        config = yaml.safe_load(f)
+
+    validate_config(config)
+
+    fill_defaults(config)
+
+    return config

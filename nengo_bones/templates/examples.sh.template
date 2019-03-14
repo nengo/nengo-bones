@@ -1,0 +1,18 @@
+{% extends "base_script.sh.template" %}
+
+{% block install %}
+{{ super() }}
+    exe pip install "pytest>=3.6.0" "nbval>=0.6.0"
+    exe pip install -e ".[docs]"
+{% endblock %}
+
+{% block before_script %}
+    exe export DISPLAY=:99.0
+    exe sh -e /etc/init.d/xvfb start
+    exe sleep 3
+{% endblock %}
+
+{% block script %}
+    # shellcheck disable=SC2086
+    exe pytest docs/examples -v --color=yes --durations 20 --nbval-lax $TEST_ARGS
+{% endblock %}
