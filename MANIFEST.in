@@ -1,4 +1,9 @@
+include *.py
 include *.rst
+include *.yml
+include .gitlint
+recursive-include docs *.ipynb
 recursive-include docs *.py
 recursive-include docs *.rst
 recursive-include nengo_bones *.template
+prune .github

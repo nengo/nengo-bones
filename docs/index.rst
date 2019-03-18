@@ -6,3 +6,4 @@ Nengo Bones
     :maxdepth: 2
 
     Introduction <introduction>
+    examples

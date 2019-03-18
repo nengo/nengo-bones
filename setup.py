@@ -27,22 +27,11 @@ version = runpy.run_path(os.path.join(
     root, 'nengo_bones', 'version.py'))['version']
 
 install_requires = ["click>=7.0", "jinja2>=2.10", "pyyaml>=5.1"]
-tests_require = [
-    "codespell>=1.12.0",
-    "gitlint>=0.1.2",
-    "jupyter>=1.0.0",
-    "nbval>=0.6.0",
-    "pylint>=1.9.2",
-    "pytest>=3.6.0",
-    "pytest-cov>=2.6.0",
-    "pytest-xdist>=1.16.0",
-]
-docs_require = [
-    "nbsphinx>=0.2.13",
-    "nengo-sphinx-theme>=0.7.0",
-    "numpydoc>=0.6.0",
-    "sphinx>=1.8.0",
-]
+
+# note: these are intentionally empty to test that the correct requirements
+# are built into the ci scripts
+tests_require = []
+docs_require = []
 
 setup(
     name="nengo-bones",
