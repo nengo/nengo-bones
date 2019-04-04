@@ -1,4 +1,4 @@
-"""Tools for creating dummy objects for testing."""
+"""Tools for writing tests in nengo-bones."""
 
 from traceback import print_tb
 
@@ -6,17 +6,18 @@ from traceback import print_tb
 def write_file(tmpdir, filename, contents):
     """Writes a (multiline) string to file."""
 
+    contents = contents.splitlines()
+
+    # skip first entry if it's a blank newline
+    if contents[0] == "":
+        contents = contents[1:]
+
+    # assume that all lines indented by some constant that we want
+    # to strip out
+    indent = len(contents[0]) - len(contents[0].lstrip(" "))
+    contents = "\n".join(s[indent:] for s in contents)
+
     with open(str(tmpdir.join(filename)), "w") as f:
-        contents = contents.splitlines()
-
-        # skip first entry if it's a blank newline
-        if contents[0] == "":
-            contents = contents[1:]
-
-        # assume that all lines indented by some constant that we want
-        # to strip out
-        indent = len(contents[0]) - len(contents[0].lstrip(" "))
-        contents = "\n".join(s[indent:] for s in contents)
         f.write(contents)
 
 

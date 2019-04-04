@@ -14,7 +14,7 @@ import pytest
 
 from nengo_bones.version import version as bones_version
 from nengo_bones.scripts import generate_bones
-from nengo_bones.tests.dummy import write_file, assert_exit
+from nengo_bones.tests.utils import write_file, assert_exit
 
 
 def test_ci_scripts(tmpdir):

@@ -3,7 +3,7 @@
 from click.testing import CliRunner
 
 from nengo_bones.scripts import check_bones
-from nengo_bones.tests.dummy import write_file, assert_exit
+from nengo_bones.tests.utils import write_file, assert_exit
 from nengo_bones.version import version
 
 

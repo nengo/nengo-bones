@@ -5,7 +5,7 @@ import os
 import pytest
 
 from nengo_bones import config
-from nengo_bones.tests import dummy
+from nengo_bones.tests import utils
 
 
 def test_find_config():
@@ -93,7 +93,7 @@ def test_load_config(tmpdir):
         },
     }
 
-    dummy.write_file(tmpdir, ".nengobones.yml", """
+    utils.write_file(tmpdir, ".nengobones.yml", """
         pkg_name: dummy
         repo_name: dummyorg/dummy
 
