@@ -5,5 +5,7 @@ Nengo Bones
 .. toctree::
     :maxdepth: 2
 
-    Introduction <introduction>
+    introduction
+    cli
     examples
+    reference

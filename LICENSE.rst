@@ -25,4 +25,11 @@ SOFTWARE.
 Licensed code
 =============
 
-TODO
+Nengo Bones imports several open source libraries:
+
+* `Click <https://click.palletsprojects.com/en/7.x/>`_ - Used under
+  `BSD license <https://click.palletsprojects.com/en/7.x/license/>`__
+- `Jinja2 <http://jinja.pocoo.org/>`_ - Used under
+  `BSD license <https://github.com/pallets/jinja/blob/master/LICENSE>`__
+- `PyYAML <https://pyyaml.org/>`_ - Used under
+  `MIT license <https://github.com/yaml/pyyaml/blob/master/LICENSE>`__

@@ -22,5 +22,5 @@ Release History
 0.1.0 (unreleased)
 ==================
 
-Initial release of {{ PROJECT }}!
+Initial release Nengo Bones!
 Thanks to all of the contributors for making this possible!

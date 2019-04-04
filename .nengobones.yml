@@ -50,7 +50,7 @@ ci_scripts:
     pre_commands:
       - cat .ci/docs.sh
     pip_install:
-      - mock
+      - sphinx-click>=2.0.1
   - template: examples
     pre_commands:
       - cat .ci/examples.sh

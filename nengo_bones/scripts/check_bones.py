@@ -15,10 +15,9 @@ def main(root_dir):
     """
     Validates auto-generated project files.
 
-    Notes
-    -----
-    This does not check the ci scripts, because those are generated on-the-fly
-    in TravisCI (so any ci files we did find here are likely local artifacts).
+    Note: This does not check the ci scripts, because those are generated
+    on-the-fly in TravisCI (so any ci files we do find are likely local
+    artifacts).
     """
 
     click.echo("*" * 50)

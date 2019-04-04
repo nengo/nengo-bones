@@ -11,8 +11,8 @@ def find_config():
 
     Returns
     -------
-    filename : str
-        File path for default config file.
+    conf_file : str
+        Path to the default config file.
     """
     # for now, assume that config file is in cwd
     conf_file = os.path.join(os.getcwd(), ".nengobones.yml")
@@ -48,7 +48,7 @@ def fill_defaults(config):
 
 def validate_config(config):
     """
-    Apply validation to a populated config dict.
+    Validates a populated config dict.
 
     Parameters
     ----------
@@ -104,13 +104,13 @@ def validate_ci_config(ci_config):
 
 def load_config(conf_file=None):
     """
-    Load config values from file and apply defaults/validation.
+    Loads config values from a file and applies defaults/validation.
 
     Parameters
     ----------
     conf_file : str
         Filepath for config file (if None, will load the default returned by
-        `.find_config`.
+        `.find_config`).
 
     Returns
     -------

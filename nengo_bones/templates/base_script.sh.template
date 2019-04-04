@@ -18,7 +18,7 @@ exe() {
     "${args[@]}" || STATUS=1;
 }
 
-if [[  ! -e {{ pkg_name }} ]]; then
+if [[ ! -e {{ pkg_name }} ]]; then
     echo "Run this script from the root directory of this repository"
     exit 1
 fi

@@ -14,6 +14,7 @@ extensions = [
     "nengo_sphinx_theme",
     "numpydoc",
     "nbsphinx",
+    "sphinx_click.ext",
 ]
 
 templates_path = ["_templates"]
@@ -45,6 +46,7 @@ linkcheck_ignore = [r"http://localhost:\d+"]
 linkcheck_anchors = True
 nitpicky = True
 default_role = "py:obj"
+exclude_patterns = ["examples/test-example.ipynb"]
 
 project = u"Nengo Bones"
 authors = u"Applied Brain Research"
@@ -65,5 +67,5 @@ html_favicon = os.path.join("_static", "favicon.ico")
 html_theme_options = {
     "sidebar_toc_depth": 4,
     "sidebar_logo_width": 200,
-    "nengo_logo": "nengo-full-light.svg",
+    "nengo_logo": "general-full-light.svg",
 }

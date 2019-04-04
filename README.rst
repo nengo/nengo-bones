@@ -1,36 +1,81 @@
+.. image:: https://img.shields.io/pypi/v/nengo-bones.svg
+  :target: https://pypi.org/project/nengo-bones
+  :alt: Latest PyPI version
+
+.. image:: https://img.shields.io/travis/nengo/nengo-bones/master.svg
+  :target: https://travis-ci.org/nengo/nengo-bones
+  :alt: Travis-CI build status
+
+.. image:: https://img.shields.io/codecov/c/github/nengo/nengo-bones/master.svg
+  :target: https://codecov.io/gh/nengo/nengo-bones
+  :alt: Test coverage
+
 ***********
-Nengo bones
+Nengo Bones
 ***********
 
-This repository provides the bones for new Nengo projects.
-New projects can start with these bones,
-or existing projects can refer back to here
-when adopting more Nengo project conventions.
+The aim of this project is to automate the configuration of repositories
+throughout the Nengo ecosystem.  The idea is that we can centralize the
+design and maintenance of "meta" project code (such as CI testing
+infrastructure) in this project, rather than each repository maintaining that
+code independently.
 
-Generally, strings that should be replaced with
-a project-specific string are capitalized
-and enclosed in double curly brackets ``{{ LIKE THIS }}``.
-The capitalization makes them stick out;
-the curly brackets are easy to ``grep`` for,
-and are inspired by Jinja templates.
+The basic methodology for this project is a templating system in which
+there are common templates for meta files that are populated with
+data in each downstream project.  Projects control this templating through the
+``.nengobones.yml`` configuration file, which defines the information used to
+fill in the templates.
 
-Plans
-=====
+Wherever possible, we try to do this templating in such a way that downstream
+projects will be automatically updated when an update is made in
+``nengo-bones``. However, some files cannot be updated automatically and
+require downstream repos to manually run a script to update those files.
 
-Currently this repository contain bones
-that must be manually inspected,
-modified, and incorporated into Nengo projects.
-In the future, we plan to automate
-as much of this process as possible
-so that projects can continue to have
-healthy bones as this repository develops.
-Doing this in an error-free way that relieves,
-rather than adds to, maintainer burden is tricky.
+Note that this repository itself is configured using the ``nengo-bones``
+templating system, so if you would like an example of how to use it, check out
+`the source code <https://github.com/nengo/nengo-bones>`__.
 
-Notes
-=====
+Installation
+============
 
-Some of the bones require the following steps
-to be done outside of the repository.
+We recommend installing ``nengo-bones`` using ``pip``:
 
-1. Set up the ``GH_TOKEN`` environment variable through TravisCI.
+.. code-block:: bash
+
+    pip install nengo-bones
+
+Or for the latest updates you can perform a developer installation:
+
+.. code-block:: bash
+
+    git clone https://github.com/nengo/nengo-bones.git
+    pip install -e ./nengo-bones
+
+Basic usage
+===========
+
+The first step is to fill in the ``.nengobones.yml`` configuration file.  You
+can use the one in this repository as a starting point, or see
+`the documentation
+<https://www.nengo.ai/nengo-bones/examples/configuration.html>`__
+for more details.  This file should be
+placed in the top level of your project.
+
+All of the manually generated template files can then be rendered by running
+this command in the same folder as the ``.nengobones.yml`` file:
+
+.. code-block:: bash
+
+    generate-bones
+
+See ``generate-bones --help`` or
+`the documentation <https://www.nengo.ai/nengo-bones/cli.html>`__
+for a full list of command line options.
+
+Documentation
+=============
+
+- `Command line usage <https://www.nengo.ai/nengo-bones/cli.html>`_
+- `Demonstration of available configuration options
+  <https://www.nengo.ai/nengo-bones/examples/configuration.html>`_
+- `API reference <https://www.nengo.ai/nengo-bones/reference.html>`_
