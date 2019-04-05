@@ -10,8 +10,6 @@
 {% endblock %}
 
 {% block script %}
-    exe sphinx-build -b linkcheck -vW -D nbsphinx_execute=never docs docs/_build
-
     exe git clone -b gh-pages-release https://github.com/{{ repo_name }}.git {{ docs_dir }}
     RELEASES=$(find {{ docs_dir }} -maxdepth 1 -type d -name "v[0-9].*" -printf "%f,")
 
@@ -21,9 +19,18 @@
     else
         exe sphinx-build -b html docs {{ docs_dir }} -vW -A building_version=latest -A releases="$RELEASES"
     fi
+
+    export DOCS_STATUS="$STATUS"
+
+    exe sphinx-build -b linkcheck -vW -D nbsphinx_execute=never docs docs/_build
 {% endblock %}
 
-{% block after_success %}
+{% block after_script %}
+    if [[ "$DOCS_STATUS" -ne "0" ]]; then
+        echo "Skipping docs upload because build failed"
+        exit "$DOCS_STATUS"
+    fi
+
     cd {{ docs_dir }} || exit
     git config --global user.email "travis@travis-ci.org"
     git config --global user.name "TravisCI"
