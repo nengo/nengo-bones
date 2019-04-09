@@ -1,8 +1,8 @@
-*************
-{{ PROJECT }}
-*************
-
-{{ INTRODUCTION }}
+***********
+Nengo Bones
+***********
 
 .. toctree::
-   :maxdepth 2:
+    :maxdepth: 2
+
+    Introduction <introduction>

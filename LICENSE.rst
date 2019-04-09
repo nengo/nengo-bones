@@ -2,15 +2,15 @@
 Nengo license
 *************
 
-Copyright (c) {{ COPYRIGHT YEARS }} Applied Brain Research Inc.
+Copyright (c) 2018-2019 Applied Brain Research Inc.
 
-{{ PROJECT }} is made available under a proprietary license that
-permits using, copying, sharing, and making derivative works from
-{{ PROJECT }} and its source code for any non-commercial purpose, as
-long as the above copyright notice and this permission notice are
-included in all copies or substantial portions of the software.
+Nengo is made available under a proprietary license that permits using,
+copying, sharing, and making derivative works from Nengo and its source code
+for any non-commercial purpose, as long as the above copyright notice and this
+permission notice are included in all copies or substantial portions of the
+software.
 
-If you would like to use {{ PROJECT }} commercially, licenses can be
+If you would like to use Nengo commercially, licenses can be
 purchased from Applied Brain Research, Inc. Please contact
 info@appliedbrainresearch.com for more information.
 
@@ -25,15 +25,4 @@ SOFTWARE.
 Licensed code
 =============
 
-{{ PROJECT }} imports or vendorizes several open source libraries.
-
-* `{{ DEPENDENCY }} <{{ DEPENDENCY URL }}>`__
-  - Used under `{{ LICENSE }} <{{ LICENSE URL }}>`__
-
-{{ PROJECT }} also includes code modified from other libraries.
-
-------------
-
-The file ``{{ FILE }}`` contains code with the following license:
-
-{{ FILE LICENSE }}
+TODO

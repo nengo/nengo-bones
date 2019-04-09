@@ -1,78 +1,69 @@
-#!/usr/bin/env python3
+"""Sphinx configuration options"""
 
 import os
 
-import project as proj
+import nengo_bones
 
 extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
     "sphinx.ext.githubpages",
     "sphinx.ext.intersphinx",
     "sphinx.ext.mathjax",
-    "sphinx.ext.todo",
-    "nengo_sphinx_theme.ext.versions",
+    "sphinx.ext.viewcode",
+    "nengo_sphinx_theme",
+    "numpydoc",
+    "nbsphinx",
 ]
 
-# -- sphinx
-nitpicky = True
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
-source_suffix = ".rst"
-source_encoding = "utf-8"
-master_doc = "index"
-project = "{{ PROJECT }}"
-copyright = proj.__copyright__
-author = "Applied Brain Research"
-version = ".".join(proj.__version__.split(".")[:2])  # X.Y version
-release = proj.__version__ # Full version with tags
+templates_path = ["_templates"]
+
+# -- sphinx.ext.autodoc
+autoclass_content = "both"  # class and __init__ docstrings are concatenated
+autodoc_default_options = {"members": None}
+autodoc_member_order = "bysource"  # default is alphabetical
 
 # -- sphinx.ext.intersphinx
 intersphinx_mapping = {
-    "nengo": ("https://www.nengo.ai/", None)
+    "numpy": ("https://docs.scipy.org/doc/numpy", None),
+    "nengo": ("https://www.nengo.ai/nengo/", None),
 }
 
-# -- sphinx.ext.todo
-todo_include_todos = True
+# -- numpydoc config
+numpydoc_show_class_members = False
 
-# -- nengo_sphinx_theme
-html_theme = "nengo_sphinx_theme"
+# -- nbsphinx
+nbsphinx_timeout = 300
+
+# -- sphinx
+exclude_patterns = ["_build", "**.ipynb_checkpoints"]
+source_suffix = ".rst"
+source_encoding = "utf-8"
+master_doc = "index"
+suppress_warnings = ["image.nonlocal_uri"]
+linkcheck_ignore = [r"http://localhost:\d+"]
+linkcheck_anchors = True
+nitpicky = True
+default_role = "py:obj"
+
+project = u"Nengo Bones"
+authors = u"Applied Brain Research"
+copyright = nengo_bones.__copyright__
+release = nengo_bones.__version__  # Full version, with tags
 pygments_style = "friendly"
-templates_path = []
-html_favicon = ""
+
+# -- Options for HTML output --------------------------------------------------
+
+html_theme = "nengo_sphinx_theme"
+html_title = "Nengo Bones {0} docs".format(release)
 html_static_path = ["_static"]
-html_logo = os.path.join("_static", "logo.svg")
-html_sidebars = {"**": ["sidebar.html"]}
-html_context = {
-    "css_files": [os.path.join("_static", "custom.css")],
+
+htmlhelp_basename = 'Nengo Bones'
+html_last_updated_fmt = ""  # default output format
+html_show_sphinx = False
+html_favicon = os.path.join("_static", "favicon.ico")
+html_theme_options = {
+    "sidebar_toc_depth": 4,
+    "sidebar_logo_width": 200,
+    "nengo_logo": "nengo-full-light.svg",
 }
-
-# -- other
-htmlhelp_basename = project
-
-latex_elements = {
-    # "papersize": "letterpaper",
-    # "pointsize": "11pt",
-    # "preamble": "",
-    # "figure_align": "htbp",
-}
-
-latex_documents = [
-    (master_doc,  # source start file
-     "{{ SHORT PROJECT }}.tex",  # target name
-     project,  # title
-     author,  # author
-     "manual"),  # documentclass
-]
-
-man_pages = [
-    # (source start file, name, description, authors, manual section).
-    (master_doc, "{{ SHORT PROJECT }}", project, [author], 1)
-]
-
-texinfo_documents = [
-    (master_doc,  # source start file
-     "{{ SHORT PROJECT }}",  # target name
-     project,  # title
-     author,  # author
-     "{{ SHORT PROJECT }}",  # dir menu entry
-     "{{ DESCRIPTION }}",  # description
-     "Miscellaneous"),  # category
-]

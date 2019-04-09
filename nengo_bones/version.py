@@ -1,4 +1,4 @@
-"""{{ PROJECT }} version information.
+"""nengo-bones version information.
 
 We use semantic versioning (see http://semver.org/).
 and conform to PEP440 (see https://www.python.org/dev/peps/pep-0440/).
@@ -6,7 +6,7 @@ and conform to PEP440 (see https://www.python.org/dev/peps/pep-0440/).
 a release version. Release versions are git tagged with the version.
 """
 
-name = "{{ PACKAGE }}"
+name = "nengo-bones"
 version_info = (0, 1, 0)  # (major, minor, patch)
 dev = 0
 

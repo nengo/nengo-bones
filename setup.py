@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-import imp
 import io
 import os
-import sys
+import runpy
 
 try:
     from setuptools import find_packages, setup
@@ -24,9 +23,8 @@ def read(*filenames, **kwargs):
 
 
 root = os.path.dirname(os.path.realpath(__file__))
-version_module = imp.load_source(
-    "version", os.path.join(root, "{{ PACKAGE }}", "version.py"))
-testing = "test" in sys.argv or "pytest" in sys.argv
+version = runpy.run_path(os.path.join(
+    root, 'nengo_bones', 'version.py'))['version']
 
 install_requires = [
 ]
@@ -42,16 +40,14 @@ tests_require = [
 
 
 setup(
-    name="{{ REPO NAME }}",
-    version=version_module.version,
+    name="nengo-bones",
+    version=version,
     author="Applied Brain Research",
     author_email="info@appliedbrainresearch.com",
     packages=find_packages(),
-    scripts=[],
-    data_files=[],
-    url="https://github.com/nengo/{{ REPO NAME }}",
+    url="https://github.com/nengo/nengo-bones",
     license="Free for non-commercial use",
-    description="{{ DESCRIPTION }}",
+    description="Tools for managing Nengo projects",
     long_description=read("README.rst", "CHANGES.rst"),
     setup_requires=["pytest-runner"] if testing else [] + install_requires,
     install_requires=install_requires,
