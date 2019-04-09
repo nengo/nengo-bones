@@ -8,14 +8,18 @@ import jinja2
 import nengo_bones
 
 
-@click.group()
+@click.group(invoke_without_command=True)
 @click.option("--conf-file", default=None, help="Filepath for config file")
 @click.option("--output-dir", default=".", help="Output directory for scripts")
 @click.option("--template-dir", default=None,
               help="Directory containing additional templates")
 @click.pass_context
 def main(ctx, conf_file, output_dir, template_dir):
-    """Loads config file and sets up template environment."""
+    """Loads config file and sets up template environment.
+
+    By default, this updates all templated files that are
+    to be committed to the repository.
+    """
 
     ctx.ensure_object(dict)
 
@@ -34,6 +38,10 @@ def main(ctx, conf_file, output_dir, template_dir):
     ctx.obj["env"] = env
     ctx.obj["config"] = config
     ctx.obj["output_dir"] = output_dir
+
+    if ctx.invoked_subcommand is None:
+        for script in (travis_yml, codecov_yml):
+            ctx.invoke(script)
 
 
 @main.command()
