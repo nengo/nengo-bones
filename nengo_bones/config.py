@@ -116,6 +116,10 @@ def load_config(conf_file=None):
     if conf_file is None:
         conf_file = find_config()
 
+    if not os.path.exists(str(conf_file)):
+        raise RuntimeError("Could not find conf_file: %s\n\nPerhaps you are "
+                           "not in the project's root directory?" % conf_file)
+
     with open(str(conf_file)) as f:
         config = yaml.safe_load(f)
 

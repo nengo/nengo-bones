@@ -62,6 +62,11 @@ def test_validate_config():
         config.validate_config(init_cfg)
 
 
+def test_missing_config(tmpdir):
+    with pytest.raises(RuntimeError, match="Could not find conf_file"):
+        config.load_config(tmpdir.join(".does-not-exist.yml"))
+
+
 def test_load_config(tmpdir):
     truth = {
         "pkg_name": "dummy",
