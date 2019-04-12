@@ -75,12 +75,12 @@ jobs:
 before_install:
   # export travis_terminate for use in scripts
   - export -f travis_terminate
-  - export -f _travis_terminate_linux
-  - export -f _travis_terminate_osx
-  - export -f _travis_terminate_unix
-  - export -f _travis_terminate_windows
+    _travis_terminate_linux
+    _travis_terminate_osx
+    _travis_terminate_unix
+    _travis_terminate_windows
   # install/run nengo-bones
-  - pip install git+https://github.com/nengo/nengo-bones.git@template-ci
+  - pip install git+https://github.com/nengo/nengo-bones.git@$(git symbolic-ref --short HEAD)
   - generate-bones --output-dir .ci --template-dir .ci ci-scripts
   - check-bones
   - chmod +x .ci/*.sh

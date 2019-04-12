@@ -34,6 +34,11 @@ def fill_defaults(config):
         config["travis_yml"].setdefault("global_vars", {})
         config["travis_yml"].setdefault("pypi_user", None)
         config["travis_yml"].setdefault("deploy_dists", ["sdist"])
+        # TODO: change this to "nengo-bones" on initial release
+        config["travis_yml"].setdefault(
+            "bones_install",
+            "git+https://github.com/nengo/nengo-bones.git@docs",
+        )
 
     if "codecov_yml" in config:
         config["codecov_yml"].setdefault("skip_appveyor", True)

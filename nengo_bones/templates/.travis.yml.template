@@ -74,7 +74,7 @@ before_install:
     _travis_terminate_unix
     _travis_terminate_windows
   # install/run nengo-bones
-  - pip install git+https://github.com/nengo/nengo-bones.git@template-ci
+  - pip install {{ bones_install }}
   - generate-bones --output-dir .ci --template-dir .ci ci-scripts
   - check-bones
   - chmod +x .ci/*.sh
