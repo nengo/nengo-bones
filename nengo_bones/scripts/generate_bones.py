@@ -1,6 +1,7 @@
 """Scripts for auto-generating nengo-bones files."""
 
 import os
+import stat
 
 import click
 import jinja2
@@ -54,12 +55,16 @@ def ci_scripts(ctx):
         script_name = params.pop("template")
         template = ctx.obj["env"].get_template(script_name + ".sh.template")
         output_name = params.pop("output_name", script_name)
+        path = os.path.join(ctx.obj["output_dir"], output_name + ".sh")
 
-        with open(os.path.join(
-                ctx.obj["output_dir"], output_name + ".sh"), "w") as f:
+        with open(path, "w") as f:
             f.write(template.render(
                 pkg_name=config["pkg_name"], repo_name=config["repo_name"],
                 version=nengo_bones.__version__, **params))
+
+        # Mark CI script as executable
+        st = os.stat(path)
+        os.chmod(path, st.st_mode | stat.S_IEXEC)
 
 
 @main.command()

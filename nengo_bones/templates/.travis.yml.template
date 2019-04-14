@@ -77,7 +77,6 @@ before_install:
   - pip install {{ bones_install }}
   - generate-bones --output-dir .ci --template-dir .ci ci-scripts
   - check-bones
-  - chmod +x .ci/*.sh
   # set up conda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - if ! [[ -d $HOME/miniconda/envs/test ]]; then
