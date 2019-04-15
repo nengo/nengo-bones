@@ -2,7 +2,7 @@
 
 {% block install %}
 {{ super() }}
-    exe pip install "check-manifest" "collective.checkdocs"
+    exe pip install "check-manifest>=0.37" "collective.checkdocs>=0.2" "pygments>=2.3.1"
     exe pip install -e .
 {% endblock %}
 
