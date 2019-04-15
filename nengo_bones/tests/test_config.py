@@ -85,9 +85,7 @@ def test_load_config(tmpdir):
                 "bdist_wheel"
             ],
             "jobs": [{"script": "static", "language": "generic"}],
-            "bones_install": (  # TODO: change to "nengo-bones"
-                "git+https://github.com/nengo/nengo-bones.git@docs"
-            ),
+            "bones_install": "nengo-bones",
         },
         "codecov_yml": {
             "skip_appveyor": False,
