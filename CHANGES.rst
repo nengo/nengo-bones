@@ -19,8 +19,8 @@ Release History
    - Removed
    - Fixed
 
-0.1.0 (unreleased)
-==================
+0.1.0 (April 15, 2019)
+======================
 
-Initial release Nengo Bones!
+Initial release of Nengo Bones!
 Thanks to all of the contributors for making this possible!
