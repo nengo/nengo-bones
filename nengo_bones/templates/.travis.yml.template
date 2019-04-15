@@ -24,6 +24,7 @@ env:
     - COV_CORE_SOURCE={{ pkg_name }}  # early start pytest-cov engine
     - COV_CORE_CONFIG=.coveragerc
     - COV_CORE_DATAFILE=.coverage.eager
+    - BRANCH_NAME="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
     {% for var, val in global_vars.items() %}
     - {{ var|upper }}="{{ val }}"
     {% endfor %}

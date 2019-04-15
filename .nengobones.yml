@@ -24,7 +24,7 @@ travis_yml:
   deploy_dists:
     - sdist
     - bdist_wheel
-  bones_install: git+https://github.com/nengo/nengo-bones.git@$(git symbolic-ref --short HEAD)
+  bones_install: git+https://github.com/nengo/nengo-bones.git@$BRANCH_NAME
 
 codecov_yml: {}
 

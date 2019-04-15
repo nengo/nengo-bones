@@ -24,6 +24,7 @@ env:
     - COV_CORE_SOURCE=  # early start pytest-cov engine
     - COV_CORE_CONFIG=.coveragerc
     - COV_CORE_DATAFILE=.coverage.eager
+    - BRANCH_NAME="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
     - TEST_GLOBAL_VAR="test global var val"
     - TEST_LOCAL_VAR="this val will be overwritten"
 
@@ -80,10 +81,9 @@ before_install:
     _travis_terminate_unix
     _travis_terminate_windows
   # install/run nengo-bones
-  - pip install git+https://github.com/nengo/nengo-bones.git@$(git symbolic-ref --short HEAD)
+  - pip install git+https://github.com/nengo/nengo-bones.git@$BRANCH_NAME
   - generate-bones --output-dir .ci --template-dir .ci ci-scripts
   - check-bones
-  - chmod +x .ci/*.sh
   # set up conda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - if ! [[ -d $HOME/miniconda/envs/test ]]; then
