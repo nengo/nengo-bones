@@ -79,7 +79,7 @@ def travis_yml(ctx):
         # shortcuts for setting environment variables
         if "env" not in job:
             job["env"] = {}
-        for var in ("script", "test_args", "python_version"):
+        for var in ("script", "test_args"):
             if var in job:
                 job["env"][var] = job.pop(var)
 

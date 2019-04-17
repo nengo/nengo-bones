@@ -9,3 +9,4 @@ Nengo Bones
     cli
     examples
     reference
+    changes

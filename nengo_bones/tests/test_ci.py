@@ -58,4 +58,4 @@ def test_custom_args(pytestconfig):
                    reason="Not running on TravisCI")
 def test_python_version():
     assert ".".join(str(x) for x in sys.version_info[:2]) == os.environ[
-        "PYTHON_VERSION"]
+        "TRAVIS_PYTHON_VERSION"]

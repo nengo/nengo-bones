@@ -4,7 +4,6 @@
 
 {% block install %}
 {{ super() }}
-    exe conda install "pandoc"
     exe pip install "sphinx>=1.8.0" "jupyter>=1.0.0" "nbsphinx>=0.2.13" "nengo-sphinx-theme>=0.7.0" "numpydoc>=0.6.0"
     exe pip install -e ".[docs]"
 {% endblock %}

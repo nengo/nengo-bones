@@ -2,7 +2,7 @@ pkg_name: nengo_bones
 repo_name: nengo/nengo-bones
 
 travis_yml:
-  python_version: 3.6
+  python: 3.6
   global_vars:
     TEST_GLOBAL_VAR: test global var val
     TEST_LOCAL_VAR: this val will be overwritten
@@ -14,7 +14,7 @@ travis_yml:
       env:
         TEST_LOCAL_VAR: test local var val
       test_args: --test-arg --test-arg
-      python_version: 3.5
+      python: 3.5
     - script: test-coverage
       env:
         TEST_LOCAL_VAR: test local var val

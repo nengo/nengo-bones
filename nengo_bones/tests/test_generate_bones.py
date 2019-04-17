@@ -28,9 +28,6 @@ def test_ci_scripts(tmpdir):
               - pip0
               - pip1
           - template: static
-            conda_install:
-              - conda0
-              - conda1
           - template: test
             nengo_tests: true
           - template: test
@@ -66,10 +63,8 @@ def test_ci_scripts(tmpdir):
         return False
 
     assert has_line(".ci/base_script.sh", 'exe pip install "pip0" "pip1"')
-    assert not has_line(".ci/base_script.sh", "exe conda install")
     assert has_line(".ci/base_script.sh", "# Version: %s" % bones_version)
 
-    assert has_line(".ci/static.sh", 'exe conda install -q "conda0" "conda1"')
     assert has_line(".ci/static.sh", "exe pylint dummy --rcfile")
 
     assert has_line(".ci/test.sh", '--durations 20 $TEST_ARGS',
@@ -135,11 +130,11 @@ def test_travis_yml(tmpdir):
               test_args:
                 arg0: val0
                 arg1: val1
-              python_version: 6.0
+              python: 6.0
               coverage: true
             - script: job1
               coverage: false
-          python_version: 5.0
+          python: 5.0
           global_vars:
             global0: globval0
             global1: globval1
@@ -173,13 +168,13 @@ def test_travis_yml(tmpdir):
 
     assert has_line("# Version: %s" % bones_version)
 
-    assert has_line('- PYTHON_VERSION="5.0"')
+    assert has_line('python: 5.0')
 
     assert has_line('- GLOBAL0="globval0"')
     assert has_line('- GLOBAL1="globval1"')
 
     assert has_line('SCRIPT="job0"')
-    assert has_line('PYTHON_VERSION="6.0"')
+    assert has_line('python: 6.0')
 
     assert has_line('SCRIPT="job1"')
 

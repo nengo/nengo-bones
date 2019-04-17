@@ -2,22 +2,17 @@
 # Version: {{ version }}
 
 language: python
-python:
-  - "3.6"
+python: {{ python }}
 notifications:
   email:
     on_success: change
     on_failure: change
-# cache:
-#   directories:
-#   - $HOME/miniconda
 
 dist: trusty
 
 env:
   global:
     - SCRIPT="test"
-    - PYTHON_VERSION="{{ python_version }}"
     - PIP_UPGRADE="true"  # always upgrade to latest version
     - PIP_UPGRADE_STRATEGY="eager"  # upgrade all dependencies
     - TEST_ARGS=""
@@ -39,7 +34,15 @@ jobs:
       {{ var|upper }}="{{ val }}"
       {% endfor %}
     {% endif %}
-    {% for key, val in job.items() if key != "env" %}
+    {% if job["apt_install"] %}
+    addons:
+      apt:
+        packages:
+          {% for pkg in job["apt_install"] %}
+          - {{ pkg }}
+          {% endfor %}
+    {% endif %}
+    {% for key, val in job.items() if key not in ("env", "apt_install") %}
     {{ key }}: {{ val }}
     {% endfor %}
   {% endfor %}
@@ -74,33 +77,17 @@ before_install:
     _travis_terminate_osx
     _travis_terminate_unix
     _travis_terminate_windows
+  # upgrade pip
+  - pip install pip --upgrade
   # install/run nengo-bones
   - pip install {{ bones_install }}
   - generate-bones --output-dir .ci --template-dir .ci ci-scripts
   - check-bones
-  # set up conda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - if ! [[ -d $HOME/miniconda/envs/test ]]; then
-      rm -rf $HOME/miniconda;
-      wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-      bash miniconda.sh -b -p $HOME/miniconda;
-      conda update -q -y conda;
-      conda create -q -y -n test python=$PYTHON_VERSION pip;
-    else
-      conda update -q -y conda;
-    fi
-  - conda config --set always_yes yes --set changeps1 no
-  - source activate test
-  # upgrade pip
-  - pip install pip
   # display environment info
-  - conda info -a
-  - conda list -e
   - pip freeze
 
 install:
   - .ci/$SCRIPT.sh install
-  - conda list -e
   - pip freeze
 
 after_install:

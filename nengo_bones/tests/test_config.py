@@ -13,13 +13,16 @@ def test_find_config():
 
 
 def test_fill_defaults():
-    init_cfg = {"travis_yml": {}, "codecov_yml": {}}
+    init_cfg = {"travis_yml": {"jobs": [{"script": "docs-test"}]},
+                "codecov_yml": {}}
     config.fill_defaults(init_cfg)
 
-    assert init_cfg["travis_yml"]["python_version"] == "3.6"
+    assert init_cfg["travis_yml"]["python"] == "3.6"
     assert init_cfg["travis_yml"]["global_vars"] == {}
     assert init_cfg["travis_yml"]["pypi_user"] is None
     assert init_cfg["travis_yml"]["deploy_dists"] == ["sdist"]
+
+    assert init_cfg["travis_yml"]["jobs"][0]["apt_install"] == ["pandoc"]
 
     assert init_cfg["codecov_yml"]["skip_appveyor"]
     assert init_cfg["codecov_yml"]["abs_target"] == "auto"
@@ -56,9 +59,9 @@ def test_validate_config():
         config.validate_config(init_cfg)
     test_cfg["pip_install"] = ["pip_req"]
 
-    # error when conda_install is a string instead of list
-    test_cfg["conda_install"] = "conda_req"
-    with pytest.raises(TypeError, match="conda_install should be a list"):
+    # error when pre_commands is a string instead of list
+    test_cfg["pre_commands"] = "command"
+    with pytest.raises(TypeError, match="pre_commands should be a list"):
         config.validate_config(init_cfg)
 
 
@@ -76,7 +79,7 @@ def test_load_config(tmpdir):
              "pip_install": ["static_pip0", "static_pip1"]}
         ],
         "travis_yml": {
-            "python_version": "6.0",
+            "python": "6.0",
             "global_vars": {
                 "TEST_VAR": "test var val"},
             "pypi_user": "dummy_pypi_user",
@@ -105,7 +108,7 @@ def test_load_config(tmpdir):
               - static_pip1
 
         travis_yml:
-          python_version: "6.0"
+          python: "6.0"
           global_vars:
             TEST_VAR: test var val
           pypi_user: dummy_pypi_user

@@ -30,11 +30,15 @@ def fill_defaults(config):
         Dictionary containing configuration values.
     """
     if "travis_yml" in config:
-        config["travis_yml"].setdefault("python_version", "3.6")
+        config["travis_yml"].setdefault("python", "3.6")
         config["travis_yml"].setdefault("global_vars", {})
         config["travis_yml"].setdefault("pypi_user", None)
         config["travis_yml"].setdefault("deploy_dists", ["sdist"])
         config["travis_yml"].setdefault("bones_install", "nengo-bones")
+
+        for job in config["travis_yml"]["jobs"]:
+            if job.get("script", "").startswith("docs"):
+                job.setdefault("apt_install", ["pandoc"])
 
     if "codecov_yml" in config:
         config["codecov_yml"].setdefault("skip_appveyor", True)
@@ -88,11 +92,11 @@ def validate_ci_config(ci_config):
         # pip_install: dependency (which gives a string), rather than
         # pip_install:
         #   - dependency
-        for key in ("pip_install", "conda_install"):
+        for key in ("pip_install", "pre_commands", "post_commands"):
             if not isinstance(ci_config[key], list):
                 raise TypeError(
                     "%s should be a list, found '%s'; did you forget "
-                    "to add '-' before each dependency?" % (
+                    "to add '-' before each entry?" % (
                         key, ci_config[key]))
     except KeyError:
         pass

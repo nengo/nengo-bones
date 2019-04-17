@@ -19,9 +19,25 @@ Release History
    - Removed
    - Fixed
 
-0.1.1 (unreleased)
+0.2.0 (unreleased)
 ==================
 
+**Added**
+
+- Added ``apt_install`` option that can be set in the ``jobs`` section to
+  ``apt install`` any custom ``apt`` requirements for a job. (`#14`_)
+
+**Changed**
+
+- The Python version is now specified by the ``python`` option (instead of
+  ``python_version``), for consistency with ``.travis.yml``. (`#14`_)
+
+**Removed**
+
+- Removed ``conda`` from the CI setup; all installations should be done
+  through ``pip`` instead. (`#14`_)
+
+.. _#14: https://github.com/nengo/nengo-bones/pull/14
 
 0.1.0 (April 15, 2019)
 ======================

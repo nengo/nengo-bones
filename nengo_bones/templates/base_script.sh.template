@@ -26,15 +26,10 @@ fi
 
 if [[ "$COMMAND" == "install" ]]; then
     {% block install %}
-    {% if conda_install %}
-    exe conda install -q {%- for pkg in conda_install %} "{{ pkg }}" {%- endfor %}
-
-    {% endif %}
     {% if pip_install %}
     exe pip install {%- for pkg in pip_install %} "{{ pkg }}" {%- endfor %}
 
-    {% endif %}
-    {% if not pip_install and not conda_install %}
+    {% else %}
     :
 
     {% endif %}
@@ -65,7 +60,7 @@ elif [[ "$COMMAND" == "script" ]]; then
     {% endif %}
 elif [[ "$COMMAND" == "before_cache" ]]; then
     {% block before_cache %}
-    exe conda clean --all
+    :
     {% endblock %}
 elif [[ "$COMMAND" == "after_success" ]]; then
     {% block after_success %}
