@@ -1,5 +1,6 @@
 """Handles the processing of nengo-bones configuration settings."""
 
+from collections import OrderedDict
 import os
 
 import yaml
@@ -125,8 +126,23 @@ def load_config(conf_file=None):
         raise RuntimeError("Could not find conf_file: %s\n\nPerhaps you are "
                            "not in the project's root directory?" % conf_file)
 
+    def ordered_load(stream):
+        """Use OrderedDict instead of dict for loading mappings."""
+
+        class OrderedLoader(yaml.SafeLoader):  # pylint: disable=too-many-ancestors
+            """Custom loader containing OrderedDict mapping."""
+
+        def construct_mapping(loader, node):
+            loader.flatten_mapping(node)
+            return OrderedDict(loader.construct_pairs(node))
+
+        OrderedLoader.add_constructor(
+            yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+            construct_mapping)
+        return yaml.load(stream, OrderedLoader)
+
     with open(str(conf_file)) as f:
-        config = yaml.safe_load(f)
+        config = ordered_load(f)
 
     validate_config(config)
 

@@ -1,5 +1,6 @@
 """Scripts for auto-generating nengo-bones files."""
 
+from collections import OrderedDict
 import os
 import stat
 
@@ -78,7 +79,7 @@ def travis_yml(ctx):
     for job in jobs:
         # shortcuts for setting environment variables
         if "env" not in job:
-            job["env"] = {}
+            job["env"] = OrderedDict()
         for var in ("script", "test_args"):
             if var in job:
                 job["env"][var] = job.pop(var)

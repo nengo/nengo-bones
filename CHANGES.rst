@@ -37,6 +37,11 @@ Release History
 - Removed ``conda`` from the CI setup; all installations should be done
   through ``pip`` instead. (`#14`_)
 
+**Fixed**
+
+- Order of templated dicts should now be deterministic for
+  all Python versions. (`#14`_)
+
 .. _#14: https://github.com/nengo/nengo-bones/pull/14
 
 0.1.0 (April 15, 2019)
