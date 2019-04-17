@@ -3,7 +3,8 @@
 {% block install %}
 {{ super() }}
     {# TODO: switch to templating requirements in setup.py, then remove these #}
-    exe pip install "pytest>=3.6.0" "pytest-xdist>=1.16.0"
+    exe pip install "pytest>=3.6.0"
+    exe pip install "pytest-xdist>=1.16.0"
     {% if coverage %}
     exe pip install "pytest-cov>=2.6.0"
     {% endif %}
