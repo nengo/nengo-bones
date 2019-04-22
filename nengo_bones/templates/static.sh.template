@@ -24,10 +24,18 @@ shopt -s globstar
     #   s/# $/#/g replaces lines with just '# ' with '#'
     #   /get_ipython()/d removes lines containing 'get_ipython()'
     #   $ d removes a trailing newline
-    sed -i -e 's/# $/#/g' -e '/get_ipython()/d' -e '$ d' -- docs/examples/**/*.py
+    for nb_file in docs/examples/**/*.ipynb; do
+        sed -i \
+            -e 's/# $/#/g' \
+            -e '/get_ipython()/d' \
+            -e '$ d' \
+            -- "${nb_file%.ipynb}.py"
+    done
     exe pylint docs --rcfile=setup.cfg --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
     exe flake8 docs --extend-ignore=E402,E703,W291,W293,W391
-    rm docs/examples/**/*.py
+    for nb_file in docs/examples/**/*.ipynb; do
+        rm "${nb_file%.ipynb}.py"
+    done
     exe codespell -q 3 \
         --skip="./build,./docs/_build,*-checkpoint.ipynb,./.eggs,./.git"
         {%- if codespell_ignore_words %} \
@@ -41,7 +49,9 @@ shopt -s globstar
     N_COMMITS=$(git rev-list --count HEAD ^origin/master)
     for ((i=0; i<N_COMMITS; i++)) do
         {# TODO: way to get this working properly with exe? #}
-        git log -n 1 --skip $i --pretty=%B | grep -v '^Co-authored-by:' | gitlint -vvv || STATUS=1
+        git log -n 1 --skip $i --pretty=%B \
+            | grep -v '^Co-authored-by:' \
+            | gitlint -vvv || STATUS=1
     done
     exe python setup.py checkdocs
 {% endblock %}

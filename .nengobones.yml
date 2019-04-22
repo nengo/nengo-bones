@@ -42,6 +42,9 @@ ci_scripts:
   - template: static
     pre_commands:
       - cat .ci/static.sh
+    post_commands:
+      - "[ -f 'docs/examples/ignore-me.py' ]"
+      - "[ ! -f 'docs/examples/test-example.py' ]"
   - template: test
     pre_commands:
       - cat .ci/test.sh

@@ -29,6 +29,12 @@ Release History
 - Added ``analytics_id`` option to ``docs_conf.py.template``,
   which will enable Google Analytics tracking. (`#35`_)
 
+**Fixed**
+
+- Fixed an issue with ``static.sh.template`` in which Python files
+  that were not converted from notebooks were deleted. (`#16`_)
+
+.. _#16: https://github.com/nengo/nengo-bones/pull/16
 .. _#35: https://github.com/nengo/nengo-bones/pull/35
 
 0.2.0 (May 15, 2019)
