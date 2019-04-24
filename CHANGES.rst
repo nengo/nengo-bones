@@ -34,6 +34,9 @@ Release History
   templates can be accessed in ``include`` and ``extend`` tags with the
   ``templates/`` prefix. (`#17`_)
 - Added ``flake8`` to the static check script. (`#17`_)
+- Added the ``bones-pr-number`` script to predict the next PR number for a
+  repository. This helps when writing a changelog entry before a PR has been
+  made. (`#18`_)
 
 **Changed**
 

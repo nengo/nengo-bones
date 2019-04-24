@@ -2,6 +2,9 @@
 Command line interface
 **********************
 
+Generating files
+================
+
 In general, the only command that downstream repos will ever need to run is
 
 .. code-block:: bash
@@ -25,4 +28,14 @@ below.
 
 .. click:: nengo_bones.scripts.check_bones:main
     :prog: bones-check
+    :show-nested:
+
+
+Other development support scripts
+=================================
+
+This repository also contains scripts to automate various development tasks.
+
+.. click:: nengo_bones.scripts.pr_number:main
+    :prog: bones-pr-number
     :show-nested:

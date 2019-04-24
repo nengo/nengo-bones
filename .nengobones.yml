@@ -95,6 +95,7 @@ setup_py:
     console_scripts:
       - bones-generate=nengo_bones.scripts.generate_bones:main
       - bones-check=nengo_bones.scripts.check_bones:main
+      - bones-pr-number=nengo_bones.scripts.pr_number:main
   include_package_data: True
   # note: docs/tests_req are intentionally empty to test that the correct
   # requirements are built into the ci scripts
@@ -102,6 +103,7 @@ setup_py:
     - click>=7.0
     - jinja2>=2.10
     - pyyaml>=5.1
+    - requests>=2.21
   classifiers:
     - "Development Status :: 4 - Beta"
     - "Framework :: Nengo"

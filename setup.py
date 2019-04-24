@@ -34,6 +34,7 @@ install_req = [
     "click>=7.0",
     "jinja2>=2.10",
     "pyyaml>=5.1",
+    "requests>=2.21",
 ]
 docs_req = [
 ]
@@ -66,6 +67,7 @@ setup(
         "console_scripts": [
             "bones-generate=nengo_bones.scripts.generate_bones:main",
             "bones-check=nengo_bones.scripts.check_bones:main",
+            "bones-pr-number=nengo_bones.scripts.pr_number:main",
         ],
     },
     classifiers=[
