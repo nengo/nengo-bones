@@ -26,7 +26,7 @@ def main(root_dir):
 
     passed = True
 
-    for filename in [".travis.yml", ".codecov.yml"]:
+    for filename in nengo_bones.all_templated_files:
         click.echo(filename + ":")
 
         # TODO: Ensure that the file is there <=> it is the config
@@ -37,7 +37,8 @@ def main(root_dir):
         with open(os.path.join(root_dir, filename)) as f:
             version = None
             for line in f.readlines()[:50]:
-                if line.startswith("# Version:"):
+                if (line.startswith("# Version:")
+                        or line.startswith(".. Version:")):
                     version = line.split(":")[1].strip()
                     break
 

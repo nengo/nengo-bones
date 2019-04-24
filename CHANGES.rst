@@ -26,6 +26,9 @@ Release History
 
 - Added ``apt_install`` option that can be set in the ``jobs`` section to
   ``apt install`` any custom ``apt`` requirements for a job. (`#14`_)
+- Added templates for ``CONTRIBUTING.rst``, ``CONTRIBUTORS.rst``,
+  ``LICENSE.rst``, ``MANIFEST.in``, ``docs/conf.py``, ``setup.cfg``, and
+  ``setup.py`` (`#17`_)
 
 **Changed**
 
@@ -43,6 +46,7 @@ Release History
   all Python versions. (`#14`_)
 
 .. _#14: https://github.com/nengo/nengo-bones/pull/14
+.. _#17: https://github.com/nengo/nengo-bones/pull/17
 
 0.1.0 (April 15, 2019)
 ======================

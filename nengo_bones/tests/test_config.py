@@ -30,7 +30,7 @@ def test_fill_defaults():
 
 
 def test_validate_config():
-    mandatory = ["pkg_name", "repo_name", "travis_yml.jobs"]
+    mandatory = ["project_name", "pkg_name", "repo_name", "travis_yml.jobs"]
     init_cfg = {"travis_yml": {}}
     for entry in mandatory:
         with pytest.raises(KeyError, match="must define %s" % entry):
@@ -72,8 +72,13 @@ def test_missing_config(tmpdir):
 
 def test_load_config(tmpdir):
     truth = {
+        "project_name": "Dummy",
         "pkg_name": "dummy",
         "repo_name": "dummyorg/dummy",
+        "author": "A Dummy",
+        "author_email": "dummy@dummy.com",
+        "copyright_start": 0,
+        "copyright_end": 1,
         "ci_scripts": [
             {"template": "static",
              "pip_install": ["static_pip0", "static_pip1"]}
@@ -98,8 +103,13 @@ def test_load_config(tmpdir):
     }
 
     utils.write_file(tmpdir, ".nengobones.yml", """
+        project_name: Dummy
         pkg_name: dummy
         repo_name: dummyorg/dummy
+        author: A Dummy
+        author_email: dummy@dummy.com
+        copyright_start: 0
+        copyright_end: 1
 
         ci_scripts:
           - template: static
