@@ -36,6 +36,9 @@ jobs:
           - pandoc
   -
     env:
+      SCRIPT="examples"
+  -
+    env:
       TEST_LOCAL_VAR="test local var val"
       SCRIPT="test"
       TEST_ARGS="--test-arg --test-arg"
@@ -48,7 +51,11 @@ jobs:
       TEST_ARGS="--test-arg"
   -
     env:
-      SCRIPT="examples"
+      TEST_LOCAL_VAR="test local var val"
+      SCRIPT="test"
+      TEST_ARGS="--test-arg"
+    python: 3.7
+    dist: xenial
   - stage: deploy
     if: branch =~ ^release-candidate-* OR tag =~ ^v[0-9]*
     env: SCRIPT="deploy"
