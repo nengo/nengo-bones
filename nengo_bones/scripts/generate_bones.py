@@ -33,6 +33,7 @@ def render_template(ctx, cfg_key, output_file, template_file=None, **kwargs):
         template_file = output_file + ".template"
 
     template = ctx.obj["env"].get_template(template_file)
+
     output_file = os.path.join(ctx.obj["output_dir"], output_file)
     with open(output_file, "w") as f:
         f.write(template.render(
@@ -48,25 +49,55 @@ def render_template(ctx, cfg_key, output_file, template_file=None, **kwargs):
 @click.group(invoke_without_command=True)
 @click.option("--conf-file", default=None, help="Filepath for config file")
 @click.option("--output-dir", default=".", help="Output directory for scripts")
-@click.option("--template-dir", default=None,
-              help="Directory containing additional templates")
 @click.pass_context
-def main(ctx, conf_file, output_dir, template_dir):
+def main(ctx, conf_file, output_dir):
     """Loads config file and sets up template environment.
 
     By default, this updates all templated files that are
     to be committed to the repository.
+
+    We look in the current directory for a ``.templates`` folder. If it
+    exists, any templates defined in that folder will be loaded first.
+    Otherwise, built-in templates will be loaded from the
+    ``nengo_bones/templates`` directory.
+
+    If you are overriding a template in the ``.templates`` folder, the
+    original built-in version of that template can be accessed with
+    the ``templates/`` prefix. This is useful in ``include`` and
+    ``extends`` tags. For example, to add text to the default
+    ``LICENSE.rst`` template, put the following in
+    ``.templates/LICENSE.rst.template``:
+
+    .. code-block:: rst
+
+       {% include "templates/LICENSE.rst.template %}
+
+       Additional license info
+       =======================
+       ...
+
     """
 
     ctx.ensure_object(dict)
 
     config = nengo_bones.load_config(conf_file)
 
-    template_dirs = [] if template_dir is None else [template_dir]
-    template_dirs.append(
-        os.path.join(os.path.dirname(__file__), "..", "templates"))
+    bones_toplevel = os.path.normpath(
+        os.path.join(os.path.dirname(__file__), "..")
+    )
+    # Load overridden templates first.
+    # Builtins are referenced with templates/*.template
+    override_dirs = []
+    override_dirs.append(".templates")
+    override_dirs.append(bones_toplevel)
+    override_loader = jinja2.FileSystemLoader(override_dirs)
+    # If those fail, use the builtins
+    builtin_loader = jinja2.FileSystemLoader(
+        os.path.join(bones_toplevel, "templates")
+    )
+
     env = jinja2.Environment(
-        loader=jinja2.FileSystemLoader(template_dirs),
+        loader=jinja2.ChoiceLoader([override_loader, builtin_loader]),
         trim_blocks=True, lstrip_blocks=True, keep_trailing_newline=True)
     env.filters["rstrip"] = lambda s, chars: s.rstrip(chars)
 

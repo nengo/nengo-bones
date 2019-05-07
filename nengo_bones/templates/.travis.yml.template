@@ -80,7 +80,7 @@ before_install:
   - pip install pip --upgrade
   # install/run nengo-bones
   - pip install {{ bones_install }}
-  - generate-bones --output-dir .ci --template-dir .ci ci-scripts
+  - generate-bones --output-dir .ci ci-scripts
   - check-bones
   # display environment info
   - pip freeze

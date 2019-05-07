@@ -254,8 +254,9 @@ def test_codecov_yml(tmpdir):
 
 
 def test_ci_script_custom_template(tmpdir):
-    write_file(tmpdir, "custom.sh.template", """
-        {% extends "test.sh.template" %}
+    tmpdir.mkdir(".templates")
+    write_file(tmpdir.join(".templates"), "custom.sh.template", """
+        {% extends "templates/test.sh.template" %}
 
         {% block script %}
             {{ custom_msg }}
@@ -272,11 +273,8 @@ def test_ci_script_custom_template(tmpdir):
             custom_msg: this is a custom message
         """)
 
-    result = CliRunner().invoke(
-        generate_bones.main,
-        ["--conf-file", str(tmpdir.join(".nengobones.yml")),
-         "--output-dir", str(tmpdir), "--template-dir", str(tmpdir),
-         "ci-scripts"])
+    with tmpdir.as_cwd():
+        result = CliRunner().invoke(generate_bones.main, ["ci-scripts"])
 
     assert_exit(result, 0)
 

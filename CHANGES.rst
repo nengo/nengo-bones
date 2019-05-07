@@ -29,6 +29,10 @@ Release History
 - Added templates for ``CONTRIBUTING.rst``, ``CONTRIBUTORS.rst``,
   ``LICENSE.rst``, ``MANIFEST.in``, ``docs/conf.py``, ``setup.cfg``, and
   ``setup.py`` (`#17`_)
+- Templates will now be automatically loaded from a ``<repo>/.templates``
+  directory if it exists. When overriding existing templates, the built-in
+  templates can be accessed in ``include`` and ``extend`` tags with the
+  ``templates/`` prefix. (`#17`_)
 
 **Changed**
 
@@ -39,6 +43,8 @@ Release History
 
 - Removed ``conda`` from the CI setup; all installations should be done
   through ``pip`` instead. (`#14`_)
+- Removed the ``--template-dir`` option from the ``generate-bones`` script;
+  use a ``.templates`` directory instead. (`#17`_)
 
 **Fixed**
 
