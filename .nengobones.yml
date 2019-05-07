@@ -24,10 +24,10 @@ travis_yml:
       env:
         TEST_LOCAL_VAR: test local var val
       test_args: --test-arg
-    - script: test
+    - script: test-nengo
       env:
         TEST_LOCAL_VAR: test local var val
-      test_args: --test-arg
+      test_args: --test-arg -p nengo.tests.options
       python: 3.7
       dist: xenial
   pypi_user: drasmuss
@@ -49,13 +49,25 @@ ci_scripts:
     post_commands:
       - export TEST_POST_COMMANDS=True
   - template: test
+    output_name: test-coverage
+    coverage: true
     pre_commands:
       - cat .ci/test-coverage.sh
       - export TEST_PRE_COMMANDS=True
     post_commands:
       - export TEST_POST_COMMANDS=True
-    coverage: true
-    output_name: test-coverage
+  - template: test
+    output_name: test-nengo
+    nengo_tests: true
+    pip_install:
+      # TODO: update this to release version once there is one with the
+      # nengo_test_unsupported config
+      - git+https://github.com/nengo/nengo#egg=nengo[tests]
+    pre_commands:
+      - cat .ci/test-nengo.sh
+      - export TEST_PRE_COMMANDS=True
+    post_commands:
+      - export TEST_POST_COMMANDS=True
   - template: docs
     pre_commands:
       - cat .ci/docs.sh
@@ -108,11 +120,28 @@ setup_py:
 setup_cfg:
   pytest:
     addopts: []
+    norecursedirs:
+      - tests/ignoreme
+    markers:
+      test-marker:
+        Not a real
+        marker
+    nengo_test_unsupported:
+      "*":
+        All tests are
+        unsupported
   coverage:
     exclude_lines:
       - "if __name__ == .__main__.:"
     omit_files:
-      - tests/utils.py
+      - nengo_bones/tests/utils.py
+      - nengo_bones/tests/ignoreme/*
+  flake8:
+    exclude:
+      - nengo_bones/tests/ignoreme
+  pylint:
+    ignore:
+      - nengo_bones/tests/ignoreme
 
 docs_conf_py:
   exclude_patterns:

@@ -52,8 +52,8 @@ jobs:
   -
     env:
       TEST_LOCAL_VAR="test local var val"
-      SCRIPT="test"
-      TEST_ARGS="--test-arg"
+      SCRIPT="test-nengo"
+      TEST_ARGS="--test-arg -p nengo.tests.options"
     python: 3.7
     dist: xenial
   - stage: deploy

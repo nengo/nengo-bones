@@ -548,6 +548,11 @@ def test_setup_cfg_valueerror(tmpdir):
     assert_exit(result, 1)
 
 
+def test_setup_cfg_custom_marker(pytestconfig):
+    # this marker is added in the setup.cfg file
+    assert "test-marker: Not a real marker" in pytestconfig.getini("markers")
+
+
 def test_docs_conf_py(tmpdir):
     write_file(tmpdir, ".nengobones.yml", """
         project_name: Dummy
