@@ -1,5 +1,9 @@
+project_name: Nengo Bones
 pkg_name: nengo_bones
 repo_name: nengo/nengo-bones
+
+description: Tools for managing Nengo projects
+copyright_start: 2018
 
 travis_yml:
   python: 3.6
@@ -59,3 +63,57 @@ ci_scripts:
   - template: deploy
     pre_commands:
       - cat .ci/deploy.sh
+
+contributing_rst: {}
+
+contributors_rst: {}
+
+license_rst: {}
+
+manifest_in:
+  global-include:
+    - "*.template"
+
+setup_py:
+  entry_points:
+    console_scripts:
+      - generate-bones=nengo_bones.scripts.generate_bones:main
+      - check-bones=nengo_bones.scripts.check_bones:main
+  include_package_data: True
+  # note: docs/tests_req are intentionally empty to test that the correct
+  # requirements are built into the ci scripts
+  install_req:
+    - click>=7.0
+    - jinja2>=2.10
+    - pyyaml>=5.1
+  classifiers:
+    - "Development Status :: 4 - Beta"
+    - "Framework :: Nengo"
+    - "Intended Audience :: Developers"
+    - "License :: Free for non-commercial use"
+    - "Operating System :: Microsoft :: Windows"
+    - "Operating System :: POSIX :: Linux"
+    - "Programming Language :: Python"
+    - "Programming Language :: Python :: 3.5"
+    - "Programming Language :: Python :: 3.6"
+    - "Programming Language :: Python :: 3.7"
+    - "Topic :: Software Development"
+
+setup_cfg:
+  pytest:
+    addopts: []
+  coverage:
+    exclude_lines:
+      - "if __name__ == .__main__.:"
+    omit_files:
+      - tests/utils.py
+
+docs_conf_py:
+  exclude_patterns:
+    - examples/test-example.ipynb
+  sphinx_options:
+    suppress_warnings: "['image.nonlocal_uri']"
+  extensions:
+    - sphinx_click.ext
+  intersphinx_mapping:
+    click: https://click.palletsprojects.com/en/7.x
