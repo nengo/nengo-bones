@@ -33,6 +33,7 @@ Release History
   directory if it exists. When overriding existing templates, the built-in
   templates can be accessed in ``include`` and ``extend`` tags with the
   ``templates/`` prefix. (`#17`_)
+- Added ``flake8`` to the static check script. (`#17`_)
 
 **Changed**
 

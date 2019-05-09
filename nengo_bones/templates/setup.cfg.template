@@ -39,12 +39,19 @@ exclude =
     {% for exclude in flake8.exclude %}
     {{ exclude }}
     {% endfor %}
-{% if flake8.ignore %}
 ignore =
+    E123
+    E133
+    E226
+    E241
+    E242
+    E501
+    E731
+    F401
+    W503
     {% for ignore in flake8.ignore %}
     {{ ignore }}
     {% endfor %}
-{% endif %}
 max-complexity = 10
 
 [tool:pytest]

@@ -8,11 +8,12 @@ shopt -s globstar
 
 {% block install %}
 {{ super() }}
-    exe pip install "jupyter>=1.0.0" "pylint>=1.9.2" "codespell>=1.12.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2"
+    exe pip install "jupyter>=1.0.0" "pylint>=1.9.2" "codespell>=1.12.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2" "flake8>=3.7.7"
 {% endblock %}
 
 {% block script %}
     exe pylint {{ pkg_name }} --rcfile=setup.cfg
+    exe flake8 {{ pkg_name }}
     exe jupyter nbconvert \
         --log-level WARN \
         --to python \
@@ -25,6 +26,7 @@ shopt -s globstar
     #   $ d removes a trailing newline
     sed -i -e 's/# $/#/g' -e '/get_ipython()/d' -e '$ d' -- docs/examples/**/*.py
     exe pylint docs --rcfile=setup.cfg --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
+    exe flake8 docs --extend-ignore=E402,E703,W291,W293,W391
     rm docs/examples/**/*.py
     exe codespell -q 3 --skip="./build,./docs/_build,*-checkpoint.ipynb,./.eggs"
     exe shellcheck -e SC2087 .ci/*.sh
