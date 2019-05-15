@@ -63,6 +63,9 @@ ci_scripts:
       - "[ -f 'docs/tests/ignore-me.py' ]"
       - "[ ! -f 'docs/tests/test-example.py' ]"
   - template: test
+    pip_install:
+      - "-e"
+      - .[optional]
     pre_commands:
       - cat .ci/test.sh
       - export TEST_PRE_COMMANDS=True
@@ -71,6 +74,9 @@ ci_scripts:
   - template: test
     output_name: test-coverage
     coverage: true
+    pip_install:
+      - "-e"
+      - .[optional]
     pre_commands:
       - cat .ci/test-coverage.sh
       - export TEST_PRE_COMMANDS=True
@@ -139,6 +145,7 @@ setup_py:
       - bones-generate=nengo_bones.scripts.generate_bones:main
       - bones-check=nengo_bones.scripts.check_bones:main
       - bones-pr-number=nengo_bones.scripts.pr_number:main
+      - bones-format-notebook=nengo_bones.scripts.format_notebook:main
   include_package_data: True
   # note: docs/tests_req are intentionally empty to test that the correct
   # requirements are built into the ci scripts
@@ -148,6 +155,8 @@ setup_py:
     - jinja2>=2.11
     - pyyaml>=5.1
     - requests>=2.21
+  optional_req:
+    - jupyter>=1.0.0  # required for format-notebook script
   classifiers:
     - "Development Status :: 4 - Beta"
     - "Framework :: Nengo"

@@ -37,7 +37,9 @@ install_req = [
     "requests>=2.21",
 ]
 docs_req = []
-optional_req = []
+optional_req = [
+    "jupyter>=1.0.0",
+]
 tests_req = []
 
 setup(
@@ -65,6 +67,7 @@ setup(
             "bones-generate=nengo_bones.scripts.generate_bones:main",
             "bones-check=nengo_bones.scripts.check_bones:main",
             "bones-pr-number=nengo_bones.scripts.pr_number:main",
+            "bones-format-notebook=nengo_bones.scripts.format_notebook:main",
         ],
     },
     classifiers=[

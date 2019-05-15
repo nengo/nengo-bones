@@ -39,3 +39,7 @@ This repository also contains scripts to automate various development tasks.
 .. click:: nengo_bones.scripts.pr_number:main
     :prog: bones-pr-number
     :show-nested:
+
+.. click:: nengo_bones.scripts.format_notebook:main
+    :prog: bones-format-notebook
+    :show-nested:

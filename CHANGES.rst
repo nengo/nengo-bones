@@ -28,6 +28,8 @@ Release History
 - Added ``tagmanager_id`` option to ``docs_conf.py.template``,
   which will enable Google Tag Manager tracking. This option takes precedence
   over ``analytics_id`` if both are specified. (`#114`_)
+- Added the ``bones-format-notebook`` script to apply black formatting to notebooks
+  and clear notebook outputs/unnecessary metadata. (`#32`_)
 
 **Changed**
 
@@ -38,6 +40,7 @@ Release History
   during CI. (`#110`_)
 - Increased minimum ``black`` version to 20.8b0. (`#104`_)
 
+.. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
 .. _#103: https://github.com/nengo/nengo-bones/pull/103
 .. _#104: https://github.com/nengo/nengo-bones/pull/104
