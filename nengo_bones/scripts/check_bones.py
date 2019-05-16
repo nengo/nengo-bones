@@ -47,7 +47,7 @@ def main(root_dir):
         if version != nengo_bones.__version__:
             click.secho(
                 "  Version (%s) does not match nengo-bones version (%s);\n"
-                "  please update by running `generate-bones` from\n"
+                "  please update by running `bones-generate` from\n"
                 "  the root directory." % (version, nengo_bones.__version__),
                 fg="red")
             passed = False

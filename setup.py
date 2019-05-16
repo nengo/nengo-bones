@@ -64,8 +64,8 @@ setup(
     python_requires=">=3.5",
     entry_points={
         "console_scripts": [
-            "generate-bones=nengo_bones.scripts.generate_bones:main",
-            "check-bones=nengo_bones.scripts.check_bones:main",
+            "bones-generate=nengo_bones.scripts.generate_bones:main",
+            "bones-check=nengo_bones.scripts.check_bones:main",
         ],
     },
     classifiers=[

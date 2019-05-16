@@ -39,6 +39,9 @@ Release History
 
 - The Python version is now specified by the ``python`` option (instead of
   ``python_version``), for consistency with ``.travis.yml``. (`#14`_)
+- All ``nengo-bones`` scripts now start with ``bones-``, to make them easier
+  to find with autocompletion. ``generate-bones`` is now ``bones-generate``,
+  and ``check-bones`` is now ``bones-check``. (`#18`_)
 
 **Removed**
 
@@ -54,6 +57,7 @@ Release History
 
 .. _#14: https://github.com/nengo/nengo-bones/pull/14
 .. _#17: https://github.com/nengo/nengo-bones/pull/17
+.. _#18: https://github.com/nengo/nengo-bones/pull/18
 
 0.1.0 (April 15, 2019)
 ======================

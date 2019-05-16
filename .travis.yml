@@ -89,8 +89,8 @@ before_install:
   - pip install pip --upgrade
   # install/run nengo-bones
   - pip install git+https://github.com/nengo/nengo-bones.git@$BRANCH_NAME
-  - generate-bones --output-dir .ci ci-scripts
-  - check-bones
+  - bones-generate --output-dir .ci ci-scripts
+  - bones-check
   # display environment info
   - pip freeze
 
