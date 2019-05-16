@@ -3,6 +3,7 @@
 
 global-include *.py
 global-include *.sh
+global-include *.template
 include *.rst
 
 # Include files for CI and recreating the source dist
@@ -21,6 +22,7 @@ prune .git
 prune .github
 prune .tox
 prune .eggs
+prune .ci
 
 # Exclude auto-generated files
 recursive-exclude docs/examples *.py
@@ -32,5 +34,3 @@ global-exclude *-checkpoint.ipynb
 # Exclude all bytecode
 global-exclude *.pyc *.pyo *.pyd
 
-# Repo-specific files
-global-include *.template

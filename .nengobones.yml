@@ -88,9 +88,7 @@ contributors_rst: {}
 
 license_rst: {}
 
-manifest_in:
-  global-include:
-    - "*.template"
+manifest_in: {}
 
 setup_py:
   entry_points:
