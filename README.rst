@@ -66,9 +66,9 @@ this command in the same folder as the ``.nengobones.yml`` file:
 
 .. code-block:: bash
 
-    generate-bones
+    bones-generate
 
-See ``generate-bones --help`` or
+See ``bones-generate --help`` or
 `the documentation <https://www.nengo.ai/nengo-bones/cli.html>`__
 for a full list of command line options.
 
