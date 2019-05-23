@@ -22,7 +22,12 @@ Release History
 0.2.1 (unreleased)
 ==================
 
+**Added**
 
+- Added ``codespell_ignore_words`` option to ``static.sh.template``,
+  which is a list of words that ``codespell`` will ignore. (`#35`_)
+
+.. _#35: https://github.com/nengo/nengo-bones/pull/35
 
 0.2.0 (May 15, 2019)
 ====================

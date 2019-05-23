@@ -28,7 +28,12 @@ shopt -s globstar
     exe pylint docs --rcfile=setup.cfg --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
     exe flake8 docs --extend-ignore=E402,E703,W291,W293,W391
     rm docs/examples/**/*.py
-    exe codespell -q 3 --skip="./build,./docs/_build,*-checkpoint.ipynb,./.eggs"
+    exe codespell -q 3 \
+        --skip="./build,./docs/_build,*-checkpoint.ipynb,./.eggs,./.git"
+        {%- if codespell_ignore_words %} \
+        --ignore-words-list="{{ codespell_ignore_words | join(",") }}"
+        {%- endif %}
+
     exe shellcheck -e SC2087 .ci/*.sh
     # undo single-branch cloning
     git config --replace-all remote.origin.fetch +refs/heads/*:refs/remotes/origin/*

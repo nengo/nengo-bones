@@ -29,6 +29,9 @@ def test_ci_scripts(tmpdir):
               - pip0
               - pip1
           - template: static
+            codespell_ignore_words:
+              - onne
+              - ttwo
           - template: test
             nengo_tests: true
           - template: test
@@ -67,6 +70,7 @@ def test_ci_scripts(tmpdir):
     assert has_line(".ci/base_script.sh", "# Version: %s" % bones_version)
 
     assert has_line(".ci/static.sh", "exe pylint dummy --rcfile")
+    assert has_line(".ci/static.sh", '--ignore-words-list="onne,ttwo"')
 
     assert has_line(".ci/test.sh", '--durations 20 $TEST_ARGS',
                     startswith=False)

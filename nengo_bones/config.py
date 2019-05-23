@@ -161,15 +161,14 @@ def validate_ci_config(ci_config):
         raise KeyError("Script config must define 'template' "
                        "(for entry %s)" % ci_config)
 
-    try:
-        # make sure that people don't accidentally do
-        # pip_install: dependency (which gives a string), rather than
-        # pip_install:
-        #   - dependency
-        for key in ("pip_install", "pre_commands", "post_commands"):
-            check_list(ci_config, key)
-    except KeyError:
-        pass
+    # make sure that people don't accidentally do things like
+    # pip_install: dependency (which gives a string), rather than
+    # pip_install:
+    #   - dependency
+    list_opts = ("pip_install", "pre_commands", "post_commands",
+                 "codespell_ignore_words")
+    for opt in list_opts:
+        check_list(ci_config, opt)
 
 
 def load_config(conf_file=None):
