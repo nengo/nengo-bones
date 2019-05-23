@@ -26,6 +26,8 @@ Release History
 
 - Added ``codespell_ignore_words`` option to ``static.sh.template``,
   which is a list of words that ``codespell`` will ignore. (`#35`_)
+- Added ``analytics_id`` option to ``docs_conf.py.template``,
+  which will enable Google Analytics tracking. (`#35`_)
 
 .. _#35: https://github.com/nengo/nengo-bones/pull/35
 

@@ -90,4 +90,7 @@ html_favicon = os.path.join("_static", "favicon.ico")
 html_theme_options = {
     "sidebar_logo_width": 200,
     "nengo_logo": "{{ nengo_logo }}",
+    {% if analytics_id %}
+    "analytics_id": "{{ analytics_id }}",
+    {% endif %}
 }

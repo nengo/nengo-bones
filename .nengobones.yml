@@ -152,3 +152,4 @@ docs_conf_py:
     - sphinx_click.ext
   intersphinx_mapping:
     click: https://click.palletsprojects.com/en/7.x
+  analytics_id: UA-41658423-2
