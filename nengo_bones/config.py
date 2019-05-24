@@ -6,6 +6,8 @@ import os
 
 import yaml
 
+import nengo_bones.version
+
 
 def check_list(cfg, key):
     """
@@ -79,7 +81,9 @@ def fill_defaults(config):
         cfg.setdefault("global_vars", OrderedDict())
         cfg.setdefault("pypi_user", None)
         cfg.setdefault("deploy_dists", ["sdist"])
-        cfg.setdefault("bones_install", "nengo-bones")
+        cfg.setdefault("bones_install",
+                       "nengo-bones" if nengo_bones.version.dev is None
+                       else "git+https://github.com/nengo/nengo-bones.git")
 
         for job in cfg["jobs"]:
             if job.get("script", "").startswith("docs"):
