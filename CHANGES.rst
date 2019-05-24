@@ -29,6 +29,10 @@ Release History
 - Added ``analytics_id`` option to ``docs_conf.py.template``,
   which will enable Google Analytics tracking. (`#35`_)
 
+**Changed**
+
+- ``codespell`` will now ignore ``_vendor`` directories. (`#36`_)
+
 **Fixed**
 
 - Fixed an issue with ``static.sh.template`` in which Python files
@@ -36,6 +40,7 @@ Release History
 
 .. _#16: https://github.com/nengo/nengo-bones/pull/16
 .. _#35: https://github.com/nengo/nengo-bones/pull/35
+.. _#36: https://github.com/nengo/nengo-bones/pull/36
 
 0.2.0 (May 15, 2019)
 ====================

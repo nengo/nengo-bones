@@ -37,7 +37,7 @@ shopt -s globstar
         rm "${nb_file%.ipynb}.py"
     done
     exe codespell -q 3 \
-        --skip="./build,./docs/_build,*-checkpoint.ipynb,./.eggs,./.git"
+        --skip="./build,*/_build,*-checkpoint.ipynb,./.eggs,./.git,*/_vendor"
         {%- if codespell_ignore_words %} \
         --ignore-words-list="{{ codespell_ignore_words | join(",") }}"
         {%- endif %}
