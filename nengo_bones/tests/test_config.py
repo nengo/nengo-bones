@@ -4,6 +4,7 @@ import os
 
 import pytest
 
+import nengo_bones.version
 from nengo_bones import config
 from nengo_bones.tests import utils
 
@@ -93,7 +94,8 @@ def test_load_config(tmpdir):
                 "bdist_wheel"
             ],
             "jobs": [{"script": "static", "language": "generic"}],
-            "bones_install": "nengo-bones",
+            "bones_install": "nengo-bones" if nengo_bones.version.dev is None
+            else "git+https://github.com/nengo/nengo-bones.git",
         },
         "codecov_yml": {
             "skip_appveyor": False,
