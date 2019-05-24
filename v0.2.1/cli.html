@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Command line interface &#8212; Nengo Bones 0.2.1 docs</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/mmenu.all.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/components.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/nengo.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+<script type="text/javascript" src="https://cdn.crate.io/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/js/modernizr.js"></script>
+    <script type="text/javascript" src="_static/js/underscore.min.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/searchtools.js"></script>
+    <script type="text/javascript" src="_static/js/webflow.js"></script>
+    <script type="text/javascript" src="_static/js/bootstrap.js"></script>
+    <script type="text/javascript" src="_static/js/mmenu.all.min.js"></script>
+    <script type="text/javascript" src="_static/js/fontawesome.js"></script>
+    <script type="text/javascript" src="_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+<header class="header-nav">
+  <div class="container">
+    <div class="navbar w-nav" data-animation="default" data-collapse="small" data-contain="1" data-duration="400">
+      <a class="brand w-nav-brand" href="https://www.nengo.ai/">
+        <img src="https://www.nengo.ai/design/_images/general-full-light.svg" width="120">
+      </a>
+      <nav class="w-nav-menu main-nav" role="navigation">
+        <div class="dropdownBackground">
+          <span class="arrow"></span>
+        </div>
+        <ul id="menu-top-navigation" class="menu">
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/overview.html">Overview</a>
+            <ul class="sub-menu">
+                <li class="menu-item"><a href="https://www.nengo.ai/quickstart.html">Quick Start</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/documentation.html">Documentation</a>
+            <table class="sub-menu">
+              <tr>
+                <td class="menu-heading">Core</td>
+                <td class="menu-heading">Backends</td>
+                <td class="menu-heading">Add-ons</td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo">Nengo</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-fpga">Nengo FPGA</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-examples">Nengo Examples</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-dl/">Nengo DL</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-loihi">Nengo Loihi</a></td>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-extras/">Nengo Extras</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-gui">Nengo GUI</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-mpi">Nengo MPI</a></td>
+                <td class="menu-item"><a href="https://arvoelke.github.io/nengolib-docs/">Nengo Lib</a></td>
+              </tr>
+              <tr>
+                <td class="menu-item"><a href="https://www.nengo.ai/nengo-spa/">Nengo SPA</a></td>
+                <td class="menu-item"><a href="https://github.com/nengo/nengo-ocl">Nengo OpenCL</a></td>
+                <td class="menu-item"></td>
+              </tr>
+              <tr>
+                <td class="menu-item"></td>
+                <td class="menu-item"><a href="https://github.com/project-rig/nengo_spinnaker">Nengo SpiNNaker</a></td>
+                <td class="menu-item"></td>
+              </tr>
+            </table>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/community.html">Community</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://forum.nengo.ai/">Forum</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/publications.html">Publications</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/summerschool.html">Summer School</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/videos.html">Videos</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/people.html">People</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/projects.html">Development</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/contributing.html">Contributor Guide</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/projects.html">Ecosystem</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/README.html">About</a></li>
+          <li class="btn-link w-nav-link menu-item"><a href="https://www.nengo.ai/download.html">Download</a></li>
+        </ul>
+      </nav>
+
+      <div id="mobile-nav" class="mm-menu">
+        <ul class="offcanvas-menu">
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/overview.html">Overview</a></li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/documentation.html">Documentation</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/quickstart.html">Quick Start</a></li>
+              <li class="menu-item"><a href="http://www.nengo.ai/nengo">NengoCore</a></li>
+              <li class="menu-item"><a href="https://github.com/nengo/nengo-gui#nengo-gui">NengoGUI</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/community.html">Community</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://forum.nengo.ai/">Forum</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/summerschool.html">Summer School</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/people.html">People</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item menu-item-has-children">
+            <a href="https://www.nengo.ai/projects.html">Development</a>
+            <ul class="sub-menu">
+              <li class="menu-item"><a href="https://www.nengo.ai/contributing.html">Contributor Guide</a></li>
+              <li class="menu-item"><a href="https://www.nengo.ai/projects.html">Ecosystem</a></li>
+            </ul>
+          </li>
+          <li class="navlink w-nav-link menu-item"><a href="https://www.nengo.ai/README.html">About</a></li>
+          <li class="btn-link w-nav-link menu-item"><a href="https://www.nengo.ai/download.html">Download</a></li>
+        </ul>
+      </div>
+
+      <a href="#mobile-nav" class="fa fa-bars mobile-nav-button"></a>
+    </div>
+  </div>
+</header>
+
+<div class="w-section section border-top">
+  <div class="container">
+    <div class="row" id="cli">
+      <div class="col-md-4 col-lg-3">
+        <aside class="wrapper-navleft"><div role="complementary" class="bs-docs-sidebar hidden-print" id="nav-affix">
+  <ul class="bs-docs-sidenav bs-sidenav nav" role="complementary">
+    <a href="index.html">
+      <img class="logo" src="https://www.nengo.ai/design/_images/general-full-light.svg" alt="Nengo Bones" width="200" />
+    </a>
+    <ul class="toctree nav nav-list">
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command line interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generating-files">Generating files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bones-generate">bones-generate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bones-check">bones-check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#other-development-support-scripts">Other development support scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bones-pr-number">bones-pr-number</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Release History</a></li>
+</ul>
+
+    </ul>
+  </ul>
+<form id="form-search" class="form-search" action="search.html" method="get">
+  <div class="form-group">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+  </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form></div>
+          
+        </aside>
+      </div>
+      <div class="col-md-8 col-lg-9">
+        <div class="body wrapper-content-right">
+          
+<div class="version-select-container">
+    <div data-delay="0" class="w-dropdown">
+        <div class="w-dropdown-toggle toggle">
+            <div class="toggle-text">v0.2.1</div>
+            <div class="w-icon-dropdown-toggle toggle-icon"></div>
+        </div>
+        <nav class="w-dropdown-list dropdown-list">
+            
+            
+                <a href="../cli.html" class="w-dropdown-link">latest</a>
+            
+
+            
+                
+                <div class="w-dropdown-link">v0.2.1</div>
+                
+            
+                
+                    <a href="../v0.2.0/cli.html" class="w-dropdown-link">v0.2.0</a>
+                
+            
+                
+                    <a href="../v0.1.0/cli.html" class="w-dropdown-link">v0.1.0</a>
+                
+            
+        </nav>
+    </div>
+</div>
+
+          
+  <div class="section" id="command-line-interface">
+<h1>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="generating-files">
+<h2>Generating files<a class="headerlink" href="#generating-files" title="Permalink to this headline">¶</a></h2>
+<p>In general, the only command that downstream repos will ever need to run is</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bones-generate
+</pre></div>
+</div>
+<p>from the root directory containing <code class="docutils literal notranslate"><span class="pre">.nengobones.yml</span></code>.  This updates all of
+the templated files that need to be manually updated and committed to the
+downstream repository.  Note that there are other files that
+<code class="docutils literal notranslate"><span class="pre">bones-generate</span></code> can generate, but this is done automatically
+(i.e., dynamically) by <code class="docutils literal notranslate"><span class="pre">nengo-bones</span></code> during continuous integration.</p>
+<p>However, it may be helpful when debugging a <code class="docutils literal notranslate"><span class="pre">.nengobones.yml</span></code> configuration
+to be able to see the rendered output, so we expose all the <code class="docutils literal notranslate"><span class="pre">nengo-bones</span></code>
+functionality through different command line options, which can be found
+below.</p>
+<div class="section" id="bones-generate">
+<h3>bones-generate<a class="headerlink" href="#bones-generate" title="Permalink to this headline">¶</a></h3>
+<p>Loads config file and sets up template environment.</p>
+<p>By default, this updates all templated files that are
+to be committed to the repository.</p>
+<p>We look in the current directory for a <code class="docutils literal notranslate"><span class="pre">.templates</span></code> folder. If it
+exists, any templates defined in that folder will be loaded first.
+Otherwise, built-in templates will be loaded from the
+<code class="docutils literal notranslate"><span class="pre">nengo_bones/templates</span></code> directory.</p>
+<p>If you are overriding a template in the <code class="docutils literal notranslate"><span class="pre">.templates</span></code> folder, the
+original built-in version of that template can be accessed with
+the <code class="docutils literal notranslate"><span class="pre">templates/</span></code> prefix. This is useful in <code class="docutils literal notranslate"><span class="pre">include</span></code> and
+<code class="docutils literal notranslate"><span class="pre">extends</span></code> tags. For example, to add text to the default
+<code class="docutils literal notranslate"><span class="pre">LICENSE.rst</span></code> template, put the following in
+<code class="docutils literal notranslate"><span class="pre">.templates/LICENSE.rst.template</span></code>:</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>{% include &quot;templates/LICENSE.rst.template %}
+
+<span class="gh">Additional license info</span>
+<span class="gh">=======================</span>
+<span class="cp">...</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bones-generate-conf-file">
+<code class="descname">--conf-file</code><code class="descclassname"> &lt;conf_file&gt;</code><a class="headerlink" href="#cmdoption-bones-generate-conf-file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filepath for config file</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bones-generate-output-dir">
+<code class="descname">--output-dir</code><code class="descclassname"> &lt;output_dir&gt;</code><a class="headerlink" href="#cmdoption-bones-generate-output-dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output directory for scripts</p>
+</dd></dl>
+
+<div class="section" id="bones-generate-ci-scripts">
+<h4>ci-scripts<a class="headerlink" href="#bones-generate-ci-scripts" title="Permalink to this headline">¶</a></h4>
+<p>Generate TravisCI shell scripts.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate ci-scripts <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-codecov-yml">
+<h4>codecov-yml<a class="headerlink" href="#bones-generate-codecov-yml" title="Permalink to this headline">¶</a></h4>
+<p>Generate codecov config file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate codecov-yml <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-contributing-rst">
+<h4>contributing-rst<a class="headerlink" href="#bones-generate-contributing-rst" title="Permalink to this headline">¶</a></h4>
+<p>Generate CONTRIBUTING.rst file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate contributing-rst <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-contributors-rst">
+<h4>contributors-rst<a class="headerlink" href="#bones-generate-contributors-rst" title="Permalink to this headline">¶</a></h4>
+<p>Generate CONTRIBUTORS.rst file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate contributors-rst <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-docs-conf-py">
+<h4>docs-conf-py<a class="headerlink" href="#bones-generate-docs-conf-py" title="Permalink to this headline">¶</a></h4>
+<p>Generate docs/conf.py file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate docs-conf-py <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-license-rst">
+<h4>license-rst<a class="headerlink" href="#bones-generate-license-rst" title="Permalink to this headline">¶</a></h4>
+<p>Generate LICENSE.rst file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate license-rst <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-manifest-in">
+<h4>manifest-in<a class="headerlink" href="#bones-generate-manifest-in" title="Permalink to this headline">¶</a></h4>
+<p>Generate MANIFEST.in file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate manifest-in <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-setup-cfg">
+<h4>setup-cfg<a class="headerlink" href="#bones-generate-setup-cfg" title="Permalink to this headline">¶</a></h4>
+<p>Generate setup.cfg file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate setup-cfg <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-setup-py">
+<h4>setup-py<a class="headerlink" href="#bones-generate-setup-py" title="Permalink to this headline">¶</a></h4>
+<p>Generate setup.py file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate setup-py <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bones-generate-travis-yml">
+<h4>travis-yml<a class="headerlink" href="#bones-generate-travis-yml" title="Permalink to this headline">¶</a></h4>
+<p>Generate TravisCI config file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-generate travis-yml <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="bones-check">
+<h3>bones-check<a class="headerlink" href="#bones-check" title="Permalink to this headline">¶</a></h3>
+<p>Validates auto-generated project files.</p>
+<p>Note: This does not check the ci scripts, because those are generated
+on-the-fly in TravisCI (so any ci files we do find are likely local
+artifacts).</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-check <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bones-check-root-dir">
+<code class="descname">--root-dir</code><code class="descclassname"> &lt;root_dir&gt;</code><a class="headerlink" href="#cmdoption-bones-check-root-dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Directory containing files to be checked</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="other-development-support-scripts">
+<h2>Other development support scripts<a class="headerlink" href="#other-development-support-scripts" title="Permalink to this headline">¶</a></h2>
+<p>This repository also contains scripts to automate various development tasks.</p>
+<div class="section" id="bones-pr-number">
+<h3>bones-pr-number<a class="headerlink" href="#bones-pr-number" title="Permalink to this headline">¶</a></h3>
+<p>Get the next available PR number for a repository.</p>
+<p>When writing a CHANGELOG entry, it helpful to predict the PR number for the
+branch before the PR has actually been made. This script counts the issues
+in the repository and returns the next available number.</p>
+<p>This command will read –conf-file to determine the current repository.
+To check for another repository, pass it as an argument.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bones-pr-number <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>REPO<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bones-pr-number-conf-file">
+<code class="descname">--conf-file</code><code class="descclassname"> &lt;conf_file&gt;</code><a class="headerlink" href="#cmdoption-bones-pr-number-conf-file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filepath for config file</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bones-pr-number-arg-repo">
+<code class="descname">REPO</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bones-pr-number-arg-repo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div><footer class="footer">
+  <div class="w-container">
+    <div class="w-clearfix">
+      <div class="w-row search">
+<form id="form-search" class="form-search" action="search.html" method="get">
+  <div class="form-group">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+  </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form></div>
+      <div class="w-row mobileAlign">
+        <div class="w-col w-col-2 footer-menu">
+          <p class="menu-Label">ABR, Inc.</p>
+          <ul class="vertical-menu">
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/products/">Products</a></li>
+            <li class="footer-listitem-new "><a href="https://appliedbrainresearch.com/services/">Services</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/research/">Research</a></li>
+          </ul>
+        </div>
+        <div class="w-col w-col-2 footer-menu">
+          <p class="menu-Label">About Us</p>
+          <ul class="vertical-menu">
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/">Contact</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/#team">Team</a></li>
+            <li class="footer-listitem-new"><a href="https://appliedbrainresearch.com/about-us/#culture">Culture</a></li>
+          </ul>
+        </div>
+        <a class="brand footer-brand" href="https://appliedbrainresearch.com">
+          <img src="https://appliedbrainresearch.com/img/logo-light-notext.svg" width="80">
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+  </body>
+</html>
