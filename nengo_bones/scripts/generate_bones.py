@@ -255,5 +255,13 @@ def docs_conf_py(ctx):
                     template_file="docs_conf.py.template")
 
 
+@main.command()
+@click.pass_context
+def gitignore(ctx):
+    """Generate setup.cfg file."""
+
+    render_template(ctx, "gitignore", ".gitignore")
+
+
 if __name__ == "__main__":
     main(obj={})  # pragma: no cover pylint: disable=no-value-for-parameter
