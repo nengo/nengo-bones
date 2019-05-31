@@ -8,13 +8,14 @@ from nengo_bones.version import version as __version__
 from nengo_bones.config import load_config
 
 all_templated_files = {
-    ".travis.yml": "travis_yml",
-    ".codecov.yml": "codecov_yml",
     "docs/conf.py": "docs_conf_py",
-    "setup.cfg": "setup_cfg",
-    "setup.py": "setup_py",
+    ".codecov.yml": "codecov_yml",
+    ".gitignore": "gitignore",
+    ".travis.yml": "travis_yml",
     "CONTRIBUTING.rst": "contributing_rst",
     "CONTRIBUTORS.rst": "contributors_rst",
     "LICENSE.rst": "license_rst",
     "MANIFEST.in": "manifest_in",
+    "setup.cfg": "setup_cfg",
+    "setup.py": "setup_py",
 }

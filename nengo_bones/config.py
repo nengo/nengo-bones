@@ -145,6 +145,9 @@ def validate_config(config):
         for ci_config in config["ci_scripts"]:
             validate_ci_config(ci_config)
 
+    if "gitignore" in config:
+        check_list(config["gitignore"], "extra")
+
     # TODO: check that there aren't unused config options in yml
 
 
