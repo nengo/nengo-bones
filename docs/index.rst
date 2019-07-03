@@ -8,5 +8,8 @@ Nengo Bones
     introduction
     cli
     examples
+    releasing
+    style
+    policies
     reference
     changes

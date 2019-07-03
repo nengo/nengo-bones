@@ -22,7 +22,11 @@ Release History
 0.3.1 (unreleased)
 ==================
 
+**Added**
 
+- Added style guide and release instructions to documentation. (`#44`_)
+
+.. _#44: https://github.com/nengo/nengo-bones/pull/44
 
 0.3.0 (July 19, 2019)
 =====================
