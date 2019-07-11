@@ -19,10 +19,15 @@ Release History
    - Removed
    - Fixed
 
-0.2.2 (unreleased)
+0.3.0 (unreleased)
 ==================
 
+**Changed**
 
+- The ``docs/conf.py`` template has been updated for new versions of
+  Nengo Sphinx Theme. (`#46`_)
+
+.. _#46: https://github.com/nengo/nengo-bones/pull/46
 
 0.2.1 (May 24, 2019)
 ====================

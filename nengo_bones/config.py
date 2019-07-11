@@ -116,6 +116,7 @@ def fill_defaults(config):
     if "docs_conf_py" in config:
         cfg = config["docs_conf_py"]
         cfg.setdefault("nengo_logo", "general-full-light.svg")
+        cfg.setdefault("nengo_logo_color", "#a8acaf")
 
 
 def validate_config(config):

@@ -88,8 +88,8 @@ html_last_updated_fmt = ""  # Default output format (suppressed)
 html_show_sphinx = False
 html_favicon = os.path.join("_static", "favicon.ico")
 html_theme_options = {
-    "sidebar_logo_width": 200,
     "nengo_logo": "{{ nengo_logo }}",
+    "nengo_logo_color": "{{ nengo_logo_color }}",
     {% if analytics_id %}
     "analytics_id": "{{ analytics_id }}",
     {% endif %}
