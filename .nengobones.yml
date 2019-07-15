@@ -43,8 +43,8 @@ ci_scripts:
     pre_commands:
       - cat .ci/static.sh
     post_commands:
-      - "[ -f 'docs/examples/ignore-me.py' ]"
-      - "[ ! -f 'docs/examples/test-example.py' ]"
+      - "[ -f 'docs/tests/ignore-me.py' ]"
+      - "[ ! -f 'docs/tests/test-example.py' ]"
   - template: test
     pre_commands:
       - cat .ci/test.sh
@@ -148,7 +148,7 @@ setup_cfg:
 
 docs_conf_py:
   exclude_patterns:
-    - examples/test-example.ipynb
+    - tests/test-example.ipynb
   sphinx_options:
     suppress_warnings: "['image.nonlocal_uri']"
   extensions:

@@ -26,6 +26,14 @@ Release History
 
 - The ``docs/conf.py`` template has been updated for new versions of
   Nengo Sphinx Theme. (`#46`_)
+- ``static.sh`` and ``examples.sh`` will now check any notebooks in the
+  ``docs`` folder (not just ``docs/examples``). (`#46`_)
+
+
+**Fixed**
+
+- The ``static.sh``/``examples.sh`` script will no longer fail if there are no
+  notebooks in the ``docs`` folder. (`#46`_)
 
 .. _#46: https://github.com/nengo/nengo-bones/pull/46
 

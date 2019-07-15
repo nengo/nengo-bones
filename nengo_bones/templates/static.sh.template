@@ -14,26 +14,28 @@ shopt -s globstar
 {% block script %}
     exe pylint {{ pkg_name }} --rcfile=setup.cfg
     exe flake8 {{ pkg_name }}
-    exe jupyter nbconvert \
-        --log-level WARN \
-        --to python \
-        --TemplateExporter.exclude_input_prompt=True \
-        --TemplateExporter.exclude_markdown=True \
-        -- docs/examples/**/*.ipynb
-    # Remove style issues introduced in the conversion:
-    #   s/# $/#/g replaces lines with just '# ' with '#'
-    #   /get_ipython()/d removes lines containing 'get_ipython()'
-    #   $ d removes a trailing newline
-    for nb_file in docs/examples/**/*.ipynb; do
-        sed -i \
-            -e 's/# $/#/g' \
-            -e '/get_ipython()/d' \
-            -e '$ d' \
-            -- "${nb_file%.ipynb}.py"
-    done
+    if ls docs/**/*.ipynb 2>/dev/null; then
+        exe jupyter nbconvert \
+            --log-level WARN \
+            --to python \
+            --TemplateExporter.exclude_input_prompt=True \
+            --TemplateExporter.exclude_markdown=True \
+            -- docs/**/*.ipynb
+        # Remove style issues introduced in the conversion:
+        #   s/# $/#/g replaces lines with just '# ' with '#'
+        #   /get_ipython()/d removes lines containing 'get_ipython()'
+        #   $ d removes a trailing newline
+        for nb_file in docs/**/*.ipynb; do
+            sed -i \
+                -e 's/# $/#/g' \
+                -e '/get_ipython()/d' \
+                -e '$ d' \
+                -- "${nb_file%.ipynb}.py"
+        done
+    fi
     exe pylint docs --rcfile=setup.cfg --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
     exe flake8 docs --extend-ignore=E402,E703,W291,W293,W391
-    for nb_file in docs/examples/**/*.ipynb; do
+    for nb_file in docs/**/*.ipynb; do
         rm "${nb_file%.ipynb}.py"
     done
     exe codespell -q 3 \

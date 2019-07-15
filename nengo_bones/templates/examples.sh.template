@@ -14,5 +14,7 @@
 
 {% block script %}
     # shellcheck disable=SC2086
-    exe pytest docs/examples -v --color=yes --durations 20 --nbval-lax $TEST_ARGS
+    if ls docs/**/*.ipynb 2>/dev/null; then
+        exe pytest docs -v --color=yes --durations 20 --nbval-lax $TEST_ARGS
+    fi
 {% endblock %}

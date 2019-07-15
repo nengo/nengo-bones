@@ -48,7 +48,7 @@ nitpicky = True
 exclude_patterns = [
     "_build",
     "**/.ipynb_checkpoints",
-    "examples/test-example.ipynb",
+    "tests/test-example.ipynb",
 ]
 linkcheck_timeout = 30
 source_suffix = ".rst"
