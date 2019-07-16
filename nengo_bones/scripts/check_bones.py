@@ -58,7 +58,6 @@ def main(root_dir, conf_file, verbose):
 
         template = BonesTemplate(filename, env)
         new_lines = template.render(
-            version=__version__,
             **template.get_render_data(config),
         ).splitlines(keepends=True)
 

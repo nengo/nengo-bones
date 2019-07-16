@@ -98,7 +98,6 @@ def ci_scripts(ctx):
         BonesTemplate(script_name + ".sh", ctx.obj["env"]).render_to_file(
             ctx.obj["output_dir"],
             output_name=output_file + ".sh",
-            version=__version__,
             pkg_name=config["pkg_name"],
             repo_name=config["repo_name"],
             **params,
