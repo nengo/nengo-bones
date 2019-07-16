@@ -33,6 +33,11 @@ Release History
   Nengo Sphinx Theme. (`#46`_)
 - ``static.sh`` and ``examples.sh`` will now check any notebooks in the
   ``docs`` folder (not just ``docs/examples``). (`#46`_)
+- ``bones-check`` now checks that the content of the generated files
+  matches the expected content, rather than relying on version numbers.
+  This means most files will not need to be regenerated when new Nengo Bones
+  versions are released, and that ``bones-check`` will be sensitive to changes
+  within a dev version. (`#45`_)
 
 **Fixed**
 
