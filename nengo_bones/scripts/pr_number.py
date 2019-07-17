@@ -31,7 +31,7 @@ def main(repo, conf_file):
     """
 
     if repo is None:
-        config = nengo_bones.load_config(conf_file)
+        config = nengo_bones.config.load_config(conf_file)
         repo = config["repo_name"]
 
     click.echo("Asking GitHub for information about %s..." % (repo,))

@@ -22,6 +22,11 @@ Release History
 0.3.0 (unreleased)
 ==================
 
+**Added**
+
+- The ``nengo_bones.templates`` module was added to consolidate code
+  that loads and renders templates. (`#45`_)
+
 **Changed**
 
 - The ``docs/conf.py`` template has been updated for new versions of
@@ -29,12 +34,12 @@ Release History
 - ``static.sh`` and ``examples.sh`` will now check any notebooks in the
   ``docs`` folder (not just ``docs/examples``). (`#46`_)
 
-
 **Fixed**
 
 - The ``static.sh``/``examples.sh`` script will no longer fail if there are no
   notebooks in the ``docs`` folder. (`#46`_)
 
+.. _#45: https://github.com/nengo/nengo-bones/pull/45
 .. _#46: https://github.com/nengo/nengo-bones/pull/46
 
 0.2.1 (May 24, 2019)

@@ -218,3 +218,16 @@ def load_config(conf_file=None):
     fill_defaults(config)
 
     return config
+
+
+sections = {
+    "travis_yml": ".travis.yml",
+    "codecov_yml": ".codecov.yml",
+    "docs_conf_py": "docs/conf.py",
+    "setup_cfg": "setup.cfg",
+    "setup_py": "setup.py",
+    "contributing_rst": "CONTRIBUTING.rst",
+    "contributors_rst": "CONTRIBUTORS.rst",
+    "license_rst": "LICENSE.rst",
+    "manifest_in": "MANIFEST.in",
+}

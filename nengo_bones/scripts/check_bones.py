@@ -26,7 +26,7 @@ def main(root_dir):
 
     passed = True
 
-    for filename in nengo_bones.all_templated_files:
+    for filename in nengo_bones.config.sections.values():
         click.echo(filename + ":")
 
         # TODO: Ensure that the file is there <=> it is the config

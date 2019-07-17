@@ -11,10 +11,10 @@ import os
 from click.testing import CliRunner
 import pytest
 
-from nengo_bones import all_templated_files
-from nengo_bones.version import version as bones_version
+from nengo_bones.config import sections
 from nengo_bones.scripts import generate_bones
 from nengo_bones.tests.utils import assert_exit, make_has_line, write_file
+from nengo_bones.version import version as bones_version
 
 
 def test_ci_scripts(tmpdir):
@@ -574,7 +574,7 @@ def test_generate_all(tmpdir):
                 "pkg_name: dummy\n" \
                 "repo_name: dummy/dummy_repo\n"
 
-    for configname in all_templated_files.values():
+    for configname in sections:
         nengo_yml += "%s: %s\n" % (
             configname, "\n  jobs: []" if configname == "travis_yml" else "{}")
 
@@ -587,7 +587,7 @@ def test_generate_all(tmpdir):
         ])
     assert_exit(result, 0)
 
-    for file_path in all_templated_files:
+    for file_path in sections.values():
         assert os.path.exists(str(tmpdir.join(file_path)))
 
 
@@ -605,5 +605,5 @@ def test_generate_none(tmpdir):
         ])
     assert_exit(result, 0)
 
-    for file_path in all_templated_files:
+    for file_path in sections.values():
         assert not os.path.exists(str(tmpdir.join(file_path)))
