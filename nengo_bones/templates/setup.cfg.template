@@ -89,6 +89,12 @@ nengo_test_unsupported =
         "{{ val | wordwrap(break_long_words=False, wrapstring="\n        ") }}"
 {% endfor %}
 {% endif %}
+{% if pytest.allclose_tolerances %}
+allclose_tolerances =
+{% for item in pytest.allclose_tolerances %}
+    {{ item }}
+{% endfor %}
+{% endif %}
 
 [pylint]
 # note: pylint doesn't look in setup.cfg by default, need to call it with

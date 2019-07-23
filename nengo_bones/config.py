@@ -150,6 +150,24 @@ def validate_black_config(config):
         )
 
 
+def validate_setup_cfg_config(config):
+    """
+    Validates the ``setup_cfg`` section of the config.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary containing configuration values.
+    """
+    if "setup_cfg" in config:
+        if "pytest" in config["setup_cfg"]:
+            pytest = config["setup_cfg"]["pytest"]
+            check_list(pytest, "addopts")
+            check_list(pytest, "allclose_tolerances")
+            check_list(pytest, "filterwarnings")
+            check_list(pytest, "norecursedirs")
+
+
 def validate_config(config):  # noqa: C901
     """
     Validates a populated config dict.
@@ -178,6 +196,7 @@ def validate_config(config):  # noqa: C901
             validate_ci_config(ci_config)
 
     validate_black_config(config)
+    validate_setup_cfg_config(config)
 
     # TODO: check that there aren't unused config options in yml
 

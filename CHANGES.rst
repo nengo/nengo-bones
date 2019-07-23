@@ -22,7 +22,12 @@ Release History
 0.4.1 (unreleased)
 ==================
 
+**Added**
 
+- Added ``allclose_tolerances`` option to the ``pytest`` section of the
+  ``setup.cfg`` template to set tolerances for pytest-allclose. (`#47`_)
+
+.. _#47: https://github.com/nengo/nengo-bones/pull/47
 
 0.4.0 (July 26, 2019)
 =====================

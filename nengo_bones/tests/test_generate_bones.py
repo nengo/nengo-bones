@@ -550,6 +550,8 @@ def test_setup_cfg(tmpdir):
                   foobar
             filterwarnings:
               - "ignore:hello:DeprecationWarning"
+            allclose_tolerances:
+              - "test_something.py:test_something atol=0.01  # comment"
           pylint:
             ignore:
               - zz-some-file.py
@@ -595,6 +597,8 @@ def test_setup_cfg(tmpdir):
     assert has_line("    mymarker: foobar")
     assert has_line("filterwarnings =")
     assert has_line("    ignore:hello:DeprecationWarning")
+    assert has_line("allclose_tolerances =")
+    assert has_line("    test_something.py:test_something atol=0.01  # comment")
     assert has_line("[pylint]")
     assert has_line("ignore =")
     assert has_line("    zz-some-file.py")
