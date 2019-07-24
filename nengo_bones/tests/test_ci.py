@@ -13,8 +13,7 @@ import sys
 import pytest
 
 
-@pytest.mark.xfail("TRAVIS" not in os.environ,
-                   reason="Not running on TravisCI")
+@pytest.mark.xfail("TRAVIS" not in os.environ, reason="Not running on TravisCI")
 def test_extra_commands():
     # pre_commands will be used to set an environment variable, which
     # we check for here
@@ -26,8 +25,7 @@ def test_extra_commands():
     assert "TEST_POST_COMMANDS" not in os.environ
 
 
-@pytest.mark.xfail("TRAVIS" not in os.environ,
-                   reason="Not running on TravisCI")
+@pytest.mark.xfail("TRAVIS" not in os.environ, reason="Not running on TravisCI")
 def test_env_vars():
     # global variable created in travis config
     assert os.environ["TEST_GLOBAL_VAR"] == "test global var val"
@@ -36,8 +34,7 @@ def test_env_vars():
     assert os.environ["TEST_LOCAL_VAR"] == "test local var val"
 
 
-@pytest.mark.xfail("TRAVIS" not in os.environ,
-                   reason="Not running on TravisCI")
+@pytest.mark.xfail("TRAVIS" not in os.environ, reason="Not running on TravisCI")
 def test_coverage(pytestconfig):
     cov_flag = pytestconfig.getoption("--cov", None)
 
@@ -48,14 +45,14 @@ def test_coverage(pytestconfig):
         assert cov_flag is None
 
 
-@pytest.mark.xfail("TRAVIS" not in os.environ,
-                   reason="Not running on TravisCI")
+@pytest.mark.xfail("TRAVIS" not in os.environ, reason="Not running on TravisCI")
 def test_custom_args(pytestconfig):
     assert pytestconfig.getoption("--test-arg")
 
 
-@pytest.mark.xfail("TRAVIS" not in os.environ,
-                   reason="Not running on TravisCI")
+@pytest.mark.xfail("TRAVIS" not in os.environ, reason="Not running on TravisCI")
 def test_python_version():
-    assert ".".join(str(x) for x in sys.version_info[:2]) == os.environ[
-        "TRAVIS_PYTHON_VERSION"]
+    assert (
+        ".".join(str(x) for x in sys.version_info[:2])
+        == os.environ["TRAVIS_PYTHON_VERSION"]
+    )

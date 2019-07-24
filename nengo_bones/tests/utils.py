@@ -52,8 +52,7 @@ def make_has_line(lines, strip=False, regex=False):
             if strip:
                 line = line.strip()
 
-            match = (re.search(target, line) if regex else
-                     line.startswith(target))
+            match = re.search(target, line) if regex else line.startswith(target)
             if match:
                 return True
 

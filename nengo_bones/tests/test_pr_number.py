@@ -12,6 +12,7 @@ from nengo_bones.tests.utils import assert_exit, make_has_line, write_file
 
 def mocked_requests_get(url, repo=None, number=None):
     """Used to mock out github requests so that we don't get timed out."""
+
     class MockResponse:
         def __init__(self, json_data):
             self.json_data = json_data
@@ -20,7 +21,8 @@ def mocked_requests_get(url, repo=None, number=None):
             return self.json_data
 
     assert url == (
-        "https://api.github.com/repos/%s/issues?state=all&sort=created" % repo)
+        "https://api.github.com/repos/%s/issues?state=all&sort=created" % repo
+    )
 
     return MockResponse([{"number": number}])
 
@@ -30,25 +32,29 @@ def test_pr_number(monkeypatch, tmpdir, mode):
     repo = "a-repo/%s" % mode
 
     monkeypatch.setattr(
-        pr_number.requests, "get",
-        partial(mocked_requests_get, repo=repo, number=len(mode)))
+        pr_number.requests,
+        "get",
+        partial(mocked_requests_get, repo=repo, number=len(mode)),
+    )
 
     if mode != "repo":
-        write_file(tmpdir, ".nengobones.yml", """
+        write_file(
+            tmpdir,
+            ".nengobones.yml",
+            """
             project_name: Nengo Bones
             pkg_name: nengo-bones
             repo_name: %s
-        """ % repo)
+        """
+            % repo,
+        )
 
     if mode == "repo":
-        result = CliRunner().invoke(
-            pr_number.main,
-            [repo])
+        result = CliRunner().invoke(pr_number.main, [repo])
     elif mode == "conf-arg":
         result = CliRunner().invoke(
-            pr_number.main,
-            ['--conf-file',
-             str(tmpdir.join('.nengobones.yml'))])
+            pr_number.main, ["--conf-file", str(tmpdir.join(".nengobones.yml"))]
+        )
     else:
         original_dir = os.getcwd()
         os.chdir(str(tmpdir))
@@ -59,7 +65,7 @@ def test_pr_number(monkeypatch, tmpdir, mode):
 
     assert_exit(result, 0)
 
-    lines = result.output.split('\n')
+    lines = result.output.split("\n")
     has_line = make_has_line(lines, regex=True)
     assert has_line(r"about %s\.\.\." % repo)
     assert has_line(r"assigned #%s" % (len(mode) + 1))

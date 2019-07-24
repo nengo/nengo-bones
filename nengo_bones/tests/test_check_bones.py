@@ -7,15 +7,21 @@ from nengo_bones.tests.utils import write_file, assert_exit
 
 
 def test_files(tmpdir):
-    write_file(tmpdir, ".nengobones.yml", """
+    write_file(
+        tmpdir,
+        ".nengobones.yml",
+        """
         project_name: Dumdum
         pkg_name: dummy
         repo_name: dummy_org/dummy
         contributors_rst: {}
-    """)
+    """,
+    )
     check_args = [
-        "--root-dir", str(tmpdir),
-        "--conf-file", str(tmpdir.join(".nengobones.yml")),
+        "--root-dir",
+        str(tmpdir),
+        "--conf-file",
+        str(tmpdir.join(".nengobones.yml")),
         "--verbose",
     ]
 
@@ -28,9 +34,14 @@ def test_files(tmpdir):
     # generate a valid contributors.rst
     result = CliRunner().invoke(
         generate_bones.main,
-        ["--conf-file", str(tmpdir.join(".nengobones.yml")),
-         "--output-dir", str(tmpdir),
-         "contributors-rst"])
+        [
+            "--conf-file",
+            str(tmpdir.join(".nengobones.yml")),
+            "--output-dir",
+            str(tmpdir),
+            "contributors-rst",
+        ],
+    )
     assert_exit(result, 0)
 
     # successful check

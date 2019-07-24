@@ -40,7 +40,8 @@ def check_list(cfg, key):
     if key in cfg and not isinstance(cfg[key], list):
         raise TypeError(
             "%s should be a list, found '%s'; did you forget "
-            "to add '-' before each entry?" % (key, cfg[key]))
+            "to add '-' before each entry?" % (key, cfg[key])
+        )
 
 
 def find_config():
@@ -101,8 +102,8 @@ def fill_defaults(config):
         cfg.setdefault("python_requires", ">=3.5")
         cfg.setdefault("include_package_data", False)
         cfg.setdefault(
-            "url",
-            "https://www.nengo.ai/%s" % config["pkg_name"].replace("_", "-"))
+            "url", "https://www.nengo.ai/%s" % config["pkg_name"].replace("_", "-")
+        )
 
     if "setup_cfg" in config:
         cfg = config["setup_cfg"]
@@ -159,15 +160,20 @@ def validate_ci_config(ci_config):
         Dictionary containing ci_scripts configuration values.
     """
     if "template" not in ci_config:
-        raise KeyError("Script config must define 'template' "
-                       "(for entry %s)" % ci_config)
+        raise KeyError(
+            "Script config must define 'template' " "(for entry %s)" % ci_config
+        )
 
     # make sure that people don't accidentally do things like
     # pip_install: dependency (which gives a string), rather than
     # pip_install:
     #   - dependency
-    list_opts = ("pip_install", "pre_commands", "post_commands",
-                 "codespell_ignore_words")
+    list_opts = (
+        "pip_install",
+        "pre_commands",
+        "post_commands",
+        "codespell_ignore_words",
+    )
     for opt in list_opts:
         check_list(ci_config, opt)
 
@@ -192,8 +198,10 @@ def load_config(conf_file=None):
         conf_file = find_config()
 
     if not os.path.exists(str(conf_file)):
-        raise RuntimeError("Could not find conf_file: %s\n\nPerhaps you are "
-                           "not in the project's root directory?" % conf_file)
+        raise RuntimeError(
+            "Could not find conf_file: %s\n\nPerhaps you are "
+            "not in the project's root directory?" % conf_file
+        )
 
     def ordered_load(stream):
         """Use OrderedDict instead of dict for loading mappings."""
@@ -206,8 +214,8 @@ def load_config(conf_file=None):
             return OrderedDict(loader.construct_pairs(node))
 
         OrderedLoader.add_constructor(
-            yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
-            construct_mapping)
+            yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, construct_mapping
+        )
         return yaml.load(stream, OrderedLoader)
 
     with open(str(conf_file)) as f:

@@ -163,9 +163,7 @@ def load_env():
     override_dirs.append(bones_toplevel)
     override_loader = jinja2.FileSystemLoader(override_dirs)
     # If those fail, use the builtins
-    builtin_loader = jinja2.FileSystemLoader(
-        os.path.join(bones_toplevel, "templates")
-    )
+    builtin_loader = jinja2.FileSystemLoader(os.path.join(bones_toplevel, "templates"))
 
     env = jinja2.Environment(
         loader=jinja2.ChoiceLoader([override_loader, builtin_loader]),

@@ -13,8 +13,7 @@ def test_find_config():
 
 
 def test_fill_defaults():
-    init_cfg = {"travis_yml": {"jobs": [{"script": "docs-test"}]},
-                "codecov_yml": {}}
+    init_cfg = {"travis_yml": {"jobs": [{"script": "docs-test"}]}, "codecov_yml": {}}
     config.fill_defaults(init_cfg)
 
     assert init_cfg["travis_yml"]["python"] == "3.6"
@@ -80,29 +79,27 @@ def test_load_config(tmpdir):
         "copyright_start": 0,
         "copyright_end": 1,
         "ci_scripts": [
-            {"template": "static",
-             "pip_install": ["static_pip0", "static_pip1"]}
+            {"template": "static", "pip_install": ["static_pip0", "static_pip1"]}
         ],
         "travis_yml": {
             "python": "6.0",
-            "global_vars": {
-                "TEST_VAR": "test var val"},
+            "global_vars": {"TEST_VAR": "test var val"},
             "pypi_user": "dummy_pypi_user",
-            "deploy_dists": [
-                "sdist",
-                "bdist_wheel"
-            ],
+            "deploy_dists": ["sdist", "bdist_wheel"],
             "jobs": [{"script": "static", "language": "generic"}],
             "bones_install": "nengo-bones",
         },
         "codecov_yml": {
             "skip_appveyor": False,
             "abs_target": "test_abs",
-            "diff_target": "test_diff"
+            "diff_target": "test_diff",
         },
     }
 
-    utils.write_file(tmpdir, ".nengobones.yml", """
+    utils.write_file(
+        tmpdir,
+        ".nengobones.yml",
+        """
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummyorg/dummy
@@ -133,7 +130,8 @@ def test_load_config(tmpdir):
           skip_appveyor: false
           abs_target: test_abs
           diff_target: test_diff
-        """)
+        """,
+    )
 
     loaded = config.load_config(tmpdir.join(".nengobones.yml"))
 

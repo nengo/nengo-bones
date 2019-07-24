@@ -12,13 +12,12 @@ from nengo_bones.templates import BonesTemplate, load_env
 
 
 @click.command()
-@click.option("--root-dir", default=".",
-              help="Directory containing files to be checked")
+@click.option(
+    "--root-dir", default=".", help="Directory containing files to be checked"
+)
 @click.option("--conf-file", default=None, help="Filepath for config file")
 @click.option(
-    "--verbose",
-    is_flag=True,
-    help="Show more information about failed checks.",
+    "--verbose", is_flag=True, help="Show more information about failed checks."
 )
 def main(root_dir, conf_file, verbose):
     """
@@ -57,23 +56,26 @@ def main(root_dir, conf_file, verbose):
             continue
 
         template = BonesTemplate(filename, env)
-        new_lines = template.render(
-            **template.get_render_data(config),
-        ).splitlines(keepends=True)
+        new_lines = template.render(**template.get_render_data(config)).splitlines(
+            keepends=True
+        )
 
-        diff = list(difflib.unified_diff(
-            current_lines,
-            new_lines,
-            fromfile="current %s" % (filename,),
-            tofile="new %s" % (filename,),
-        ))
+        diff = list(
+            difflib.unified_diff(
+                current_lines,
+                new_lines,
+                fromfile="current %s" % (filename,),
+                tofile="new %s" % (filename,),
+            )
+        )
 
         if len(diff) > 0:
             click.secho(
                 "  Content does not match nengo-bones (version %s);\n"
                 "  please update by running `bones-generate` from\n"
                 "  the root directory." % (__version__,),
-                fg="red")
+                fg="red",
+            )
             if verbose:
                 click.echo("\n  Full diff")
                 click.echo("  =========")
