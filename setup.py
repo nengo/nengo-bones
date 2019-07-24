@@ -12,7 +12,8 @@ except ImportError:
     raise ImportError(
         "'setuptools' is required but not installed. To install it, "
         "follow the instructions at "
-        "https://pip.pypa.io/en/stable/installing/#installing-with-get-pip-py")
+        "https://pip.pypa.io/en/stable/installing/#installing-with-get-pip-py"
+    )
 
 
 def read(*filenames, **kwargs):
@@ -26,21 +27,18 @@ def read(*filenames, **kwargs):
 
 
 root = os.path.dirname(os.path.realpath(__file__))
-version = runpy.run_path(os.path.join(
-    root, "nengo_bones", "version.py"))["version"]
+version = runpy.run_path(os.path.join(root, "nengo_bones", "version.py"))["version"]
 
 install_req = [
+    "black>=19.3b0; python_version>='3.6'",
     "click>=7.0",
     "jinja2>=2.10",
     "pyyaml>=5.1",
     "requests>=2.21",
 ]
-docs_req = [
-]
-optional_req = [
-]
-tests_req = [
-]
+docs_req = []
+optional_req = []
+tests_req = []
 
 setup(
     name="nengo-bones",
@@ -67,7 +65,7 @@ setup(
             "bones-generate=nengo_bones.scripts.generate_bones:main",
             "bones-check=nengo_bones.scripts.check_bones:main",
             "bones-pr-number=nengo_bones.scripts.pr_number:main",
-        ],
+        ]
     },
     classifiers=[
         "Development Status :: 4 - Beta",

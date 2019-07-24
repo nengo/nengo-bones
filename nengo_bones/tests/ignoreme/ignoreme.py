@@ -6,3 +6,7 @@ str = """
 abc 
 de
 """
+
+# this would be changed if black formatting were applied
+not_black_formatted = ["a", "b",
+                       "c"]

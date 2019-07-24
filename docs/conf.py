@@ -44,11 +44,7 @@ nbsphinx_timeout = -1
 
 # -- sphinx
 nitpicky = True
-exclude_patterns = [
-    "_build",
-    "**/.ipynb_checkpoints",
-    "tests/test-example.ipynb",
-]
+exclude_patterns = ["_build", "**/.ipynb_checkpoints", "tests/test-example.ipynb"]
 linkcheck_timeout = 30
 source_suffix = ".rst"
 source_encoding = "utf-8"
@@ -57,7 +53,7 @@ linkcheck_ignore = [r"http://localhost:\d+"]
 linkcheck_anchors = True
 default_role = "py:obj"
 pygments_style = "sphinx"
-suppress_warnings = ['image.nonlocal_uri']
+suppress_warnings = ["image.nonlocal_uri"]
 
 project = "Nengo Bones"
 authors = "Applied Brain Research"

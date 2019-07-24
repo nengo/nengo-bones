@@ -19,14 +19,24 @@ Release History
    - Removed
    - Fixed
 
-0.3.1 (unreleased)
+0.4.0 (unreleased)
 ==================
 
 **Added**
 
 - Added style guide and release instructions to documentation. (`#44`_)
+- Added templates for ``.pre-commit-config.yaml`` and ``pyproject.toml``
+  so downstream repositories can easily adopt Black. (`#49`_)
+
+**Changed**
+
+- We now check that Python source files are autoformatted with Black
+  in the ``static.sh`` script. (`#49`_)
+- Templates will now be autoformatted with Black during the rendering
+  process, if Black is installed. (`#49`_)
 
 .. _#44: https://github.com/nengo/nengo-bones/pull/44
+.. _#49: https://github.com/nengo/nengo-bones/pull/49
 
 0.3.0 (July 19, 2019)
 =====================

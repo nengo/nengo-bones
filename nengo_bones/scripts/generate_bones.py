@@ -176,5 +176,21 @@ def docs_conf_py(ctx):
     render_template(ctx, "docs/conf.py")
 
 
+@main.command()
+@click.pass_context
+def pre_commit_config_yaml(ctx):
+    """Generate .pre-commit-config.yaml file."""
+
+    render_template(ctx, ".pre-commit-config.yaml")
+
+
+@main.command()
+@click.pass_context
+def pyproject_toml(ctx):
+    """Generate pyproject.toml file."""
+
+    render_template(ctx, "pyproject.toml")
+
+
 if __name__ == "__main__":
     main(obj={})  # pragma: no cover pylint: disable=no-value-for-parameter

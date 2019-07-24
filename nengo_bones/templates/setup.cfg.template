@@ -52,6 +52,7 @@ ignore =
     {{ ignore }}
     {% endfor %}
 max-complexity = 10
+max-line-length = 88
 
 [tool:pytest]
 {% if pytest.addopts %}
@@ -144,7 +145,7 @@ known-third-party =
     {% for third_party in pylint.known_third_party %}
     {{ third_party }},
     {% endfor %}
-max-line-length = 79
+max-line-length = 88
 valid-metaclass-classmethod-first-arg = metacls
 reports = no
 score = no

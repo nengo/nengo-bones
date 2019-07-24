@@ -120,7 +120,37 @@ def fill_defaults(config):
         cfg.setdefault("nengo_logo_color", "#a8acaf")
 
 
-def validate_config(config):
+def validate_black_config(config):
+    """
+    Validates aspects of the config related to Black.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary containing configuration values.
+    """
+
+    has_precommit = "pre_commit_config_yaml" in config
+    has_pyproject = "pyproject_toml" in config
+    if not (has_precommit or has_pyproject):
+        return
+    if not (has_pyproject and has_precommit):
+        raise KeyError(
+            "Config file must define both 'pyproject_toml' "
+            "and 'pre_commit_config_yaml' or neither"
+        )
+    precommit = config["pre_commit_config_yaml"]
+    pyproject = config["pyproject_toml"]
+    check_list(precommit, "exclude")
+    check_list(pyproject, "exclude")
+    if precommit.get("exclude", []) != pyproject.get("exclude", []):
+        raise ValueError(
+            "'pyproject_toml' and 'pre_commit_config_yaml' "
+            "must have the same 'exclude' list."
+        )
+
+
+def validate_config(config):  # noqa: C901
     """
     Validates a populated config dict.
 
@@ -146,6 +176,8 @@ def validate_config(config):
     if "ci_scripts" in config:
         for ci_config in config["ci_scripts"]:
             validate_ci_config(ci_config)
+
+    validate_black_config(config)
 
     # TODO: check that there aren't unused config options in yml
 
@@ -238,4 +270,6 @@ sections = {
     "contributors_rst": "CONTRIBUTORS.rst",
     "license_rst": "LICENSE.rst",
     "manifest_in": "MANIFEST.in",
+    "pre_commit_config_yaml": ".pre-commit-config.yaml",
+    "pyproject_toml": "pyproject.toml",
 }

@@ -42,12 +42,17 @@ jobs:
       SCRIPT="test"
       TEST_ARGS="--test-arg --test-arg"
     cache: False
-    python: 3.5
   -
     env:
       TEST_LOCAL_VAR="test local var val"
       SCRIPT="test-coverage"
       TEST_ARGS="--test-arg"
+  -
+    env:
+      TEST_LOCAL_VAR="test local var val"
+      SCRIPT="test-coverage"
+      TEST_ARGS="--test-arg"
+    python: 3.5
   -
     env:
       TEST_LOCAL_VAR="test local var val"
@@ -89,7 +94,11 @@ before_install:
   # install/run nengo-bones
   - pip install git+https://github.com/nengo/nengo-bones.git@$BRANCH_NAME
   - bones-generate --output-dir .ci ci-scripts
-  - bones-check
+  - if [[ "$TRAVIS_PYTHON_VERSION" < "3.6" ]]; then
+        echo "Skipping bones-check because Python $TRAVIS_PYTHON_VERSION < 3.6";
+    else
+        bones-check;
+    fi
   # display environment info
   - pip freeze
 

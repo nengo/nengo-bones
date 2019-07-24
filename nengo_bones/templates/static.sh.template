@@ -33,6 +33,9 @@ shopt -s globstar
                 -- "${nb_file%.ipynb}.py"
         done
     fi
+    if [[ "$(python -c 'import sys; print(sys.version_info >= (3, 6))')" == "True" ]]; then
+        exe black --check {{ pkg_name }}
+    fi
     exe pylint docs --rcfile=setup.cfg --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
     exe flake8 docs --extend-ignore=E402,E703,W291,W293,W391
     for nb_file in docs/**/*.ipynb; do

@@ -11,6 +11,25 @@ and follow it when working on Nengo projects.
 Python
 ======
 
+We use ``black`` for automated formatting.
+We recommend that you set up your editor to run ``black``
+when you save a Python file;
+see `Black editor integration
+<https://black.readthedocs.io/en/stable/editor_integration.html>`__
+for details on how to do that.
+
+Whether you set up ``black`` with your editor or not,
+you should run ``black`` through a pre-commit hook.
+To do this, first `install pre-commit <https://pre-commit.com/#install>`__.
+Then, run
+
+.. code-block:: bash
+
+   pre-commit install
+
+to install ``black`` and any other pre-commit hooks
+that a project is using.
+
 We use ``flake8`` and ``pylint`` for automated checks.
 The exact options may vary from project to project,
 so the easiest way to run these checks is to

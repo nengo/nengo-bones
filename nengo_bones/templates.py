@@ -3,7 +3,14 @@
 from collections import OrderedDict
 import os
 import stat
+import warnings
 
+try:
+    from black import FileMode, format_str, TargetVersion
+
+    HAS_BLACK = True
+except ImportError:
+    HAS_BLACK = False
 import jinja2
 
 
@@ -46,6 +53,7 @@ class BonesTemplate:
         section = output_file.lstrip(".")
         section = section.replace(".", "_")
         section = section.replace("/", "_")
+        section = section.replace("-", "_")
         section = section.lower()
         self.section = section
 
@@ -116,7 +124,25 @@ class BonesTemplate:
         data : dict
             Will be passed on to the ``template.render`` function.
         """
-        return self.env.get_template(self.template_file).render(**data)
+        rendered = self.env.get_template(self.template_file).render(**data)
+
+        # Format Python templates with black
+        if HAS_BLACK:
+            if self.output_file.endswith(".py"):
+                black_mode = FileMode(
+                    target_versions={
+                        TargetVersion.PY35,
+                        TargetVersion.PY36,
+                        TargetVersion.PY37,
+                    }
+                )
+                rendered = format_str(rendered, mode=black_mode)
+        else:
+            warnings.warn(
+                "Black not installed, rendered template may not be formatted correctly"
+            )
+
+        return rendered
 
     def render_to_file(self, output_dir, output_name=None, **data):
         """

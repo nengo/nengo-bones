@@ -19,11 +19,15 @@ travis_yml:
       env:
         TEST_LOCAL_VAR: test local var val
       test_args: --test-arg --test-arg
-      python: 3.5
     - script: test-coverage
       env:
         TEST_LOCAL_VAR: test local var val
       test_args: --test-arg
+    - script: test-coverage
+      env:
+        TEST_LOCAL_VAR: test local var val
+      test_args: --test-arg
+      python: 3.5
     - script: test-nengo
       env:
         TEST_LOCAL_VAR: test local var val
@@ -103,6 +107,7 @@ setup_py:
   # note: docs/tests_req are intentionally empty to test that the correct
   # requirements are built into the ci scripts
   install_req:
+    - black>=19.3b0; python_version>='3.6'
     - click>=7.0
     - jinja2>=2.10
     - pyyaml>=5.1
@@ -150,9 +155,19 @@ docs_conf_py:
   exclude_patterns:
     - tests/test-example.ipynb
   sphinx_options:
-    suppress_warnings: "['image.nonlocal_uri']"
+    suppress_warnings: '["image.nonlocal_uri"]'
   extensions:
     - sphinx_click.ext
   intersphinx_mapping:
     click: https://click.palletsprojects.com/en/7.x
   analytics_id: UA-41658423-2
+
+pre_commit_config_yaml:
+  exclude:
+    - tests/ignoreme/ignoreme.py
+    - tests/ignoreme/ignoreme.py
+
+pyproject_toml:
+  exclude:
+    - tests/ignoreme/ignoreme.py
+    - tests/ignoreme/ignoreme.py
