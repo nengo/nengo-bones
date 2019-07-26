@@ -35,9 +35,12 @@ Release History
 - Templates will now be autoformatted with Black during the rendering
   process, if Black is installed. (`#49`_)
 - Take advantage of multiprocessing to speed up pylint static checks. (`#49`_)
+- The ``E203`` flake8 check and ``bad-continuation`` pylint check are now
+  disabled by default. (`#50`_)
 
 .. _#44: https://github.com/nengo/nengo-bones/pull/44
 .. _#49: https://github.com/nengo/nengo-bones/pull/49
+.. _#50: https://github.com/nengo/nengo-bones/pull/50
 
 0.3.0 (July 19, 2019)
 =====================
