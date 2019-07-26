@@ -14,7 +14,7 @@ shopt -s globstar
 {% block script %}
     exe pylint {{ pkg_name }} --rcfile=setup.cfg --jobs=0
     exe flake8 {{ pkg_name }}
-    if ls docs/**/*.ipynb 2>/dev/null; then
+    if ls docs/**/*.ipynb &>/dev/null; then
         exe jupyter nbconvert \
             --log-level WARN \
             --to python \
