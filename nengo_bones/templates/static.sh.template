@@ -12,7 +12,7 @@ shopt -s globstar
 {% endblock %}
 
 {% block script %}
-    exe pylint {{ pkg_name }} --rcfile=setup.cfg
+    exe pylint {{ pkg_name }} --rcfile=setup.cfg --jobs=0
     exe flake8 {{ pkg_name }}
     if ls docs/**/*.ipynb 2>/dev/null; then
         exe jupyter nbconvert \
@@ -36,7 +36,7 @@ shopt -s globstar
     if [[ "$(python -c 'import sys; print(sys.version_info >= (3, 6))')" == "True" ]]; then
         exe black --check {{ pkg_name }}
     fi
-    exe pylint docs --rcfile=setup.cfg --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
+    exe pylint docs --rcfile=setup.cfg --jobs=0 --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
     exe flake8 docs --extend-ignore=E402,E703,W291,W293,W391
     for nb_file in docs/**/*.ipynb; do
         rm "${nb_file%.ipynb}.py"

@@ -34,6 +34,7 @@ Release History
   in the ``static.sh`` script. (`#49`_)
 - Templates will now be autoformatted with Black during the rendering
   process, if Black is installed. (`#49`_)
+- Take advantage of multiprocessing to speed up pylint static checks. (`#49`_)
 
 .. _#44: https://github.com/nengo/nengo-bones/pull/44
 .. _#49: https://github.com/nengo/nengo-bones/pull/49
