@@ -119,6 +119,12 @@ def fill_defaults(config):
         cfg.setdefault("nengo_logo", "general-full-light.svg")
         cfg.setdefault("nengo_logo_color", "#a8acaf")
 
+    if "contributors_rst" in config:
+        cfg = config["contributors_rst"]
+        cfg.setdefault(
+            "nengo_list", config.get("license_rst", {}).get("type", "") == "nengo"
+        )
+
 
 def validate_black_config(config):
     """

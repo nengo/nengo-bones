@@ -4,6 +4,11 @@
 {{ project_name }} contributors
 *************{{ '*' * project_name | length }}
 
-See https://www.nengo.ai/people/ for a list of
-the many people who have worked on {{ project_name }};
-thank you for your contributions!
+See https://github.com/{{ repo_name }}/graphs/contributors
+for a list of the people who have committed to {{ project_name }}.
+Thank you for your contributions!
+{% if nengo_list %}
+
+For the full list of the many contributors to the Nengo ecosystem,
+see https://www.nengo.ai/people/.
+{% endif %}
