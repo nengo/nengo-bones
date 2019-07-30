@@ -166,6 +166,7 @@ def validate_setup_cfg_config(config):
             check_list(pytest, "allclose_tolerances")
             check_list(pytest, "filterwarnings")
             check_list(pytest, "norecursedirs")
+            check_list(pytest, "plt_filename_drop")
 
 
 def validate_config(config):  # noqa: C901

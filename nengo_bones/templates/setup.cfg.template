@@ -95,6 +95,15 @@ allclose_tolerances =
     {{ item }}
 {% endfor %}
 {% endif %}
+{% if pytest.plt_dirname %}
+plt_dirname = {{ pytest.plt_dirname }}
+{% endif %}
+{% if pytest.plt_filename_drop %}
+plt_filename_drop =
+{% for item in pytest.plt_filename_drop %}
+    {{ item }}
+{% endfor %}
+{% endif %}
 
 [pylint]
 # note: pylint doesn't look in setup.cfg by default, need to call it with
