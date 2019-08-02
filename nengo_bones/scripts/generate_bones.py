@@ -10,8 +10,7 @@ from nengo_bones.templates import BonesTemplate, load_env
 
 
 def render_template(ctx, output_file):
-    """
-    Render a template to file.
+    """Render a template to file.
 
     Parameters
     ----------
@@ -33,7 +32,7 @@ def render_template(ctx, output_file):
 @click.option("--output-dir", default=".", help="Output directory for scripts")
 @click.pass_context
 def main(ctx, conf_file, output_dir):
-    """Loads config file and sets up template environment.
+    """Load config file and set up template environment.
 
     By default, this updates all templated files that are
     to be committed to the repository.

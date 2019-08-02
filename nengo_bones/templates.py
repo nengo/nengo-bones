@@ -15,8 +15,7 @@ import jinja2
 
 
 class BonesTemplate:
-    """
-    A templated file known to Nengo Bones.
+    """A templated file known to Nengo Bones.
 
     The only necessary information is the output filename, relative to the
     ``templates`` directory, which means that the output filename for the
@@ -60,8 +59,7 @@ class BonesTemplate:
         self.template_file = "%s.template" % (output_file,)
 
     def get_render_data(self, config):
-        """
-        Construct the ``data`` that will be used to render this template.
+        """Construct the ``data`` that will be used to render this template.
 
         This method creates a new dictionary so the original ``config``
         is not modified. Additionally, certain sections have
@@ -116,8 +114,7 @@ class BonesTemplate:
         return data
 
     def render(self, **data):
-        """
-        Render this template to a string.
+        """Render this template to a string.
 
         Parameters
         ----------
@@ -145,8 +142,7 @@ class BonesTemplate:
         return rendered
 
     def render_to_file(self, output_dir, output_name=None, **data):
-        """
-        Render a template to file.
+        """Render a template to file.
 
         .. note:: Rendered shell scripts (files with the ``.sh extension``)
                   are automatically marked as executable.
@@ -178,7 +174,7 @@ class BonesTemplate:
 
 
 def load_env():
-    """Creates a jinja environment for loading/rendering templates."""
+    """Create a jinja environment for loading/rendering templates."""
 
     bones_toplevel = os.path.normpath(os.path.dirname(__file__))
 

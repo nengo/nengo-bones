@@ -5,7 +5,7 @@ from traceback import print_tb
 
 
 def write_file(tmpdir, filename, contents):
-    """Writes a (multiline) string to file."""
+    """Write a (multiline) string to file."""
 
     contents = contents.splitlines()
 
@@ -37,7 +37,7 @@ def assert_exit(result, status):
 
 
 def make_has_line(lines, strip=False, regex=False):
-    """Create a function to check file or output lines in order"""
+    """Create a function to check file or output lines in order."""
 
     idx = 0
 

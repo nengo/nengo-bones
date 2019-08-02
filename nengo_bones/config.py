@@ -8,8 +8,7 @@ import yaml
 
 
 def check_list(cfg, key):
-    """
-    Verify that config value is a list.
+    """Verify that config value is a list.
 
     This is designed to catch the common error of specifying
 
@@ -45,8 +44,7 @@ def check_list(cfg, key):
 
 
 def find_config():
-    """
-    Finds the default nengo-bones config file.
+    """Find the default nengo-bones config file.
 
     Returns
     -------
@@ -60,8 +58,7 @@ def find_config():
 
 
 def fill_defaults(config):
-    """
-    Fills in default values in a loaded config (in-place).
+    """Fill in default values in a loaded config (in-place).
 
     Parameters
     ----------
@@ -127,8 +124,7 @@ def fill_defaults(config):
 
 
 def validate_black_config(config):
-    """
-    Validates aspects of the config related to Black.
+    """Validate aspects of the config related to Black.
 
     Parameters
     ----------
@@ -157,8 +153,7 @@ def validate_black_config(config):
 
 
 def validate_setup_cfg_config(config):
-    """
-    Validates the ``setup_cfg`` section of the config.
+    """Validate the ``setup_cfg`` section of the config.
 
     Parameters
     ----------
@@ -176,8 +171,7 @@ def validate_setup_cfg_config(config):
 
 
 def validate_config(config):  # noqa: C901
-    """
-    Validates a populated config dict.
+    """Validate a populated config dict.
 
     Parameters
     ----------
@@ -209,8 +203,7 @@ def validate_config(config):  # noqa: C901
 
 
 def validate_ci_config(ci_config):
-    """
-    Validates an entry in the ci_scripts list of a config dict.
+    """Validate an entry in the ci_scripts list of a config dict.
 
     Parameters
     ----------
@@ -237,8 +230,7 @@ def validate_ci_config(ci_config):
 
 
 def load_config(conf_file=None):
-    """
-    Loads config values from a file and applies defaults/validation.
+    """Load config values from a file and apply defaults/validation.
 
     Parameters
     ----------

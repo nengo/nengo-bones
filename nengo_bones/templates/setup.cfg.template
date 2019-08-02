@@ -115,10 +115,28 @@ plt_filename_drop =
 {% endif %}
 {% endblock %}
 
+{% block pydocstyle %}
+[pydocstyle]
+ignore =
+    D10,
+    D202,
+    D203,
+    D213,
+    D401,
+    D402,
+    D405,
+    D413,
+    D415,
+    D416,
+match-dir = '[^\._].*'
+{% endblock %}
+
 {% block pylint %}
 [pylint]
 # note: pylint doesn't look in setup.cfg by default, need to call it with
 # `pylint ... --rcfile=setup.cfg`
+# Also, this needs to be the last section in this file, so any additional
+# configuration must be added above here.
 {% if pylint.ignore %}
 ignore =
     {% for ignore in pylint.ignore %}
