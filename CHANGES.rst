@@ -25,11 +25,14 @@ Release History
 **Added**
 
 - Added ``plt_dirname`` option to the ``pytest`` section of the ``setup.cfg``
-  template to set the plot directory for pytest-plt (`#52`_)
+  template to set the plot directory for pytest-plt. (`#52`_)
 - Added ``plt_filename_drop`` option to the ``pytest`` section of the
   ``setup.cfg`` template to set pruning patterns for pytest-plt. (`#52`_)
+- Added ``rng_salt`` option to the ``pytest`` section of the ``setup.cfg``
+  template to set the salt for pytest-rng. (`#55`_)
 
 .. _#52: https://github.com/nengo/nengo-bones/pull/52
+.. _#55: https://github.com/nengo/nengo-bones/pull/55
 
 0.4.1 (July 26, 2019)
 =====================

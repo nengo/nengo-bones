@@ -113,6 +113,9 @@ plt_filename_drop =
     {{ item }}
 {% endfor %}
 {% endif %}
+{%- if pytest.rng_salt %}
+rng_salt = {{ pytest.rng_salt }}
+{%- endif %}
 {% endblock %}
 
 {% block pylint %}
