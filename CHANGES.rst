@@ -19,8 +19,8 @@ Release History
    - Removed
    - Fixed
 
-0.4.2 (unreleased)
-==================
+0.4.2 (August 8, 2019)
+======================
 
 **Added**
 
