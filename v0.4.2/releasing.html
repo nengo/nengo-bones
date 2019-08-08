@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Making releases &#8212; Nengo Bones 0.4.2 docs</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #a8acaf;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+  
+<script type="text/javascript" src="_static/underscore.js"></script>
+  
+  
+<script type="text/javascript" src="_static/doctools.js"></script>
+  
+  
+<script type="text/javascript" src="_static/language_data.js"></script>
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Style guide" href="style.html" />
+    <link rel="prev" title="Configuration options" href="examples/configuration.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai">What is Nengo?</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo Core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">Nengo GUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">Nengo DL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">Nengo SPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">Nengo Extras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-examples/">Nengo Examples</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">Nengo FPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">Nengo Loihi</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-ocl">Nengo OpenCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">Nengo SpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-mpi">Nengo MPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/download"
+            >Download</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo Bones"
+      />
+    </a>
+  </h3>
+  
+  <form class="px-5 pb-5 mb-0 mt-3 border-bottom">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option value="../releasing.html">latest</option>
+        
+        
+          
+        <option selected>v0.4.2</option>
+          
+        
+          
+        <option value="../v0.4.1/releasing.html">
+          v0.4.1
+        </option>
+          
+        
+          
+        <option value="../v0.4.0/releasing.html">
+          v0.4.0
+        </option>
+          
+        
+          
+        <option value="../v0.3.0/releasing.html">
+          v0.3.0
+        </option>
+          
+        
+          
+        <option value="../v0.2.1/releasing.html">
+          v0.2.1
+        </option>
+          
+        
+          
+        <option value="../v0.2.0/releasing.html">
+          v0.2.0
+        </option>
+          
+        
+          
+        <option value="../v0.1.0/releasing.html">
+          v0.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+  <div class="p-5 toctree">
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command line interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Making releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-projects">Python projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Style guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policies.html">Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Release History</a></li>
+</ul>
+
+  </div>
+<form class="p-5 my-0 border-top" action="search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form></div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+  <div class="section" id="making-releases">
+<h1>Making releases<a class="headerlink" href="#making-releases" title="Permalink to this headline">¶</a></h1>
+<p>These instructions assume that
+your project is using Nengo Bones
+to generate CI scripts,
+in particular the <code class="docutils literal notranslate"><span class="pre">deploy.sh</span></code> script.</p>
+<div class="section" id="python-projects">
+<h2>Python projects<a class="headerlink" href="#python-projects" title="Permalink to this headline">¶</a></h2>
+<p>In the following steps, <code class="docutils literal notranslate"><span class="pre">X.Y.Z</span></code> is the new version number.</p>
+<ol class="arabic">
+<li><p>Start a release candidate branch.</p>
+<ol class="arabic">
+<li><p>Switch to <code class="docutils literal notranslate"><span class="pre">master</span></code> and ensure it is up-to-date by doing <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>.</p></li>
+<li><p>Create a new branch off of <code class="docutils literal notranslate"><span class="pre">master</span></code> with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout -b release-candidate-X.Y.Z
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Verify the repository is in a release-ready state.</p>
+<p>The exact procedure will depend on the repository
+and how many changes have occurred since the last release,
+but may include the following steps.</p>
+<ol class="arabic">
+<li><p>Run all tests to ensure they pass on all supported platforms,
+including slow tests that are normally skipped.
+The command will depend on the repository,
+but for Nengo core it’s</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest --pyargs nengo --plots --analytics --logs --slow
+</pre></div>
+</div>
+</li>
+<li><p>Review all of the outputs (e.g., plots)
+generated from the test suite for abnormalities.</p></li>
+<li><p>Build documentation and review it for abnormalities.</p></li>
+<li><p>Commit all changes from the above steps with appropriate messages.</p></li>
+</ol>
+</li>
+<li><p>Make a release commit.</p>
+<ol class="arabic">
+<li><p>Change the version information for your project.
+For most Python projects, it lives in <code class="docutils literal notranslate"><span class="pre">project/version.py</span></code>.
+See that file for details.</p></li>
+<li><p>Set the release date in the changelog, <code class="docutils literal notranslate"><span class="pre">CHANGES.rst</span></code>.</p></li>
+<li><p>Commit all changes from the above steps with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git commit -m <span class="s2">&quot;Release vX.Y.Z&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Push the release candidate branch.</p>
+<p>This will start a TravisCI build that will run several checks
+to verify that the repository is in a good state for release.</p>
+<ol class="arabic">
+<li><p>If the build fails, fix any issues and commit the changes
+such that they appear before the release commit in <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code>.</p></li>
+<li><p>When the TravisCI build succeeds,
+inspect the release and associated metadata and files at,
+e.g., <a class="reference external" href="https://test.pypi.org/project/nengo">https://test.pypi.org/project/nengo</a></p>
+<p>In particular, make sure that extraneous files are not
+included in the released files.
+File sizes give a good indication of whether
+extra files are present.</p>
+<p>If there are any issues, fix them and commit them before
+the release commit.</p>
+</li>
+<li><p><em>Optional:</em>
+Make a pull request on the release candidate branch
+to solicit reviews.</p>
+<p>This should be done if any non-trivial changes were made
+in the previous steps, or if the release includes
+many changes that should be verified on multiple machines.
+Use your best judgment and consult with your team if unsure.</p>
+</li>
+</ol>
+</li>
+<li><p>Release to PyPI.</p>
+<ol class="arabic">
+<li><p>Tag the release commit with the version number; i.e.,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git tag -a vX.Y.Z
+</pre></div>
+</div>
+<p>We use annotated tags to retain authorship information.
+If you wish to provide a message with information about the release,
+feel free, but it is not necessary.</p>
+</li>
+<li><p>Push the tag with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git push origin vX.Y.Z
+</pre></div>
+</div>
+<p>Pushing the tag will trigger another TravisCI build
+that will deploy the release and updated documentation.</p>
+</li>
+<li><p>Confirm the release has been done successfully
+at, e.g., <a class="reference external" href="https://pypi.org/project/nengo">https://pypi.org/project/nengo</a>
+once the TravisCI build is complete.</p></li>
+</ol>
+</li>
+<li><p>Start the next version.</p>
+<ol class="arabic">
+<li><p>Change the version information in <code class="docutils literal notranslate"><span class="pre">project/version.py</span></code>.</p></li>
+<li><p>Make a new changelog section in <code class="docutils literal notranslate"><span class="pre">CHANGES.rst</span></code>
+in order to collect changes for the next release.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> the changes above and commit with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git commit -m <span class="s2">&quot;Starting development of vX.Y.Z+1&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><em>Optional:</em>
+If you opened a PR on the release candidate branch,
+push it to Github so it will be marked as merged.</p></li>
+<li><p>Merge the release candidate branch into <code class="docutils literal notranslate"><span class="pre">master</span></code>
+and push the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.</p></li>
+<li><p>Delete the release candidate branch locally and remotely.</p></li>
+</ol>
+</li>
+<li><p>Announce the new release.</p>
+<ol class="arabic">
+<li><p>Copy the changelog into the tag details on the
+Github release tab.
+Note that the changelog is in reStructuredText,
+while Github expects Markdown.
+Use <a class="reference external" href="https://pandoc.org/try/">Pandoc</a>
+to convert between the two formats
+with the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pandoc -t gfm -f rst CHANGES.rst
+</pre></div>
+</div>
+</li>
+<li><p>Write a release announcement.
+Generally, it’s easiest to start from
+the last release announcement
+and change it to make sense with the current release
+so that the overall template of each announcement is similar.
+Post the release announcement on the
+<a class="reference external" href="https://forum.nengo.ai/c/general/announcements">forum</a>.</p></li>
+<li><p>Make a PR on the
+<a class="reference external" href="https://github.com/abr/abr.github.io">ABR website repo</a>
+modifying a file in the <code class="docutils literal notranslate"><span class="pre">_releases</span></code> folder to
+point to the announcement post on the forum.</p></li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/download/">Download</a>
+    <a href="https://appliedbrainresearch.com">ABR</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>
