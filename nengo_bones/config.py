@@ -112,7 +112,6 @@ def fill_defaults(config):
         cfg.setdefault("flake8", OrderedDict())
         cfg.setdefault("coverage", OrderedDict())
         cfg["pytest"].setdefault("xfail_strict", False)
-        cfg["pytest"].setdefault("addopts", ["-p nengo.tests.options"])
 
     if "docs_conf_py" in config:
         cfg = config["docs_conf_py"]
@@ -171,6 +170,7 @@ def validate_setup_cfg_config(config):
             check_list(pytest, "addopts")
             check_list(pytest, "allclose_tolerances")
             check_list(pytest, "filterwarnings")
+            check_list(pytest, "nengo_neurons")
             check_list(pytest, "norecursedirs")
             check_list(pytest, "plt_filename_drop")
 

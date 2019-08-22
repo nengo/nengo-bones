@@ -103,6 +103,7 @@ class BonesTemplate:
             extras = OrderedDict()
             extra_types = {
                 "classifiers": "list",
+                "py_modules": "list",
                 "entry_points": "dict",
                 "package_data": "dict",
             }

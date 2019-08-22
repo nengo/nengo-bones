@@ -19,10 +19,21 @@ Release History
    - Removed
    - Fixed
 
-0.4.3 (unreleased)
+0.5.0 (unreleased)
 ==================
 
+**Added**
 
+- Added ``nengo_simulator``, ``nengo_simloader`` and ``nengo_neurons``
+  options to the ``pytest`` section of the ``setup.cfg`` template to
+  support testing changes in Nengo 3.0. (`#58`_)
+
+**Changed**
+
+- The default value for ``pytest.addopts`` in ``setup.cfg`` has been removed
+  because Nengo 3.0 does not require ``-p nengo.tests.options``. (`#58`_)
+
+.. _#58: https://github.com/nengo/nengo-bones/pull/58
 
 0.4.2 (August 8, 2019)
 ======================

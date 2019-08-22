@@ -91,6 +91,18 @@ filterwarnings =
     {{ filter }}
     {% endfor %}
 {% endif %}
+{% if pytest.nengo_simulator %}
+nengo_simulator = {{ pytest.nengo_simulator }}
+{% endif %}
+{% if pytest.nengo_simloader %}
+nengo_simloader = {{ pytest.nengo_simloader }}
+{% endif %}
+{% if pytest.nengo_neurons %}
+nengo_neurons =
+{% for neurontype in pytest.nengo_neurons %}
+    {{ neurontype }}
+{% endfor %}
+{% endif %}
 {% if pytest.nengo_test_unsupported %}
 nengo_test_unsupported =
 {% for var, val in pytest.nengo_test_unsupported.items() %}
