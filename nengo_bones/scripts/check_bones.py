@@ -6,8 +6,8 @@ import sys
 
 import click
 
-from nengo_bones import __version__
-from nengo_bones.config import load_config, sections
+from nengo_bones import __version__, all_files
+from nengo_bones.config import load_config
 from nengo_bones.templates import BonesTemplate, load_env
 
 
@@ -37,7 +37,7 @@ def main(root_dir, conf_file, verbose):
 
     passed = True
 
-    for filename in sections.values():
+    for filename in all_files:
         click.echo(filename + ":")
 
         # TODO: Ensure that the file is there <=> it is in the config

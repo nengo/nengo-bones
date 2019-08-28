@@ -4,8 +4,8 @@ import os
 
 import click
 
-from nengo_bones import __version__
-from nengo_bones.config import load_config, sections
+from nengo_bones import __version__, all_sections
+from nengo_bones.config import load_config
 from nengo_bones.templates import BonesTemplate, load_env
 
 
@@ -79,7 +79,7 @@ def main(ctx, conf_file, output_dir):
         return True
 
     if ctx.invoked_subcommand is None:
-        for cfg_name in sections:
+        for cfg_name in all_sections:
             if check_cfg(cfg_name):
                 ctx.invoke(globals()[cfg_name])
     elif not check_cfg(ctx.invoked_subcommand):
