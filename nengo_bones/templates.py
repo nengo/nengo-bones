@@ -1,6 +1,6 @@
 """Handles the processing of nengo-bones templates using jinja2."""
 
-from collections import OrderedDict
+from collections import defaultdict, OrderedDict
 import os
 import stat
 import warnings
@@ -44,6 +44,7 @@ class BonesTemplate:
     """
 
     __slots__ = ("env", "output_file", "section", "template_file")
+    extra_render_data = defaultdict(list)
 
     def __init__(self, output_file, env):
 
@@ -58,6 +59,16 @@ class BonesTemplate:
         self.section = section
 
         self.template_file = "%s.template" % (output_file,)
+
+    @classmethod
+    def add_render_data(cls, filename):
+        """Register functions that add template-specific render data."""
+
+        def _add_render_data(func):
+            cls.extra_render_data[filename].append(func)
+            return func
+
+        return _add_render_data
 
     def get_render_data(self, config):
         """
@@ -84,36 +95,8 @@ class BonesTemplate:
         data.update(config[self.section])
 
         # Add special options for specific sections
-        if self.section == "travis_yml":
-            jobs = data["travis_yml"]["jobs"]
-            for job in jobs:
-                # shortcuts for setting environment variables
-                if "env" not in job:
-                    job["env"] = OrderedDict()
-                for var in ("script", "test_args"):
-                    if var in job:
-                        job["env"][var] = job.pop(var)
-
-        elif self.section == "manifest_in":
-            data["custom"] = data["manifest_in"]
-
-        elif self.section == "setup_py":
-            setup_config = data["setup_py"]
-
-            extras = OrderedDict()
-            extra_types = {
-                "classifiers": "list",
-                "py_modules": "list",
-                "entry_points": "dict",
-                "package_data": "dict",
-            }
-            # We iterate over setup_config (rather than extra_types) so that
-            # the order in setup_config is preserved
-            for key in list(setup_config):
-                if key in extra_types:
-                    extras[key] = (extra_types[key], setup_config.pop(key))
-            data["extras"] = extras
-
+        for adder in self.extra_render_data[self.section]:
+            adder(data)
         return data
 
     def render(self, **data):
@@ -176,6 +159,69 @@ class BonesTemplate:
         if output_name.endswith(".sh"):
             st = os.stat(output_path)
             os.chmod(output_path, st.st_mode | stat.S_IEXEC)
+
+
+@BonesTemplate.add_render_data("travis_yml")
+def add_travis_data(data):
+    """Add travis.yml-specific entries to the 'data' dict."""
+    jobs = data["travis_yml"]["jobs"]
+    for job in jobs:
+        # shortcuts for setting environment variables
+        if "env" not in job:
+            job["env"] = OrderedDict()
+        for var in ("script", "test_args"):
+            if var in job:
+                job["env"][var] = job.pop(var)
+
+
+@BonesTemplate.add_render_data("manifest_in")
+def add_manifest_data(data):
+    """Add MANIFEST.in-specific entries to the 'data' dict."""
+    data["custom"] = data["manifest_in"]
+
+
+def _get_extras(sect_data, extra_types):
+    extras = OrderedDict()
+    # We iterate over sect_data (rather than extra_types) so that order is preserved
+    for key in list(sect_data):
+        if key in extra_types:
+            extras[key] = (extra_types[key], sect_data.pop(key))
+    return extras
+
+
+@BonesTemplate.add_render_data("setup_py")
+def add_setup_py_data(data):
+    """Add setup.py-specific entries to the 'data' dict."""
+    data["extras"] = _get_extras(
+        data["setup_py"],
+        extra_types={
+            "classifiers": "list",
+            "py_modules": "list",
+            "entry_points": "dict",
+            "package_data": "dict",
+        },
+    )
+
+
+@BonesTemplate.add_render_data("setup_cfg")
+def add_setup_cfg_data(data):
+    """Add setup.cfg-specific entries to the 'data' dict."""
+    pytest_data = data["setup_cfg"]["pytest"]
+    pytest_data["extras"] = _get_extras(
+        pytest_data,
+        extra_types={
+            "allclose_tolerances": "list",
+            "filterwarnings": "list",
+            "nengo_neurons": "list",
+            "nengo_simulator": "str",
+            "nengo_simloader": "str",
+            "nengo_test_unsupported": "dict",
+            "plt_dirname": "str",
+            "plt_filename_drop": "list",
+            "rng_salt": "str",
+            "xfail_strict": "str",
+        },
+    )
 
 
 def load_env():
