@@ -103,6 +103,7 @@ setup_py:
       - bones-generate=nengo_bones.scripts.generate_bones:main
       - bones-check=nengo_bones.scripts.check_bones:main
       - bones-pr-number=nengo_bones.scripts.pr_number:main
+      - bones-stale-branches=nengo_bones.scripts.stale_branches:main
   include_package_data: True
   # note: docs/tests_req are intentionally empty to test that the correct
   # requirements are built into the ci scripts
