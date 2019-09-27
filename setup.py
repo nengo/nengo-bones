@@ -65,6 +65,7 @@ setup(
             "bones-generate=nengo_bones.scripts.generate_bones:main",
             "bones-check=nengo_bones.scripts.check_bones:main",
             "bones-pr-number=nengo_bones.scripts.pr_number:main",
+            "bones-stale-branches=nengo_bones.scripts.stale_branches:main",
         ]
     },
     classifiers=[
