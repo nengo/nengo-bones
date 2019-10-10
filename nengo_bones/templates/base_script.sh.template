@@ -33,10 +33,6 @@ if [[ "$COMMAND" == "install" ]]; then
 
     {% endif %}
     {% endblock %}
-elif [[ "$COMMAND" == "after_install" ]]; then
-    {% block after_install %}
-    :
-    {% endblock %}
 elif [[ "$COMMAND" == "before_script" ]]; then
     {% block before_script %}
     :
