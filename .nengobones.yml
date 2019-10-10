@@ -19,6 +19,7 @@ travis_yml:
       env:
         TEST_LOCAL_VAR: test local var val
       test_args: --test-arg --test-arg
+    - script: remote
     - script: test-coverage
       env:
         TEST_LOCAL_VAR: test local var val
@@ -75,6 +76,10 @@ ci_scripts:
       - export TEST_PRE_COMMANDS=True
     post_commands:
       - export TEST_POST_COMMANDS=True
+  - template: remote
+    travis_var_key: 5820152da3b2
+    host: gl
+    coverage: true
   - template: docs
     pre_commands:
       - cat .ci/docs.sh

@@ -22,6 +22,11 @@ Release History
 0.5.1 (unreleased)
 ==================
 
+**Added**
+
+- Added a ``remote.sh`` CI script template for remotely executing
+  commands on an SSH-accessible machine. (`#65`_)
+
 **Fixed**
 
 - Fixed a crash when a file contained the text "Automatically generated
@@ -29,6 +34,7 @@ Release History
 
 .. _#61: https://github.com/nengo/nengo-bones/issues/61
 .. _#66: https://github.com/nengo/nengo-bones/pull/66
+.. _#65: https://github.com/nengo/nengo-bones/pull/65
 
 0.5.0 (September 3, 2019)
 =========================

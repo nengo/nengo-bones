@@ -1,0 +1,112 @@
+{% extends "base_script.sh.template" %}
+
+{#
+
+Setup instructions
+==================
+
+Run all the following commands in a new empty folder.
+Make sure you have the Travis CLI installed
+and logged in with `travis login`
+(see https://github.com/travis-ci/travis.rb#installation).
+
+1. Set up an SSH key with no passphrase with the remote host.
+
+       ssh-keygen -f id_rsa -N "" -C "TravisCI"
+       ssh-copy-id -i id_rsa.pub <hostname>
+
+2. Ensure it works.
+
+       ssh -i id_rsa <hostname>
+
+3. Copy all relevant SSH configuration related to the host to
+   a new `config` file. It should look something like this.
+
+       Host <hostname>
+           HostName <full hostname or IP address>
+           StrictHostKeyChecking no
+
+   While most options are optional, `StrictHostKeyChecking` must be `no`.
+
+4. Add all these files to a tar file. If you have other files that
+   should be encrypted, also add those files to this tar file.
+
+       tar cvf secret.tar id_rsa config
+
+5. Encrypt the file using the Travis CI command line client.
+
+       travis encrypt-file secret.tar -r nengo/<repo>
+
+6. This will create a new `secret.tar.enc` file and print some information to
+   the console. It will print an `openssl` command with some environment variables.
+   Add the middle part of these variables to `.nengobones.yml` as `travis_var_key`.
+
+       $ from travis encrypt-file
+       openssl ... -K $encrypted_0000000aaaaa_key -iv $encrypted_0000000aaaaa_iv ...
+
+       $ in .nengobones.yml
+       ci_scripts:
+         - template: remote
+           travis_var_key: 0000000aaaaa
+
+7. Add `secret.tar.enc` to the repository as `.ci/secret.tar.enc`.
+
+See https://docs.travis-ci.com/user/encrypting-files/ for more details.
+
+#}
+
+{% set pkg = pkg_name | replace("_", "-") %}
+
+{% block install %}
+{{ super() }}
+    exe openssl aes-256-cbc \
+        -K "${encrypted_{{ travis_var_key }}_key:?}" \
+        -iv "${encrypted_{{ travis_var_key }}_iv:?}" \
+        -in .ci/secret.tar.enc \
+        -out .ci/secret.tar \
+        -d
+    exe mkdir -p ~/.ssh
+    exe tar xvf .ci/secret.tar -C ~/.ssh --overwrite
+    exe chmod 600 ~/.ssh/id_rsa
+    ssh {{ host }} -q "echo 'Connected to {{ host }}'"
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+    BUILD_DIR="tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER"
+    exe ssh {{ host }} -q "mkdir -p tmp"
+    exe rsync -azh "$(pwd)" "{{ host }}:./$BUILD_DIR/"
+    exe ssh {{ host }} -q << EOF
+        REMOTE_STATUS=0
+        cd ~/"$BUILD_DIR"
+        {% block remote_install %}
+        echo "$ ({{ host }}) Installing miniconda"
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh --quiet -O miniconda.sh
+        bash miniconda.sh -b -p ./miniconda || REMOTE_STATUS=1
+        export PATH="\$PWD/miniconda/bin:\$PATH"
+        conda create -y -n travis-ci-"$TRAVIS_JOB_NUMBER" python="$TRAVIS_PYTHON_VERSION" || REMOTE_STATUS=1
+        source activate travis-ci-"$TRAVIS_JOB_NUMBER" || REMOTE_STATUS=1
+        cd {{ pkg }} || REMOTE_STATUS=1
+        echo "$ ({{ host }}) Installing {{ pkg }}"
+        {% endblock %}
+        cd ~/"$BUILD_DIR"/{{ pkg }} || REMOTE_STATUS=1
+        {% block remote_script %}
+        echo "$ ({{ host }}) Testing {{ pkg }}"
+        {% endblock %}
+        exit \$REMOTE_STATUS
+EOF
+{% endblock %}
+
+{% block after_script %}
+    {% if coverage %}
+    exe scp "{{ host }}:./tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}/coverage.xml" coverage.xml
+    eval "bash <(curl -s https://codecov.io/bash)"
+    {% endif %}
+    exe ssh {{ host }} -q << EOF
+        {% block remote_cleanup %}
+        echo "$ ({{ host }}) Cleaning up {{ pkg }}"
+        cd ~/tmp
+        ls -tp | grep '{{ pkg }}-' | tail -n +3 | xargs -I {} rm -r -- {}
+        {% endblock %}
+EOF
+{% endblock %}

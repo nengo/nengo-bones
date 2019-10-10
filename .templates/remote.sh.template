@@ -1,0 +1,12 @@
+{% extends "templates/remote.sh.template" %}
+
+{% block remote_install %}
+{{ super() }}
+        pip install pytest pytest-cov pytest-xdist || REMOTE_STATUS=1
+        pip install -e .[tests] || REMOTE_STATUS=1
+{% endblock %}
+
+{% block remote_script %}
+{{ super() }}
+        pytest {{ pkg_name }} -v -n 2 --color=yes --durations 20 --cov={{ pkg_name }} --cov-report=xml --cov-report=term-missing || REMOTE_STATUS=1
+{% endblock %}

@@ -23,5 +23,6 @@ htmlcov
 .idea
 .pytest_cache/
 .ci/*.sh
+.ci/secret.tar
 docs/examples/*
 !docs/examples/**/*.ipynb
