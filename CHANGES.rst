@@ -22,7 +22,13 @@ Release History
 0.5.1 (unreleased)
 ==================
 
+**Fixed**
 
+- Fixed a crash when a file contained the text "Automatically generated
+  by nengo-bones", but was not present in the config file. (`#61`_, `#66`_)
+
+.. _#61: https://github.com/nengo/nengo-bones/issues/61
+.. _#66: https://github.com/nengo/nengo-bones/pull/66
 
 0.5.0 (September 3, 2019)
 =========================
