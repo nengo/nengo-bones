@@ -1,6 +1,7 @@
 """Scripts for auto-generating nengo-bones files."""
 
 import os
+import sys
 
 import click
 
@@ -83,7 +84,7 @@ def main(ctx, conf_file, output_dir):
             if check_cfg(cfg_name):
                 ctx.invoke(globals()[cfg_name])
     elif not check_cfg(ctx.invoked_subcommand):
-        exit()
+        sys.exit()
 
 
 @main.command()

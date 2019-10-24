@@ -195,8 +195,8 @@ def validate_config(config):  # noqa: C901
                 if "." in entry and i == 0:
                     # if the toplevel isn't defined, ignore this
                     break
-                else:
-                    raise KeyError("Config file must define %s" % entry)
+
+                raise KeyError("Config file must define %s" % entry)
 
     if "ci_scripts" in config:
         for ci_config in config["ci_scripts"]:
