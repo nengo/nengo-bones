@@ -112,9 +112,9 @@ def test_load_config(tmpdir):
     }
 
     utils.write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummyorg/dummy

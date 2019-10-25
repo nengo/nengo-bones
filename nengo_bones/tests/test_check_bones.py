@@ -3,7 +3,7 @@
 from click.testing import CliRunner
 
 from nengo_bones.scripts import check_bones, generate_bones
-from nengo_bones.tests.utils import write_file, assert_exit
+from nengo_bones.tests.utils import assert_exit, write_file
 
 
 def _write_nengo_yml(tmpdir, nengo_yml=None):

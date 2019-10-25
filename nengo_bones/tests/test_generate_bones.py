@@ -19,9 +19,9 @@ from nengo_bones.tests.utils import assert_exit, make_has_line, write_file
 
 def test_ci_scripts(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy/dummy_repo
@@ -110,9 +110,9 @@ def test_ci_scripts(tmpdir):
 def test_travis_yml(tmpdir):
     # minimal config, testing defaults
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
             project_name: Dummy
             pkg_name: dummy
             repo_name: dummy/dummy_repo
@@ -144,9 +144,9 @@ def test_travis_yml(tmpdir):
 
     # full config, testing all options
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy/dummy_repo
@@ -208,9 +208,9 @@ def test_travis_yml(tmpdir):
 
 def test_codecov_yml(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy/dummy_repo
@@ -238,9 +238,9 @@ def test_codecov_yml(tmpdir):
     assert "target: 100%" in data
 
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
             project_name: Dummy
             pkg_name: dummy
             repo_name: dummy/dummy_repo
@@ -274,9 +274,9 @@ def test_codecov_yml(tmpdir):
 def test_ci_script_custom_template(tmpdir):
     tmpdir.mkdir(".templates")
     write_file(
-        tmpdir.join(".templates"),
-        "custom.sh.template",
-        """
+        tmpdir=tmpdir.join(".templates"),
+        filename="custom.sh.template",
+        contents="""
         {% extends "templates/test.sh.template" %}
 
         {% block script %}
@@ -286,9 +286,9 @@ def test_ci_script_custom_template(tmpdir):
     )
 
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy/dummy_repo
@@ -313,9 +313,9 @@ def test_ci_script_custom_template(tmpdir):
 @pytest.mark.parametrize("license_type", ["nengo", "mit"])
 def test_license(tmpdir, license_type):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dumdum
         pkg_name: dummy
         repo_name: dummy_org/dummy
@@ -357,9 +357,9 @@ def test_license(tmpdir, license_type):
 
 def test_contributing(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dumdum
         pkg_name: dummy
         repo_name: dummy_org/dummy
@@ -391,9 +391,9 @@ def test_contributing(tmpdir):
 
 def test_contributors(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dumdum
         pkg_name: dummy
         repo_name: dummy_org/dummy
@@ -423,9 +423,9 @@ def test_contributors(tmpdir):
 
 def test_manifest(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy_org/dummy
@@ -465,9 +465,9 @@ def test_manifest(tmpdir):
 )
 def test_setup_py(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy_org/dummy
@@ -524,9 +524,9 @@ def test_setup_py(tmpdir):
 
 def test_setup_cfg(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy_org/dummy
@@ -610,9 +610,9 @@ def test_setup_cfg(tmpdir):
 
 def test_setup_cfg_valueerror(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         pkg_name: dummy
         repo_name: dummy_org/dummy
         setup_cfg:
@@ -640,9 +640,9 @@ def test_setup_cfg_custom_marker(pytestconfig):
 
 def test_docs_conf_py(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy_org/dummy
@@ -673,9 +673,9 @@ def test_docs_conf_py(tmpdir):
 def test_empty_travis_yml(tmpdir):
     # minimal config, testing missing travis_yml
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
             project_name: Dummy
             pkg_name: dummy
             repo_name: dummy/dummy_repo
@@ -710,7 +710,7 @@ def test_generate_all(tmpdir):
             "\n  jobs: []" if configname == "travis_yml" else "{}",
         )
 
-    write_file(tmpdir, ".nengobones.yml", nengo_yml)
+    write_file(tmpdir=tmpdir, filename=".nengobones.yml", contents=nengo_yml)
 
     result = CliRunner().invoke(
         generate_bones.main,
@@ -729,9 +729,9 @@ def test_generate_all(tmpdir):
 
 def test_generate_none(tmpdir):
     write_file(
-        tmpdir,
-        ".nengobones.yml",
-        """
+        tmpdir=tmpdir,
+        filename=".nengobones.yml",
+        contents="""
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy_org/dummy
