@@ -44,7 +44,11 @@ nbsphinx_timeout = -1
 
 # -- sphinx
 nitpicky = True
-exclude_patterns = ["_build", "**/.ipynb_checkpoints", "tests/test-example.ipynb"]
+exclude_patterns = [
+    "_build",
+    "**/.ipynb_checkpoints",
+    "tests/test-example.ipynb",
+]
 linkcheck_timeout = 30
 source_suffix = ".rst"
 source_encoding = "utf-8"
