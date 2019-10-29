@@ -69,8 +69,11 @@ jobs:
   {% endif %}
 
 before_install:
-  # export travis_terminate for use in scripts
+  # export travis_terminate for use in scripts, from here:
+  # https://github.com/travis-ci/travis-build/blob/master/lib/travis/build/bash/travis_terminate.bash
   - export -f travis_terminate
+    _travis_terminate_agent
+    _travis_terminate_freebsd
     _travis_terminate_linux
     _travis_terminate_osx
     _travis_terminate_unix
