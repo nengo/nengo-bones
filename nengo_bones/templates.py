@@ -62,7 +62,19 @@ class BonesTemplate:
 
     @classmethod
     def add_render_data(cls, filename):
-        """Register functions that add template-specific render data."""
+        """
+        Register functions that add template-specific render data.
+
+        For example:
+
+        .. testcode::
+
+           @nengo_bones.templates.BonesTemplate.add_render_data("my_new_template")
+           def add_my_new_template_data(data):
+               data["attr"] = "val"
+               ...
+
+        """
 
         def _add_render_data(func):
             cls.extra_render_data[filename].append(func)

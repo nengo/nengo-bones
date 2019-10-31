@@ -22,6 +22,11 @@ Release History
 0.7.0 (unreleased)
 ==================
 
+**Added**
+
+- Added support for ``sphinx.ext.doctest``, which can be used to automatically
+  test code snippets in docstrings. (`#67`_)
+
 **Changed**
 
 - Updated the ``black`` version used in ``pre-commit`` hooks. (`#67`_)

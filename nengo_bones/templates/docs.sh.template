@@ -27,6 +27,7 @@
     export DOCS_STATUS="$STATUS"
 
     exe sphinx-build -b linkcheck -vW -D nbsphinx_execute=never docs docs/_build
+    exe sphinx-build -b doctest -vW -D nbsphinx_execute=never docs docs/_build
 {% endblock %}
 
 {% block after_script %}
