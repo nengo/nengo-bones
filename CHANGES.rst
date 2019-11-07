@@ -19,9 +19,14 @@ Release History
    - Removed
    - Fixed
 
-0.6.1 (unreleased)
+0.7.0 (unreleased)
 ==================
 
+**Changed**
+
+- Updated the ``black`` version used in ``pre-commit`` hooks. (`#67`_)
+
+.. _#67: https://github.com/nengo/nengo-bones/pull/67
 
 0.6.0 (October 30, 2019)
 ========================
