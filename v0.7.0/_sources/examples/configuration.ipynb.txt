@@ -1,0 +1,1775 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Configuration options\n",
+    "\n",
+    "All Nengo Bones configuration is done through the `.nengobones.yml` file.\n",
+    "In this notebook we will demonstrate the different configuration options\n",
+    "available and how to use them to customize behaviour for different use cases.\n",
+    "\n",
+    "First we'll define some utility functions we'll use throughout this notebook:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "\n",
+    "import nengo_bones\n",
+    "\n",
+    "\n",
+    "def write_yml(contents):\n",
+    "    \"\"\"Create a sample .nengo.yml file from a string.\"\"\"\n",
+    "\n",
+    "    nengo_yml = \"project_name: Example Project\\n\"\n",
+    "    nengo_yml += \"pkg_name: eg_package\\n\"\n",
+    "    nengo_yml += \"repo_name: eg-org/eg-package\\n\"\n",
+    "    nengo_yml += contents\n",
+    "\n",
+    "    with open(\".nengobones.yml\", \"w\") as f:\n",
+    "        f.write(nengo_yml)\n",
+    "\n",
+    "\n",
+    "def display_contents(filename, sections=None):\n",
+    "    \"\"\"\n",
+    "    Display the contents of a file.\n",
+    "\n",
+    "    The 'sections' argument filters the file to show only the\n",
+    "    specified sections.\n",
+    "    \"\"\"\n",
+    "\n",
+    "    with open(filename) as f:\n",
+    "        data = f.readlines()\n",
+    "\n",
+    "    # strip out blank lines for .sh and .yml files\n",
+    "    if filename.endswith(\".sh\") or filename.endswith(\".yml\"):\n",
+    "        data = [x for x in data if x.strip() != \"\"]\n",
+    "\n",
+    "    if sections is None:\n",
+    "        display_data = data\n",
+    "    else:\n",
+    "        # pull out only the requested sections\n",
+    "        display_data = []\n",
+    "        for sec in sections:\n",
+    "            for i, line in enumerate(data):\n",
+    "                if ('\"$COMMAND\" == \"%s\"' % sec in line\n",
+    "                        or line.startswith(sec)):\n",
+    "                    section_data = data[i:]\n",
+    "                    break\n",
+    "            for i, line in enumerate(section_data[1:]):\n",
+    "                if filename.endswith(\".cfg\"):\n",
+    "                    if line.startswith(\"[\"):\n",
+    "                        section_data = section_data[:i+1]\n",
+    "                        break\n",
+    "                else:\n",
+    "                    if not line.startswith(\" \"):\n",
+    "                        section_data = section_data[:i+1]\n",
+    "                        break\n",
+    "            display_data.extend(section_data)\n",
+    "\n",
+    "    print(\"\".join(display_data).rstrip(\"\\n\"))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## General options\n",
+    "\n",
+    "There are a few general configuration options that affect\n",
+    "multiple templated files:\n",
+    "\n",
+    "- `project_name`:\n",
+    "  Natural-language name for the project (e.g., \"Nengo Bones\").\n",
+    "- `pkg_name`:\n",
+    "  Import name for the project (e.g., \"nengo_bones\").\n",
+    "- `repo_name`:\n",
+    "  Github organization/repository name (e.g., \"nengo/nengo-bones\").\n",
+    "- `author`:\n",
+    "  Name of project author (defaults to \"Applied Brain Research\").\n",
+    "- `author_email`:\n",
+    "  Email of project author (defaults to \"info@appliedbrainresearch.com\").\n",
+    "- `description`:\n",
+    "  A brief, one-sentence description of the project.\n",
+    "- `copyright_start`:\n",
+    "  The year the project was first publicly available (defaults to current year).\n",
+    "- `copyright_end`:\n",
+    "  The last year work was done on the project (defaults to current year)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## CI scripts\n",
+    "\n",
+    "Nengo Bones uses a continuous integration (CI) setup\n",
+    "wherein build jobs are associated with different shell scripts,\n",
+    "and each script defines commands to be executed at different\n",
+    "stages during the build process.  These scripts are configured\n",
+    "through the `ci_scripts` section of `.nengobones.yml`.\n",
+    "The basic step is to add an entry with `- template: scriptname`\n",
+    "for each script template that we want to be rendered.\n",
+    "As an example, in this section we will use the \"test\" template,\n",
+    "but all the options we describe here work for any of the templated scripts.\n",
+    "\n",
+    "Normally the `.nengobones.yml` file is a text file sitting in the\n",
+    "root directory of the repository.  For demonstration purposes,\n",
+    "in this notebook we will be generating different config files on-the-fly\n",
+    "using the utility functions from above."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: test\n",
+    "\"\"\"\n",
+    "# create .nengobones.yml file\n",
+    "write_yml(nengobones_yml)\n",
+    "# call the bones-generate script\n",
+    "!bones-generate ci-scripts\n",
+    "# display the contents of the generated file\n",
+    "display_contents(\"test.sh\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "There is a lot of information in that file that we don't\n",
+    "really need to worry about (that's the whole point of Nengo Bones,\n",
+    "to take care of those details for us).  We can see that the\n",
+    "overall structure is made up of behaviour defined for different\n",
+    "build stages (e.g. \"install\", \"before_script\", etc.).\n",
+    "In most cases all the important action happens in the \"install\"\n",
+    "and \"script\" stages:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "display_contents(\"test.sh\", sections=[\"install\", \"script\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In the \"install\" stage we install any of the package requirements\n",
+    "needed to run the script. In this case we can see we're installing\n",
+    "`pytest`, `pytest-xdist`, and the current package (including any\n",
+    "optional dependencies defined in the `[tests]` `extra_requires`\n",
+    "directive).\n",
+    "\n",
+    "If we need to add extra packages to this default installation,\n",
+    "that can be done with the `pip_install` configuration option:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: test\n",
+    "      pip_install:\n",
+    "          - an-extra-pip-package\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate ci-scripts\n",
+    "display_contents(\"test.sh\", sections=[\"install\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that requirements should generally be added to the package\n",
+    "requirements defined in `setup.py` (in which case they would be\n",
+    "automatically installed in the `pip install -e \".[tests]\"` step).\n",
+    "That way anyone can easily install the necessary packages and run\n",
+    "the tests without having to go through the CI scripts.\n",
+    "The `pip_install` option is only necessary\n",
+    "if that isn't feasible for some reason.\n",
+    "\n",
+    "The \"script\" stage is where the main work of the script is done.\n",
+    "In the case of the \"test\" script, this means calling `pytest` to\n",
+    "run the test suite:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "display_contents(\"test.sh\", sections=[\"script\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Ignore the `$TEST_ARGS` part for now. We will cover that when\n",
+    "we come to the `.travis.yml` configuration.\n",
+    "\n",
+    "As with the \"install\" stage, the \"script\" stage can also be\n",
+    "customized if we want to add extra commands, either before or\n",
+    "after the main script body:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: test\n",
+    "      pre_commands:\n",
+    "          - echo \"this command will run at the beginning\"\n",
+    "      post_commands:\n",
+    "          - echo \"this command will run at the end\"\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate ci-scripts\n",
+    "display_contents(\"test.sh\", sections=[\"script\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can also use the same template multiple times, passing\n",
+    "different options to generate different output scripts.\n",
+    "In this case we need to use the `output_name` config option\n",
+    "to distinguish different rendered scripts:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: test\n",
+    "      pre_commands:\n",
+    "          - echo \"this is test\"\n",
+    "    - template: test\n",
+    "      output_name: test2\n",
+    "      pre_commands:\n",
+    "          - echo \"this is test2\"\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate ci-scripts\n",
+    "print(\"Contents of test.sh\")\n",
+    "print(\"-------------------\")\n",
+    "display_contents(\"test.sh\", sections=[\"script\"])\n",
+    "print(\"\\nContents of test2.sh\")\n",
+    "print(\"--------------------\")\n",
+    "display_contents(\"test2.sh\", sections=[\"script\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Test script options\n",
+    "\n",
+    "The \"test\" script has some configuration options specific\n",
+    "to that script.  First, we can collect coverage information while\n",
+    "tests are running by setting `coverage: true`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: test\n",
+    "      coverage: true\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate ci-scripts\n",
+    "display_contents(\"test.sh\", sections=[\"install\", \"script\", \"after_script\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that the script is now installing extra packages, adding\n",
+    "extra arguments to `pytest`, and uploading the results to\n",
+    "[Codecov](https://codecov.io/) at the end.\n",
+    "\n",
+    "Nengo backends also often want to run the core Nengo tests\n",
+    "in addition to their own test suite.  This can be accomplished\n",
+    "by setting `nengo_tests: true`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: test\n",
+    "      nengo_tests: true\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate ci-scripts\n",
+    "display_contents(\"test.sh\", sections=[\"script\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Static script options\n",
+    "\n",
+    "The \"static\" script has some configuration options specific\n",
+    "to that script.  We can add words to the\n",
+    "[codespell](https://github.com/codespell-project/codespell)\n",
+    "ignore list by setting the `codespell_ignore_words` option:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: static\n",
+    "      codespell_ignore_words:\n",
+    "          - onne\n",
+    "          - twwo\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate ci-scripts\n",
+    "display_contents(\"static.sh\", sections=[\"script\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## TravisCI config\n",
+    "\n",
+    "As mentioned above, the general idea is that TravisCI will\n",
+    "create a number of build jobs, and each job will call one of\n",
+    "the scripts we generated.  TravisCI is configured through its\n",
+    "own `.travis.yml` file, so what we will be doing is using\n",
+    "`.nengobones.yml` to generate `.travis.yml`.  This is done\n",
+    "through the `travis_yml` section:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    jobs: []\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "As before, there is a lot of detail here that we don't need to\n",
+    "worry about because Nengo Bones will take care of it for us.\n",
+    "The important part to understand is the overall structure."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Global variables\n",
+    "\n",
+    "First, we create some global variables:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "display_contents(\".travis.yml\", sections=[\"env\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This shows the default variables.  We can add arbitrary\n",
+    "variables to this list through the `global_vars` option:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    global_vars:\n",
+    "        VAR0: val0\n",
+    "        VAR1: val1\n",
+    "    jobs: []\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"env\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that these variables will be set in order, with later variables\n",
+    "overwriting earlier ones. So if, for example, we wanted to change the\n",
+    "default script, we could do that by setting:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    global_vars:\n",
+    "        SCRIPT: not-test\n",
+    "    jobs: []\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"env\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Jobs\n",
+    "\n",
+    "The next important part of the `.travis.yml` is the \"jobs\" section."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "It is currently empty because we haven't defined any jobs\n",
+    "in our `.nengobones.yml`.\n",
+    "\n",
+    "This is done via the `jobs` section of `travis_yml`, which\n",
+    "specifies the builds we want to run during CI.  The most important\n",
+    "part of each job is specifying which script we want to run.\n",
+    "For example, we could create a single job that runs the \"test\" script:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can see that this causes the `$SCRIPT` variable to be set to `\"test\"`,\n",
+    "which will then cause `test.sh` to be run during the various build steps.\n",
+    "\n",
+    "The `test_args` option sets the `$TEST_ARGS` environment variable\n",
+    "that we saw in the `test.sh` script above. Recall that this will\n",
+    "be passed to the `pytest` command, like `pytest my_project ... $TEST_ARGS`.\n",
+    "This can be useful for projects that define custom pytest arguments that\n",
+    "they might want to set for different jobs, e.g.:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "          test_args: --do-a-special-test\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can also set arbitrary environment\n",
+    "variables through the `env` option:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "          env:\n",
+    "              VAR0: val0\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `apt_install` option can be used to `apt install` any packages\n",
+    "required for a job, e.g.:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "          apt_install:\n",
+    "              - pandoc\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Any other options set for a job will be passed directly on to the\n",
+    "`.travis.yml` config for that job. This opens up a wide range of\n",
+    "configuration options (see https://docs.travis-ci.com/ for more information).\n",
+    "\n",
+    "For example, we can set the `python` variable to change the Python\n",
+    "version being used for that job.  So we could create two jobs\n",
+    "that run the test suite with different Python versions:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "          python: 3.5\n",
+    "        - script: test\n",
+    "          python: 3.6\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that the Python version can also be changed for all jobs by\n",
+    "setting the `python` option at the top level of the `travis_yml` section:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    python: 3.5\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\n",
+    "    \"language\", \"python\", \"notifications\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Or we could divide jobs into different stages through\n",
+    "the `stage` option:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "travis_yml:\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "          stage: stage 0\n",
+    "        - script: docs\n",
+    "          stage: stage 1\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Automatic deployment\n",
+    "\n",
+    "Nengo Bones can also configure TravisCI to automatically deploy\n",
+    "releases to PyPI.  This is activated by setting the `pypi_user`\n",
+    "option, which should be the username for the PyPI account that will\n",
+    "be used to upload the releases.  You will also need to go into the\n",
+    "TravisCI settings for your repo and add a secure environment variable\n",
+    "named `PYPI_TOKEN` containing that account's password.  Finally, you\n",
+    "will need to make sure you are building the `deploy.sh` script by\n",
+    "adding `- template: deploy` to your `ci_scripts`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: test\n",
+    "    - template: deploy\n",
+    "\n",
+    "travis_yml:\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "    pypi_user: test_user\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This will trigger an automatic PyPI release for any tagged commit.\n",
+    "You can also do a test release by pushing to a branch named\n",
+    "`release-candidate-x.y.z` (where `x.y.z` is the version number you\n",
+    "want to test).\n",
+    "\n",
+    "The only other setting related to the automatic deployment is\n",
+    "`deploy_dists`, which sets the distributions that will be built and\n",
+    "uploaded with each release.  We can see above that the default is an\n",
+    "`sdist`-only release, but we could, for example, add wheels by\n",
+    "modifying `deploy_dists`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "ci_scripts:\n",
+    "    - template: test\n",
+    "    - template: deploy\n",
+    "\n",
+    "travis_yml:\n",
+    "    jobs:\n",
+    "        - script: test\n",
+    "    pypi_user: test_user\n",
+    "    deploy_dists:\n",
+    "        - sdist\n",
+    "        - bdist_wheel\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate travis-yml\n",
+    "display_contents(\".travis.yml\", sections=[\"jobs\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Python environment setup\n",
+    "\n",
+    "The next section of the `.travis.yml` file sets up the Python environment:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "display_contents(\".travis.yml\", sections=[\"before_install\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that we are calling `bones-generate ... ci-scripts` in this\n",
+    "section in order to automatically generate all the scripts defined\n",
+    "in the `.nengobones.yml` `ci_scripts` discussed above.  We also call\n",
+    "`bones-check`, which will give an error if any of the templated files\n",
+    "are out of date.\n",
+    "\n",
+    "There are no configuration options for this section."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Build steps\n",
+    "\n",
+    "Finally we call our templated script in each of the build steps,\n",
+    "which will execute the behaviour we defined in those scripts."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "display_contents(\".travis.yml\", sections=[\n",
+    "    \"install\", \"after_install\", \"before_script\", \"script\"\n",
+    "])\n",
+    "print(\"...\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "There are no configuration options for this section (instead this\n",
+    "behaviour is controlled by configuring the ci scripts, as described\n",
+    "in the [section above](#CI-scripts))."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Codecov config\n",
+    "\n",
+    "Nengo Bones will automatically upload coverage reports to\n",
+    "[Codecov](https://codecov.io/) if the `coverage: true` option\n",
+    "is set on the test script config.  Codecov reads the `.codecov.yml`\n",
+    "configuration file, which Nengo Bones also has a template for and\n",
+    "can be controlled through the `codecov_yml` option."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "codecov_yml: {}\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate codecov-yml\n",
+    "display_contents(\".codecov.yml\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The first thing to be noted is the `!ci.appveyor.com` line.\n",
+    "This tells Codecov not to wait for a coverage report from appveyor\n",
+    "(generally we assume that all the coverage is being checked on TravisCI).\n",
+    "This can be disabled by setting `skip_appveyor: false`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "codecov_yml:\n",
+    "    skip_appveyor: false\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate codecov-yml\n",
+    "display_contents(\".codecov.yml\", sections=[\"codecov\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The other configuration options have to do with the target\n",
+    "coverage at either the project or patch level.  These determine\n",
+    "whether the codecov PR status checks will be marked as passing\n",
+    "or failing.  The \"project\" coverage is the total lines of code\n",
+    "covered by tests for the whole project.  The default value is\n",
+    "\"auto\", meaning that the status check will pass if the total\n",
+    "coverage is >= the coverage in the base branch of the PR.\n",
+    "The \"patch\" coverage only looks at the lines of code modified\n",
+    "in the PR.  The default value is \"100%\", meaning that every\n",
+    "modified line of code needs to be covered by a test for the check to pass.\n",
+    "\n",
+    "These can be modified by the `abs_target` and `diff_target`\n",
+    "config options, respectively:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "codecov_yml:\n",
+    "    abs_target: 80%\n",
+    "    diff_target: 90%\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate codecov-yml\n",
+    "display_contents(\".codecov.yml\", sections=[\"coverage\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## LICENSE.rst config\n",
+    "\n",
+    "A license file can be automatically generated by Nengo Bones.\n",
+    "Currently the Nengo License and MIT License are supported\n",
+    "as base templates (specified by the `type` tag)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "license_rst:\n",
+    "    type: nengo\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate license-rst\n",
+    "display_contents(\"LICENSE.rst\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that this template uses several of the\n",
+    "[general options](#General-options) described above\n",
+    "(`project_name`, `author`, `author_email`,\n",
+    "`copyright_start`, `copyright_end`)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "author: A Different Author\n",
+    "copyright_start: 1900\n",
+    "license_rst:\n",
+    "    type: mit\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "!bones-generate license-rst\n",
+    "display_contents(\"LICENSE.rst\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## CONTRIBUTING.rst config\n",
+    "\n",
+    "The CONTRIBUTING.rst file instructs potential contributors\n",
+    "on how to contribute to the project.\n",
+    "It has no configuration options,\n",
+    "although it makes use of some of the\n",
+    "[general options](#General-options)\n",
+    "(`project_name`, `repo_name`)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "contributing_rst: {}\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate contributing-rst\n",
+    "display_contents(\"CONTRIBUTING.rst\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## CONTRIBUTORS.rst config\n",
+    "\n",
+    "The CONTRIBUTORS.rst file links to the contributor list for the project.\n",
+    "It always provides the Github contributors link,\n",
+    "which lists all people who have committed to the project."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "contributors_rst: {}\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate contributors-rst\n",
+    "display_contents(\"CONTRIBUTORS.rst\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `nengo_list` flag includes the full list of Nengo ecosystem contributors.\n",
+    "It defaults to `True` if the license type is the \"nengo\" license, and False otherwise."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "contributors_rst:\n",
+    "    nengo_list: True\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate contributors-rst\n",
+    "display_contents(\"CONTRIBUTORS.rst\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## MANIFEST.in config\n",
+    "\n",
+    "The MANIFEST.in template defines some standard rules\n",
+    "for the project manifest:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "manifest_in: {}\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate manifest-in\n",
+    "display_contents(\"MANIFEST.in\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Arbitrary additions can be made to this list by\n",
+    "setting configuration options with the appropriate\n",
+    "MANIFEST rule heading:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "manifest_in:\n",
+    "    global-include:\n",
+    "        - global_include_pattern0\n",
+    "        - global_include_pattern1\n",
+    "    graft:\n",
+    "        - graft_pattern0\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate manifest-in\n",
+    "display_contents(\"MANIFEST.in\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## setup.cfg config\n",
+    "\n",
+    "The setup.cfg file contains configuration options\n",
+    "for a number of different tools.\n",
+    "In addition to the specific options defined below,\n",
+    "the setup.cfg template makes use of the general\n",
+    "`pkg_name` option to set various file/path names."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "setup_cfg: {}\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate setup-cfg\n",
+    "display_contents(\"setup.cfg\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Each of the tools configured by setup.cfg has its own subheading\n",
+    "in the .nengobones.yml `setup_cfg` section.\n",
+    "\n",
+    "`coverage` has two options:\n",
+    "- `exclude_lines`: a list of regex expressions\n",
+    "  that will be ignored in code coverage reports\n",
+    "- `omit_files`: a list of filename patterns that will be ignored\n",
+    "\n",
+    "Note that some defaults are already specified in both cases,\n",
+    "and any options passed are in addition to those defaults."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "setup_cfg:\n",
+    "    coverage:\n",
+    "        exclude_lines:\n",
+    "            # Ignore all loops\n",
+    "            - for *\n",
+    "            - while *\n",
+    "        omit_files:\n",
+    "            # Ignore all files in subdirectory\n",
+    "            - subdir/*\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate setup-cfg\n",
+    "display_contents(\"setup.cfg\", sections=[\"[coverage:run]\", \"[coverage:report]\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `flake8` section has two options:\n",
+    "\n",
+    "- `exclude`: a list of filename patterns to be ignored\n",
+    "- `ignore`: a list of rules to be ignored;\n",
+    "  see https://lintlyci.github.io/Flake8Rules/ for a full list."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "setup_cfg:\n",
+    "    flake8:\n",
+    "        exclude:\n",
+    "            - subdir/*\n",
+    "        ignore:\n",
+    "            - E101\n",
+    "            - E111\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate setup-cfg\n",
+    "display_contents(\"setup.cfg\", sections=[\"[flake8]\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `pytest` section has the following general options:\n",
+    "\n",
+    "- `addopts`: A list of command line options to pass to\n",
+    "  any pytest invocation (defaults to `-p nengo.tests.options`,\n",
+    "  which will add the pytest command line options from Nengo core).\n",
+    "- `xfail_strict`: If True, xpass will be treated as a failure\n",
+    "  (defaults to False).\n",
+    "- `norecursedirs`: A list of directory name patterns that\n",
+    "  should not be searched for test files.\n",
+    "- `markers`: Descriptions for any custom markers that can be\n",
+    "  applied to test functions.\n",
+    "- `filterwarnings`: Controls how warnings will be handled (see\n",
+    "  https://docs.python.org/3/library/warnings.html#warning-filter\n",
+    "  for a description of how to write warning filters).\n",
+    "  \n",
+    "And the following options for Pytest plugins.\n",
+    "\n",
+    "pytest-allclose:\n",
+    "\n",
+    "- `allclose_tolerances`: A list of test name patterns\n",
+    "  and associated tolerance values.\n",
+    "\n",
+    "pytest_nengo:\n",
+    "\n",
+    "- `nengo_neurons`: Specifies which neuron types to test.\n",
+    "- `nengo_simulator`: Specifies the Nengo backend to test.\n",
+    "- `nengo_simloader`: Specifies a function that returns\n",
+    "  the Nengo backend to test.\n",
+    "- `nengo_test_unsupported`:\n",
+    "  Marks which core tests are not expected to pass.\n",
+    "\n",
+    "\n",
+    "pytest-plt:\n",
+    "\n",
+    "- `plt_dirname`: A directory name to store plots.\n",
+    "- `plt_filename_drop`:\n",
+    "   A list of regular expressions to drop parts of plot filenames.\n",
+    "   \n",
+    "pytest-rng:\n",
+    "\n",
+    "- `rng_salt`: A salt value to modify seeds."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = r\"\"\"\n",
+    "setup_cfg:\n",
+    "    pytest:\n",
+    "        addopts:\n",
+    "            - -p nengo.tests.options\n",
+    "            - --colors=yes\n",
+    "        xfail_strict: true\n",
+    "        norecursedirs:\n",
+    "            - subdir0\n",
+    "            - subdir1\n",
+    "        markers:\n",
+    "            marker0: description of marker0\n",
+    "            marker1: description of marker1\n",
+    "        filterwarnings:\n",
+    "            - ignore::UserWarning\n",
+    "            - error::ResourceWarning\n",
+    "        nengo_test_unsupported:\n",
+    "            test_ensemble.py::test_encoders*:\n",
+    "                This backend does not support encoders\n",
+    "        allclose_tolerances:\n",
+    "            - \"test_ensemble.py::test_encoders* atol=0.01 rtol=0.05  # comment\"\n",
+    "        plt_dirname: nengo.plots\n",
+    "        plt_filename_drop:\n",
+    "            - \"^nengo\\\\.\"\n",
+    "        rng_salt: v1.0.0\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate setup-cfg\n",
+    "display_contents(\"setup.cfg\", sections=[\"[tool:pytest]\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `pylint` section has three options:\n",
+    "\n",
+    "- `ignore`: A list of filename patterns to ignore.\n",
+    "- `disable`: A list of pylint rules to ignore\n",
+    "  (see https://github.com/janjur/readable-pylint-messages).\n",
+    "  Note that a number of rules are already disabled by default,\n",
+    "  and any rules specified here will be in addition to those.\n",
+    "- `known-third-party`: A list of third party modules\n",
+    "  (sometimes pylint will fail to detect that a module is third-party,\n",
+    "  and then complain about the import order)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "setup_cfg:\n",
+    "    pylint:\n",
+    "        ignore:\n",
+    "            - __init__.py\n",
+    "        disable:\n",
+    "            - empty-docstring\n",
+    "            - unneeded-not\n",
+    "        known_third_party:\n",
+    "            - scipy\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate setup-cfg\n",
+    "display_contents(\"setup.cfg\", sections=[\"[pylint]\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## setup.py config\n",
+    "\n",
+    "The setup.py template has a number of configuration options,\n",
+    "and also makes use of some of the general config settings\n",
+    "(`pkg_name`, `author`, `author_email`, `description`)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "setup_py: {}\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate setup-py\n",
+    "display_contents(\"setup.py\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Package dependencies are defined in the `install_req`\n",
+    "(the main dependencies required to use the package),\n",
+    "`optional_req` (dependencies that aren't necessary\n",
+    "but activate extra functionality), `docs_req`\n",
+    "(requirements for building the documentation),\n",
+    "and `tests_req` (requirements for running the test suite) fields."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "setup_py:\n",
+    "    install_req:\n",
+    "        - package0\n",
+    "        - package1\n",
+    "    optional_req:\n",
+    "        - package2\n",
+    "        - package3\n",
+    "    docs_req:\n",
+    "        - package4\n",
+    "        - package5\n",
+    "    tests_req:\n",
+    "        - package6\n",
+    "        - package7\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate setup-py\n",
+    "display_contents(\"setup.py\", sections=[\n",
+    "    \"install_req\", \"optional_req\", \"docs_req\", \"tests_req\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "There are a number of options that will be passed to the `setup` function:\n",
+    "\n",
+    "- `url`: A link to the project's homepage\n",
+    "  (defaults to nengo.ai/my-package).\n",
+    "- `python_requires`: Python version requirement for this package\n",
+    "  (defaults to >=3.5).\n",
+    "- `include_package_data`: Whether or not to include files listed\n",
+    "  in `MANIFEST.in` in the installation (defaults to False).\n",
+    "- `package_data`: Mapping of extra data files to include in\n",
+    "  installation (not specified by `MANIFEST.in`).\n",
+    "- `classifiers`: List of\n",
+    "  [Trove classifiers](https://pypi.org/pypi?%3Aaction=list_classifiers).\n",
+    "- `entry_points`: Dictionary of entry points to make available.\n",
+    "\n",
+    "See the [distutils](https://docs.python.org/3.6/distutils/apiref.html)\n",
+    "and [setuptools](https://setuptools.readthedocs.io/en/latest/setuptools.html#new-and-changed-setup-keywords) documentation for more details on these options."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "setup_py:\n",
+    "    url: https://github.com/org/my-package\n",
+    "    python_requires: \">=3.4\"\n",
+    "    include_package_data: true\n",
+    "    package_data:\n",
+    "        pkg:\n",
+    "            - file0\n",
+    "            - file1\n",
+    "    classifiers:\n",
+    "        - \"Development Status :: 3 - Alpha\"\n",
+    "        - \"Framework :: Nengo\"\n",
+    "    entry_points:\n",
+    "        nengo.backends:\n",
+    "            - my_backend = my_backend:Simulator\n",
+    "        console_scripts:\n",
+    "            - my-script = my_project.file:function\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate setup-py\n",
+    "display_contents(\"setup.py\", sections=[\"setup\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## docs/conf.py config\n",
+    "\n",
+    "The `docs/conf.py` file contains settings controlling\n",
+    "Sphinx documentation. It makes use of several general\n",
+    "configuration option (`pkg_name`, `project_name`, `author`,\n",
+    "`copyright_start`, `copyright_end`)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py: {}\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Extra Sphinx extensions can be added by setting the `extensions` config option:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py:\n",
+    "    extensions:\n",
+    "        - a_sphinx_extension\n",
+    "        - another_sphinx_extension\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\", sections=[\"extensions\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Extra intersphinx mappings (for linking to documentation in other projects)\n",
+    "can be added by setting the `intersphinx_mapping` config option,\n",
+    "which is a mapping from package names to documentation URLs\n",
+    "(the linked documentations must also be generated by Sphinx)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py:\n",
+    "    intersphinx_mapping:\n",
+    "        scipy: https://docs.scipy.org/doc/scipy/reference\n",
+    "        sklearn: https://scikit-learn.org/dev\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\", sections=[\"intersphinx_mapping\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `exclude_patterns` config option is a list of file/directory name patterns\n",
+    "that should not be included in the documentation rendering."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py:\n",
+    "    exclude_patterns:\n",
+    "        - a-file.py\n",
+    "        - subdir\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\", sections=[\"exclude_patterns\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `nengo_logo` config option contains the name of the logo image\n",
+    "that will be rendered in the sidebar. The image filename refers to\n",
+    "the [nengo/design](https://www.nengo.ai/design) assets.\n",
+    "The default is `general-full-light.svg`, which refers to\n",
+    "[this logo](https://www.nengo.ai/design/_images/general-full-light.svg)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py:\n",
+    "    nengo_logo: nengo-dl-full-light.svg\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\", sections=[\"html_theme_options\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `nengo_logo_color` config option contains the primary color\n",
+    "associated with the logo. This information should also be present\n",
+    "in the [nengo/design](https://www.nengo.ai/design) repository.\n",
+    "The default is `#a8acaf`, which is a neutral gray appropriate\n",
+    "for projects without a primary color.\n",
+    "\n",
+    "Note that because `#` prefixes comments in YAML,\n",
+    "you must enclose hex color entries in single or double quotes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py:\n",
+    "    nengo_logo_color: '#abcdef'\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\", sections=[\"html_theme_options\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `analytics_id` config option contains a Google Analytics tracking ID\n",
+    "that will enable Google Analytics tracking.\n",
+    "It should look like `UA-000000-2`. Projects with documentation hosted\n",
+    "at https://www.nengo.ai should use the key `UA-41658423-2`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py:\n",
+    "    analytics_id: UA-41658423-2\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\", sections=[\"html_theme_options\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `doctest_setup` config option contains a list of Python statements\n",
+    "that should be executed before the code in `.. testcode::` blocks,\n",
+    "which are run with the `sphinx.ext.doctest` extension."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py:\n",
+    "    doctest_setup:\n",
+    "        - import nengo\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Finally, the `sphinx_options` config option can be used to set\n",
+    "arbitrary options of the form `var = val` in the conf.py file."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "docs_conf_py:\n",
+    "    sphinx_options:\n",
+    "        an_option: \"'a string value'\"\n",
+    "        another_option: [\"a\", \"list\", \"value\"]\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate docs-conf-py\n",
+    "display_contents(\"docs/conf.py\", sections=[\n",
+    "    \"default_role\", \"pygments_style\", \"an_option\", \"another_option\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## .pre-commit-config.yaml and pyproject.toml configs\n",
+    "\n",
+    "The `.pre-commit-config.yaml` and `pyproject.toml` files\n",
+    "make it easy to install `black`\n",
+    "as a pre-commit hook for your repository\n",
+    "and run it on the correct files.\n",
+    "\n",
+    "The only configuration available for these files is an\n",
+    "`exclude` option that accepts a list of patterns to exclude.\n",
+    "Each entry is a regular expression.\n",
+    "The list should be the same for both files.\n",
+    "\n",
+    "When you add these files to your `.nengobones.yml` file,\n",
+    "you should also add something to your documentation\n",
+    "to indicate that users should configure their\n",
+    "editor to run Black automatically,\n",
+    "and to install `pre-commit`\n",
+    "and run `pre-commit install` inside the repository."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "nengobones_yml = \"\"\"\n",
+    "pre_commit_config_yaml:\n",
+    "    exclude:\n",
+    "        - project/ignore_me.py\n",
+    "pyproject_toml:\n",
+    "    exclude:\n",
+    "        - project/ignore_me.py\n",
+    "\"\"\"\n",
+    "write_yml(nengobones_yml)\n",
+    "\n",
+    "!bones-generate pre-commit-config-yaml\n",
+    "display_contents(\".pre-commit-config.yaml\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "!bones-generate pyproject-toml\n",
+    "display_contents(\"pyproject.toml\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# clean up the temporary files generated by this notebook\n",
+    "\n",
+    "files = list(nengo_bones.all_files) + [\n",
+    "    \".nengobones.yml\", \"test.sh\", \"test2.sh\", \"static.sh\"]\n",
+    "\n",
+    "for file in files:\n",
+    "    if os.path.exists(file):\n",
+    "        os.remove(file)"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
