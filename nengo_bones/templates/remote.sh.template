@@ -103,10 +103,15 @@ EOF
     eval "bash <(curl -s https://codecov.io/bash)"
     {% endif %}
     exe ssh {{ host }} -q << EOF
-        {% block remote_cleanup %}
         echo "$ ({{ host }}) Cleaning up {{ pkg }}"
         cd ~/tmp
-        ls -tp | grep '{{ pkg }}-' | tail -n +3 | xargs -I {} rm -r -- {}
-        {% endblock %}
+        (
+          flock -x -w 540 200 || exit 1
+          echo "$ Obtained cleanup lock"
+          {% block remote_cleanup %}
+          ls -tp | grep '{{ pkg }}-' | tail -n +3 | xargs -I {} rm -r -- {}
+          {% endblock %}
+        ) 200>cleanup.lock
+        exit \$?
 EOF
 {% endblock %}

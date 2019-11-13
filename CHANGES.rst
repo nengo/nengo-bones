@@ -27,7 +27,13 @@ Release History
 - Added support for ``nengo_sphinx_theme.ext.redirects``, which can be used to
   automatically add redirects for renamed documentation pages. (`#68`_)
 
+**Fixed**
+
+- Added locking to ``remote.sh`` script to avoid possible race conditions
+  during cleanup. (`#69`_)
+
 .. _#68: https://github.com/nengo/nengo-bones/pull/68
+.. _#69: https://github.com/nengo/nengo-bones/pull/69
 
 0.7.0 (November 7, 2019)
 ========================
