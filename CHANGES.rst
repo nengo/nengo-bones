@@ -22,7 +22,12 @@ Release History
 0.7.1 (unreleased)
 ==================
 
+**Added**
 
+- Added support for ``nengo_sphinx_theme.ext.redirects``, which can be used to
+  automatically add redirects for renamed documentation pages. (`#68`_)
+
+.. _#68: https://github.com/nengo/nengo-bones/pull/68
 
 0.7.0 (November 7, 2019)
 ========================

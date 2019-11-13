@@ -17,6 +17,9 @@ extensions = [
     "sphinx.ext.viewcode",
     "nbsphinx",
     "nengo_sphinx_theme",
+    {% if html_redirects %}
+    "nengo_sphinx_theme.ext.redirects",
+    {% endif %}
     "numpydoc",
     {% for ext in extensions %}
     "{{ ext }}",
@@ -102,3 +105,10 @@ html_theme_options = {
     "analytics_id": "{{ analytics_id }}",
     {% endif %}
 }
+{% if html_redirects %}
+html_redirects = [
+    {% for src, dst in html_redirects.items() %}
+    ("{{ src }}", "{{ dst }}"),
+    {% endfor %}
+]
+{% endif %}

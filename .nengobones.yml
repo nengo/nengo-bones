@@ -169,6 +169,8 @@ docs_conf_py:
   doctest_setup:
     - "# Testing that doctest_setup works"
     - "# with multiple lines"
+  html_redirects:
+    changelog.html: changes.html
 
 pre_commit_config_yaml:
   exclude:
