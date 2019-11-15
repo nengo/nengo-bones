@@ -105,13 +105,12 @@ EOF
     exe ssh {{ host }} -q << EOF
         echo "$ ({{ host }}) Cleaning up {{ pkg }}"
         cd ~/tmp
-        (
-          flock -x -w 540 200 || exit 1
-          echo "$ Obtained cleanup lock"
-          {% block remote_cleanup %}
-          ls -tp | grep '{{ pkg }}-' | tail -n +3 | xargs -I {} rm -r -- {}
-          {% endblock %}
-        ) 200>cleanup.lock
-        exit \$?
+        exec 200>cleanup.lock || exit 1
+        flock --wait 540 200 || exit 1
+        echo "$ Obtained cleanup lock"
+        {% block remote_cleanup %}
+        ls -tp | grep '{{ pkg }}-' | tail -n +3 | xargs -I {} rm -r -- {}
+        {% endblock %}
+        flock --unlock 200
 EOF
 {% endblock %}
