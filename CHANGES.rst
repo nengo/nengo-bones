@@ -22,6 +22,13 @@ Release History
 0.7.2 (unreleased)
 ==================
 
+**Changed**
+
+- Failing to install miniconda in ``remote.sh`` is no longer considered a build
+  error (this can occur, for example, when rerunning a build that already has
+  miniconda installed). (`#71`_)
+
+.. _#71: https://github.com/nengo/nengo-bones/pull/71
 
 0.7.1 (November 14, 2019)
 =========================
