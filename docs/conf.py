@@ -70,7 +70,7 @@ suppress_warnings = ["image.nonlocal_uri"]
 
 project = "Nengo Bones"
 authors = "Applied Brain Research"
-copyright = "2018-2019 Applied Brain Research"
+copyright = "2018-2020 Applied Brain Research"
 version = ".".join(nengo_bones.__version__.split(".")[:2])  # Short X.Y version
 release = nengo_bones.__version__  # Full version, with tags
 
