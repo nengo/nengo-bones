@@ -14,9 +14,6 @@ env:
   global:
     - SCRIPT="test"
     - TEST_ARGS=""
-    - COV_CORE_SOURCE=nengo_bones  # early start pytest-cov engine
-    - COV_CORE_CONFIG=.coveragerc
-    - COV_CORE_DATAFILE=.coverage.eager
     - BRANCH_NAME="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
     - TEST_GLOBAL_VAR="test global var val"
     - TEST_LOCAL_VAR="this val will be overwritten"

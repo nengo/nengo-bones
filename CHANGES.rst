@@ -22,7 +22,12 @@ Release History
 0.7.3 (unreleased)
 ==================
 
+**Removed**
 
+- Removed coverage.py early starting logic. This is no longer necessary as of Nengo
+  3.0 and causes problems with the new coverage.py 5.0 release. (`#78`_)
+
+.. _#78: https://github.com/nengo/nengo-bones/pull/78
 
 0.7.2 (December 2, 2019)
 ========================

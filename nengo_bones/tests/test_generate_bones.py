@@ -83,13 +83,13 @@ def test_ci_scripts(tmpdir):
     assert has_line(".ci/test.sh", "--durations 20 $TEST_ARGS", startswith=False)
     assert not has_line(
         ".ci/test.sh",
-        "--cov=dummy --cov-append --cov-report=term-missing $TEST_ARGS",
+        "--cov=dummy --cov-report=term-missing $TEST_ARGS",
         startswith=False,
     )
 
     assert has_line(
         ".ci/test-coverage.sh",
-        "--cov=dummy --cov-append --cov-report=term-missing $TEST_ARGS",
+        "--cov=dummy --cov-report=term-missing $TEST_ARGS",
         startswith=False,
     )
 
