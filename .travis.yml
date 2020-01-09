@@ -8,7 +8,7 @@ notifications:
     on_failure: change
 cache: pip
 
-dist: trusty
+dist: xenial
 
 env:
   global:
@@ -33,6 +33,7 @@ jobs:
   -
     env:
       SCRIPT="examples"
+    services: ['xvfb']
   -
     env:
       TEST_LOCAL_VAR="test local var val"
@@ -59,7 +60,7 @@ jobs:
       SCRIPT="test-nengo"
       TEST_ARGS="--test-arg -p nengo.tests.options"
     python: 3.7
-    dist: xenial
+    dist: bionic
   - stage: deploy
     if: branch =~ ^release-candidate-* OR tag =~ ^v[0-9]*
     env: SCRIPT="deploy"

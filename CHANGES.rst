@@ -19,9 +19,14 @@ Release History
    - Removed
    - Fixed
 
-0.7.4 (unreleased)
+0.8.0 (unreleased)
 ==================
 
+**Changed**
+
+- The default distribution used in builds is now ``xenial``. (`#79`_)
+
+.. _#79: https://github.com/nengo/nengo-bones/pull/79
 
 0.7.3 (January 8, 2020)
 =======================

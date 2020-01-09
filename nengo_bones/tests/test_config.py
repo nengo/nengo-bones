@@ -13,7 +13,10 @@ def test_find_config():
 
 
 def test_fill_defaults():
-    init_cfg = {"travis_yml": {"jobs": [{"script": "docs-test"}]}, "codecov_yml": {}}
+    init_cfg = {
+        "travis_yml": {"jobs": [{"script": "docs-test"}, {"script": "examples-test"}]},
+        "codecov_yml": {},
+    }
     config.fill_defaults(init_cfg)
 
     assert init_cfg["travis_yml"]["python"] == "3.6"
@@ -22,6 +25,7 @@ def test_fill_defaults():
     assert init_cfg["travis_yml"]["deploy_dists"] == ["sdist"]
 
     assert init_cfg["travis_yml"]["jobs"][0]["apt_install"] == ["pandoc"]
+    assert init_cfg["travis_yml"]["jobs"][1]["services"] == ["xvfb"]
 
     assert init_cfg["codecov_yml"]["skip_appveyor"]
     assert init_cfg["codecov_yml"]["abs_target"] == "auto"

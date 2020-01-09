@@ -6,12 +6,6 @@
     exe pip install -e ".[docs]"
 {% endblock %}
 
-{% block before_script %}
-    exe export DISPLAY=:99.0
-    exe sh -e /etc/init.d/xvfb start
-    exe sleep 3
-{% endblock %}
-
 {% block script %}
     # shellcheck disable=SC2086
     if ls docs/**/*.ipynb &>/dev/null; then

@@ -59,7 +59,7 @@ def find_config():
     return conf_file
 
 
-def fill_defaults(config):
+def fill_defaults(config):  # noqa: C901
     """
     Fills in default values in a loaded config (in-place).
 
@@ -85,6 +85,8 @@ def fill_defaults(config):
         for job in cfg["jobs"]:
             if job.get("script", "").startswith("docs"):
                 job.setdefault("apt_install", ["pandoc"])
+            elif job.get("script", "").startswith("examples"):
+                job.setdefault("services", ["xvfb"])
 
     if "codecov_yml" in config:
         cfg = config["codecov_yml"]

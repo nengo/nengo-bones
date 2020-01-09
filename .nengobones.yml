@@ -34,7 +34,7 @@ travis_yml:
         TEST_LOCAL_VAR: test local var val
       test_args: --test-arg -p nengo.tests.options
       python: 3.7
-      dist: xenial
+      dist: bionic
   pypi_user: drasmuss
   deploy_dists:
     - sdist
