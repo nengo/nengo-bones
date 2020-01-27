@@ -51,7 +51,7 @@ jobs:
         server: https://test.pypi.org/legacy/
         user: {{ pypi_user }}
         password: $PYPI_TOKEN
-        distributions: "{% for dist in deploy_dists -%} {{ dist }} {% endfor %}"
+        distributions: "{% for dist in deploy_dists %}{{ dist }} {%+ endfor %}"
         on:
           all_branches: true
           condition: $TRAVIS_BRANCH =~ ^release-candidate-*
@@ -59,7 +59,7 @@ jobs:
       - provider: pypi
         user: {{ pypi_user }}
         password: $PYPI_TOKEN
-        distributions: "{% for dist in deploy_dists -%} {{ dist }} {% endfor %}"
+        distributions: "{% for dist in deploy_dists %}{{ dist }} {%+ endfor %}"
         on:
           all_branches: true
           condition: $TRAVIS_TAG =~ ^v[0-9]*

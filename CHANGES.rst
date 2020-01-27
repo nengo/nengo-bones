@@ -19,9 +19,15 @@ Release History
    - Removed
    - Fixed
 
-0.8.1 (unreleased)
+0.9.0 (unreleased)
 ==================
 
+**Fixed**
+
+- Fixed an issue with the ``.travis.yml`` template caused by the new
+  Jinja2 release. (`#80`_)
+
+.. _#80: https://github.com/nengo/nengo-bones/pull/80
 
 0.8.0 (January 10, 2020)
 ========================
