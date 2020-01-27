@@ -22,6 +22,11 @@ Release History
 0.9.0 (unreleased)
 ==================
 
+**Changed**
+
+- The ``bones-check`` that TravisCI does now prints diffs for easier
+  debugging. (`#80`_)
+
 **Fixed**
 
 - Fixed an issue with the ``.travis.yml`` template caused by the new
