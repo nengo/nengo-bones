@@ -18,6 +18,7 @@ all_sections = [
     "manifest_in",
     "pre_commit_config_yaml",
     "pyproject_toml",
+    "py_typed",
 ]
 
 all_files = [
@@ -32,4 +33,5 @@ all_files = [
     "MANIFEST.in",
     ".pre-commit-config.yaml",
     "pyproject.toml",
+    "pkg/py.typed",
 ]

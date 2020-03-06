@@ -192,5 +192,13 @@ def pyproject_toml(ctx):
     render_template(ctx, "pyproject.toml")
 
 
+@main.command()
+@click.pass_context
+def py_typed(ctx):
+    """Generate {{ pkg_name }}/py.typed file."""
+
+    render_template(ctx, "pkg/py.typed")
+
+
 if __name__ == "__main__":
     main(obj={})  # pragma: no cover pylint: disable=no-value-for-parameter

@@ -39,6 +39,7 @@ Release History
 - Officially support and test against Python 3.9. (`#136`_)
 - Added ``skip`` option to codespell config, which can be used to specify files that
   should be ignored. (`#138`_)
+- Added support for projects with type hints through the ``py_typed`` section. (`#140`_)
 
 **Changed**
 
@@ -84,6 +85,7 @@ Release History
 .. _#136: https://github.com/nengo/nengo-bones/pull/136
 .. _#137: https://github.com/nengo/nengo-bones/pull/137
 .. _#138: https://github.com/nengo/nengo-bones/pull/138
+.. _#140: https://github.com/nengo/nengo-bones/pull/140
 
 0.11.1 (April 13, 2020)
 =======================

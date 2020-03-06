@@ -8,10 +8,23 @@ shopt -s globstar
 
 {% block install %}
 {{ super() }}
-    exe pip install "jupyter>=1.0.0" "pylint>=2.5.1" "codespell>=2.0.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2" "flake8>=3.7.7" "isort>=5.6.4"
+    exe pip install \
+        "jupyter>=1.0.0" \
+        "pylint>=2.5.1" \
+        "codespell>=2.0.0" \
+        "gitlint>=0.1.2" \
+        "collective.checkdocs>=0.2" \
+        "flake8>=3.7.7" \
+        {% if py_typed is defined %}
+        "mypy>=0.800" \
+        {% endif %}
+        "isort>=5.6.4"
 {% endblock %}
 
 {% block script %}
+    {% if py_typed is defined %}
+    exe mypy {{ pkg_name }}
+    {% endif %}
     exe pylint {{ pkg_name }} --jobs=0
     exe flake8 {{ pkg_name }}
     exe isort {{ pkg_name }} --check

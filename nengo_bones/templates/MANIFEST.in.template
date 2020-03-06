@@ -12,6 +12,9 @@ include *.toml
 include MANIFEST.in
 include .gitlint
 include .pylintrc
+{% if py_typed is defined %}
+include {{ pkg_name}}/py.typed
+{% endif %}
 
 # Directories to include
 graft docs

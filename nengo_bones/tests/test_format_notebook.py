@@ -28,6 +28,7 @@ def check_notebook(nb_path, correct):
     no_metadata = True
     no_metadata &= "kernelspec" not in nb.metadata
     no_metadata &= "signature" not in nb.metadata
+    no_metadata &= "widgets" not in nb.metadata
 
     badinfo = (
         "codemirror_mode",
@@ -75,6 +76,7 @@ def test_format_notebook(tmp_path):
         "language": "python",
         "name": "python3",
     }
+    nb["metadata"]["widgets"] = {"widget1": "widval"}
     nb["cells"][1]["execution_count"] = 3
     nb["cells"][1]["metadata"]["collapsed"] = True
 

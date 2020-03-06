@@ -23,7 +23,7 @@ HAS_PRETTIER = (
 )
 
 
-def format_notebook(nb, fname, verbose=False, prettier=None):
+def format_notebook(nb, fname, verbose=False, prettier=None):  # noqa: C901
     """Formats an opened Jupyter notebook."""
 
     if verbose:
@@ -35,6 +35,9 @@ def format_notebook(nb, fname, verbose=False, prettier=None):
     # Should pass `nengo/tests/test_examples.py:test_minimal_metadata`
     if "kernelspec" in nb.metadata:
         del nb.metadata["kernelspec"]
+
+    if "widgets" in nb.metadata:
+        del nb.metadata["widgets"]
 
     language_info = getattr(nb.metadata, "language_info", {})
     badinfo = (

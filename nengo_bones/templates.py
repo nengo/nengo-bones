@@ -47,6 +47,7 @@ class BonesTemplate:
         self.env = env
 
         section = output_file.lstrip(".")
+        section = section.replace("pkg/", "")  # Don't require `pkg_` prefix
         section = section.replace(".", "_")
         section = section.replace("/", "_")
         section = section.replace("-", "_")
@@ -150,6 +151,11 @@ class BonesTemplate:
         if output_name is None:
             output_name = self.output_file
 
+        # Special case: templates in `templates/pkg` directory have `pkg` replaced
+        # with the actual name of the package
+        if output_name.startswith("pkg/"):
+            assert "pkg_name" in data
+            output_name = output_name.replace("pkg/", f"{data['pkg_name']}/")
         output_path = pathlib.Path(output_dir, output_name)
         output_path.parent.mkdir(exist_ok=True)
         output_path.write_text(self.render(**data))

@@ -181,3 +181,10 @@ skip = ./build,*/_build,*-checkpoint.ipynb,./.eggs,./.git,*/_vendor,{{ codespell
 ignore-words-list = {{ codespell.ignore_words | join(",") }}
 {% endif %}
 {% endblock %}
+{%- if py_typed is defined %}
+
+{% block mypy %}
+[mypy]
+python_version = 3.6
+{% endblock %}
+{% endif %}

@@ -784,7 +784,7 @@ def test_generate_all(tmp_path):
     assert_exit(result, 0)
 
     for file_path in all_files:
-        assert (tmp_path / file_path).exists()
+        assert (tmp_path / file_path.replace("pkg/", "dummy/")).exists()
 
 
 def test_generate_none(tmp_path):
