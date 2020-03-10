@@ -22,6 +22,12 @@ Release History
 0.9.1 (unreleased)
 ==================
 
+**Fixed**
+
+- Fixed deployment tag conditional check in ``.travis.yml`` template. (`#83`_)
+
+.. _#83: https://github.com/nengo/nengo-bones/pull/83
+
 
 0.9.0 (January 28, 2020)
 ========================

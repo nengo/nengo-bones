@@ -54,14 +54,15 @@ jobs:
         distributions: "{% for dist in deploy_dists %}{{ dist }} {%+ endfor %}"
         on:
           all_branches: true
+          tags: false
           condition: $TRAVIS_BRANCH =~ ^release-candidate-*
-          condition: $TRAVIS_TAG = ""
       - provider: pypi
         user: {{ pypi_user }}
         password: $PYPI_TOKEN
         distributions: "{% for dist in deploy_dists %}{{ dist }} {%+ endfor %}"
         on:
           all_branches: true
+          tags: true
           condition: $TRAVIS_TAG =~ ^v[0-9]*
   {% endif %}
 
