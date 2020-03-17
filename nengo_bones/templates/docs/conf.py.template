@@ -60,6 +60,15 @@ numpydoc_show_class_members = False
 # -- nbsphinx
 nbsphinx_timeout = -1
 
+{% if autoautosummary_change_modules %}
+# -- nengo_sphinx_theme.ext.autoautosummary
+autoautosummary_change_modules = {
+    {% for key, vals in autoautosummary_change_modules.items() %}
+    "{{ key }}": [{% for val in vals %} "{{ val }}", {% endfor %}],
+    {% endfor %}
+}
+
+{% endif %}
 # -- sphinx
 nitpicky = True
 exclude_patterns = [

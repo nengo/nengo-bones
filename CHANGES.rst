@@ -22,7 +22,12 @@ Release History
 0.9.2 (unreleased)
 ==================
 
+**Added**
 
+- Added ``autoautosummary_change_modules`` option (for use with
+  ``nengo_sphinx_theme.ext.autoautosummary``). (`#86`_)
+
+.. _#86: https://github.com/nengo/nengo-bones/pull/86
 
 0.9.1 (March 17, 2020)
 ======================
