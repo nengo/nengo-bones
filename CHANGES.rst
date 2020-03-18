@@ -22,7 +22,12 @@ Release History
 0.9.2 (unreleased)
 ==================
 
+**Changed**
 
+- Docs script will now use ``nengo_sphinx_theme.ext.unique_linkcheck`` instead of
+  the default Sphinx linkchecker. (`#85`_)
+
+.. _#85: https://github.com/nengo/nengo-bones/pull/85
 
 0.9.1 (March 17, 2020)
 ======================

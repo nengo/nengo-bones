@@ -17,6 +17,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "nbsphinx",
     "nengo_sphinx_theme",
+    "nengo_sphinx_theme.ext.unique_linkcheck",
     "nengo_sphinx_theme.ext.redirects",
     "numpydoc",
     "sphinx_click.ext",
