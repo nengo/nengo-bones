@@ -19,13 +19,18 @@ Release History
    - Removed
    - Fixed
 
-0.9.2 (unreleased)
-==================
+0.10.0 (unreleased)
+===================
 
 **Added**
 
 - Added ``autoautosummary_change_modules`` option (for use with
   ``nengo_sphinx_theme.ext.autoautosummary``). (`#86`_)
+
+**Changed**
+
+- Docs script will now use ``nengo_sphinx_theme.ext.backoff``, which adds
+  exponential backoff functionality to Sphinx requests. (`#86`_)
 
 .. _#86: https://github.com/nengo/nengo-bones/pull/86
 
