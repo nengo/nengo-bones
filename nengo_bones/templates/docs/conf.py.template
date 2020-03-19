@@ -87,6 +87,7 @@ linkcheck_ignore = [r"http://localhost:\d+"]
 linkcheck_anchors = True
 default_role = "py:obj"
 pygments_style = "sphinx"
+user_agent = "{{ pkg_name }}"
 {% if sphinx_options %}
 {% for param, val in sphinx_options.items() %}
 {{ param }} = {{ val }}

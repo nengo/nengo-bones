@@ -67,6 +67,7 @@ linkcheck_ignore = [r"http://localhost:\d+"]
 linkcheck_anchors = True
 default_role = "py:obj"
 pygments_style = "sphinx"
+user_agent = "nengo_bones"
 suppress_warnings = ["image.nonlocal_uri"]
 
 project = "Nengo Bones"
