@@ -83,7 +83,6 @@ ci_scripts:
       - cat .ci/docs.sh
     pip_install:
       - sphinx-click>=2.0.1
-      - git+https://github.com/nengo/nengo-sphinx-theme@rename-modules
   - template: examples
     pre_commands:
       - cat .ci/examples.sh
