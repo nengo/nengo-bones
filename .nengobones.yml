@@ -68,9 +68,7 @@ ci_scripts:
     output_name: test-nengo
     nengo_tests: true
     pip_install:
-      # TODO: update this to release version once there is one with the
-      # nengo_test_unsupported config
-      - git+https://github.com/nengo/nengo#egg=nengo[tests]
+      - nengo[tests]
     pre_commands:
       - cat .ci/test-nengo.sh
       - export TEST_PRE_COMMANDS=True
