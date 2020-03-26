@@ -37,9 +37,12 @@ Release History
 - Rendered documentation will not be uploaded if the html build fails (it will still
   be uploaded if the linkchecker/doctest builds fail). (`#98`_)
 - Rendered documentation will not be uploaded on cron builds. (`#98`_)
+- Docs script will now clean up the built doc directory before execution, if it exists
+  (e.g., because the docs job is being rerun). (`#96`_)
 
 .. _#97: https://github.com/nengo/nengo-bones/pull/97
 .. _#98: https://github.com/nengo/nengo-bones/pull/98
+.. _#96: https://github.com/nengo/nengo-bones/pull/96
 
 0.10.0 (March 19, 2020)
 =======================
