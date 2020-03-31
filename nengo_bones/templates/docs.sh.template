@@ -8,8 +8,8 @@
         "sphinx>=1.8.0" \
         "jupyter>=1.0.0" \
         "nbsphinx>=0.2.13" \
-        "nengo-sphinx-theme>=1.0.0" \
-        "numpydoc>=0.6.0"
+        "numpydoc>=0.6.0" \
+        "git+https://github.com/nengo/nengo-sphinx-theme#egg=nengo-sphinx-theme"
     exe pip install -e ".[docs]"
 {% endblock %}
 

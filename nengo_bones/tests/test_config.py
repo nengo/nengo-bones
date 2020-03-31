@@ -106,7 +106,7 @@ def test_load_config(tmpdir):
             "pypi_user": "dummy_pypi_user",
             "deploy_dists": ["sdist", "bdist_wheel"],
             "jobs": [{"script": "static", "language": "generic"}],
-            "bones_install": "nengo-bones",
+            "bones_install": "git+https://github.com/nengo/nengo-bones#egg=nengo-bones",
         },
         "codecov_yml": {
             "skip_appveyor": False,

@@ -14,7 +14,7 @@ version numbers as follows:
 """
 
 name = "nengo-bones"
-version_info = (0, 10, 1)  # (major, minor, patch)
+version_info = (0, 11, 0)  # (major, minor, patch)
 dev = 0
 
 version = "{v}{dev}".format(

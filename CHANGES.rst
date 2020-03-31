@@ -19,9 +19,16 @@ Release History
    - Removed
    - Fixed
 
-0.10.1 (unreleased)
+0.11.0 (unreleased)
 ===================
 
+**Changed**
+
+- Will now use ``nengo-bones`` and ``nengo-sphinx-theme`` master builds (instead of the
+  latest release), to streamline the process of distributing changes to those core
+  repos. (`#97`_)
+
+.. _#97: https://github.com/nengo/nengo-bones/pull/97
 
 0.10.0 (March 19, 2020)
 =======================

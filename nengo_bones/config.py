@@ -80,7 +80,9 @@ def fill_defaults(config):  # noqa: C901
         cfg.setdefault("global_vars", OrderedDict())
         cfg.setdefault("pypi_user", None)
         cfg.setdefault("deploy_dists", ["sdist"])
-        cfg.setdefault("bones_install", "nengo-bones")
+        cfg.setdefault(
+            "bones_install", "git+https://github.com/nengo/nengo-bones#egg=nengo-bones"
+        )
 
         for job in cfg["jobs"]:
             if job.get("script", "").startswith("docs"):
