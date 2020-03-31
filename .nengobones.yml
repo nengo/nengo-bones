@@ -35,6 +35,9 @@ travis_yml:
       test_args: --test-arg -p nengo.tests.options
       python: 3.7
       dist: bionic
+    - stage: autoupdate
+      script: auto-update
+      if: type = push AND branch = master
   pypi_user: drasmuss
   deploy_dists:
     - sdist
@@ -91,6 +94,25 @@ ci_scripts:
   - template: deploy
     pre_commands:
       - cat .ci/deploy.sh
+  - template: auto-update
+    pre_commands:
+      - cat .ci/auto-update.sh
+    repos:
+      - nengo/nengo
+      - nengo/nengo-control
+      - nengo/nengo-de1
+      - nengo/nengo-de1-hw
+      - nengo/nengo-dl
+      - nengo/nengo-fpga
+      - nengo/nengo-interfaces
+      - nengo/nengo-loihi
+      - nengo/nengo-pynq
+      - nengo/nengo-pynq-hw
+      - nengo/nengo-spa
+      - nengo/nengo-sphinx-theme
+      - nengo/pytest-allclose
+      - nengo/pytest-plt
+      - nengo/pytest-rng
 
 contributing_rst: {}
 

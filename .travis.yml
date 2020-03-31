@@ -61,6 +61,11 @@ jobs:
       TEST_ARGS="--test-arg -p nengo.tests.options"
     python: 3.7
     dist: bionic
+  -
+    env:
+      SCRIPT="auto-update"
+    stage: autoupdate
+    if: type = push AND branch = master
   - stage: deploy
     if: branch =~ ^release-candidate-* OR tag =~ ^v[0-9]*
     env: SCRIPT="deploy"

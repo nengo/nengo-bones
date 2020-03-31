@@ -22,6 +22,11 @@ Release History
 0.11.0 (unreleased)
 ===================
 
+**Added**
+
+- Downstream repos will now be automatically updated when nengo-bones is updated.
+  (`#97`_)
+
 **Changed**
 
 - Will now use ``nengo-bones`` and ``nengo-sphinx-theme`` master builds (instead of the
