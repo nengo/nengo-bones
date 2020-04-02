@@ -6,6 +6,15 @@ notifications:
   email:
     on_success: change
     on_failure: change
+  {% if slack_notifications %}
+  slack:
+    if: branch = master
+    on_pull_requests: false
+    on_success: change
+    on_failure: always
+    rooms:
+      - secure: "{{ slack_notifications }}"
+  {% endif %}
 cache: pip
 
 dist: xenial

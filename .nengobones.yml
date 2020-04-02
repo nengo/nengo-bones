@@ -43,6 +43,15 @@ travis_yml:
     - sdist
     - bdist_wheel
   bones_install: git+https://github.com/nengo/nengo-bones.git@$BRANCH_NAME
+  slack_notifications: "VVTPPxCrl53OAZeUojRa2SkG8JWdRbn/Lzfd1oVgMGZ1nKzBJsldWIvQX6pZHJ\
+    88h6MJrEvc/xOzhCSqLQURnahElw5HqzUbTRCTJ7La6/X1Xow238bby1ZTIDgcVhl8tWX6dWrwiTUEDhSg\
+    eSWcfQFLFnoY3uY8aiqvCXio/9+c8Ged3bA1bgfJRFwXcLvNWciYSK0KPMMHT8sXNrCPDzsJARXqmZN5dX\
+    1XtLCgPNzC68ocsKv/kvp4jaj1BuNhdRMxdLIHDdQOhAx2VJGNSdY+/qjvEbomR+KYWAOusNIMYyEdoJdN\
+    l4poCmaENs/YpxeP/qchNNPMsiDIi8WNphS3+A/VfdwzseOFWnkpH1+hAgEg0ZwNuYrW7+WL3TyJnV0uWD\
+    xhnLUzdbNsZx0FxkjTYz29OgcybalwGYiBWzUAl2/V1iRV4U0zlcb2mAT/knGZuU9DIb7IkynOc0aoOfuL\
+    Cul3a48Og3ehUujiTTFq11euYdBJghxsVCdivmBO9cfZN0hfIUO0fs63MvyM/a63KOUpDvVR4lOkq44/Xf\
+    j2uvHUHRmoapkdy27pcSdbk5lnCqUOuAIvO6eA6u82XFUskEBZETB+2CfjRUDGRUVNx2vMgBlETW/Q3qDb\
+    AywKqbMx1DLyAxzBcKHZOh9sfcdGfamW05q3ZrdjGrhj6uI="
 
 codecov_yml: {}
 

@@ -26,6 +26,8 @@ Release History
 
 - Downstream repos will now be automatically updated when nengo-bones is updated.
   (`#97`_)
+- Added ``slack_notifications`` option to ``.travis.yml`` to enable Slack notifications
+  for failing builds. (`#97`_)
 
 **Changed**
 
