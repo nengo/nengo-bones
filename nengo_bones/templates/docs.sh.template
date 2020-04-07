@@ -17,23 +17,29 @@
     exe git clone -b gh-pages-release https://github.com/{{ repo_name }}.git {{ docs_dir }}
     RELEASES=$(find {{ docs_dir }} -maxdepth 1 -type d -name "v[0-9].*" -printf "%f,")
 
+    FAILED_FILE="$TRAVIS_JOB_NUMBER.failed"
+    rm -f "$FAILED_FILE"
     if [[ "$TRAVIS_BRANCH" == "$TRAVIS_TAG" ]]; then
         RELEASES="$RELEASES$TRAVIS_TAG"
-        exe sphinx-build -b html docs {{ docs_dir }}/"$TRAVIS_TAG" -vW -A building_version="$TRAVIS_TAG" -A releases="$RELEASES"
+        sphinx-build -b html docs {{ docs_dir }}/"$TRAVIS_TAG" -vW --keep-going -A building_version="$TRAVIS_TAG" -A releases="$RELEASES" || touch "$FAILED_FILE"
     else
-        exe sphinx-build -b html docs {{ docs_dir }} -vW -A building_version=latest -A releases="$RELEASES"
+        sphinx-build -b html docs {{ docs_dir }} -vW --keep-going -A building_version=latest -A releases="$RELEASES" || touch "$FAILED_FILE"
     fi
 
-    export DOCS_STATUS="$STATUS"
+    if [[ -e "$FAILED_FILE" ]]; then
+        echo -e "\033[1;31mCOMMAND 'sphinx-build' FAILED\033[0m"
+        STATUS=1
+    fi
 
     exe sphinx-build -b linkcheck -vW -D nbsphinx_execute=never docs docs/_build
     exe sphinx-build -b doctest -vW -D nbsphinx_execute=never docs docs/_build
 {% endblock %}
 
 {% block after_script %}
-    if [[ "$DOCS_STATUS" -ne "0" ]]; then
+    FAILED_FILE="$TRAVIS_JOB_NUMBER.failed"
+    if [[ -e "$FAILED_FILE" ]]; then
         echo "Skipping docs upload because build failed"
-        exit "$DOCS_STATUS"
+        exit 1
     fi
 
     cd {{ docs_dir }} || exit
