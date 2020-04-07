@@ -42,6 +42,11 @@
         exit 1
     fi
 
+    if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then
+        echo "Skipping docs upload because this is a cron build"
+        exit 0
+    fi
+
     cd {{ docs_dir }} || exit
     git config --global user.email "info@appliedbrainresearch.com"
     git config --global user.name "Nengo Bones"
