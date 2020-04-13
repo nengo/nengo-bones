@@ -19,8 +19,22 @@ Release History
    - Removed
    - Fixed
 
-0.11.0 (unreleased)
-===================
+0.11.1 (April 13, 2020)
+=======================
+
+**Changed**
+
+- Rendered documentation will not be uploaded if the html build fails (it will still
+  be uploaded if the linkchecker/doctest builds fail). (`#98`_)
+- Rendered documentation will not be uploaded on cron builds. (`#98`_)
+- Docs script will now clean up the built doc directory before execution, if it exists
+  (e.g., because the docs job is being rerun). (`#96`_)
+
+.. _#96: https://github.com/nengo/nengo-bones/pull/96
+.. _#98: https://github.com/nengo/nengo-bones/pull/98
+
+0.11.0 (April 13, 2020)
+=======================
 
 **Added**
 
@@ -34,15 +48,8 @@ Release History
 - Will now use ``nengo-bones`` and ``nengo-sphinx-theme`` master builds (instead of the
   latest release), to streamline the process of distributing changes to those core
   repos. (`#97`_)
-- Rendered documentation will not be uploaded if the html build fails (it will still
-  be uploaded if the linkchecker/doctest builds fail). (`#98`_)
-- Rendered documentation will not be uploaded on cron builds. (`#98`_)
-- Docs script will now clean up the built doc directory before execution, if it exists
-  (e.g., because the docs job is being rerun). (`#96`_)
 
 .. _#97: https://github.com/nengo/nengo-bones/pull/97
-.. _#98: https://github.com/nengo/nengo-bones/pull/98
-.. _#96: https://github.com/nengo/nengo-bones/pull/96
 
 0.10.0 (March 19, 2020)
 =======================
