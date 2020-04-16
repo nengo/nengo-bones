@@ -22,6 +22,11 @@ Release History
 20.5 (unreleased)
 =================
 
+**Added**
+
+- Added support for new ``one_page`` option in ``nengo-sphinx-theme``. (`#101`_)
+
+.. _#101: https://github.com/nengo/nengo-bones/pull/101
 
 0.11.1 (April 13, 2020)
 =======================

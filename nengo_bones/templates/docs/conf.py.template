@@ -115,6 +115,9 @@ html_theme_options = {
     {% if analytics_id %}
     "analytics_id": "{{ analytics_id }}",
     {% endif %}
+    {% if one_page %}
+    "one_page": True
+    {% endif %}
 }
 {% if html_redirects %}
 html_redirects = [
