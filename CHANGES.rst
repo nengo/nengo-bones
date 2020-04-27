@@ -26,7 +26,13 @@ Release History
 
 - Added support for new ``one_page`` option in ``nengo-sphinx-theme``. (`#101`_)
 
+**Changed**
+
+- Restrict pylint version to <2.5 due to issue when the package being checked
+  is not installed in the current environment. (`#103`_)
+
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
+.. _#103: https://github.com/nengo/nengo-bones/pull/103
 
 0.11.1 (April 13, 2020)
 =======================

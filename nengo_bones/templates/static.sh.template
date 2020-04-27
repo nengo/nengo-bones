@@ -8,7 +8,7 @@ shopt -s globstar
 
 {% block install %}
 {{ super() }}
-    exe pip install "jupyter>=1.0.0" "pylint>=1.9.2" "codespell>=1.12.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2" "flake8>=3.7.7"
+    exe pip install "jupyter>=1.0.0" "pylint>=1.9.2,<2.5" "codespell>=1.12.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2" "flake8>=3.7.7"
 {% endblock %}
 
 {% block script %}
