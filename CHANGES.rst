@@ -30,9 +30,13 @@ Release History
 
 - Restrict pylint version to <2.5 due to issue when the package being checked
   is not installed in the current environment. (`#103`_)
+- Enable the new `pip dependency resolver
+  <https://pip.pypa.io/en/stable/user_guide/#changes-to-the-pip-dependency-resolver-in-20-2-2020>`_
+  during CI. (`#110`_)
 
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
 .. _#103: https://github.com/nengo/nengo-bones/pull/103
+.. _#110: https://github.com/nengo/nengo-bones/pull/110
 
 0.11.1 (April 13, 2020)
 =======================

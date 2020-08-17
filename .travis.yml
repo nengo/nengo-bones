@@ -22,6 +22,7 @@ env:
     - SCRIPT="test"
     - TEST_ARGS=""
     - BRANCH_NAME="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
+    - PIP_USE_FEATURE="2020-resolver"
     - TEST_GLOBAL_VAR="test global var val"
     - TEST_LOCAL_VAR="this val will be overwritten"
 
