@@ -10,9 +10,9 @@
   :target: https://codecov.io/gh/nengo/nengo-bones
   :alt: Test coverage
 
-***********
-Nengo Bones
-***********
+**********
+NengoBones
+**********
 
 The aim of this project is to automate the configuration of repositories
 throughout the Nengo ecosystem.  The idea is that we can centralize the

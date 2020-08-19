@@ -3,7 +3,7 @@
 Licensed code
 =============
 
-Nengo Bones imports several open source libraries:
+NengoBones imports several open source libraries:
 
 - `Click <https://click.palletsprojects.com/en/7.x/>`_ - Used under
   `BSD license <https://click.palletsprojects.com/en/7.x/license/>`__

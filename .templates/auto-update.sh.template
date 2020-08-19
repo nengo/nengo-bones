@@ -4,7 +4,7 @@
     COMMIT_HASH="$(git log -1 --pretty=%h)"
     COMMIT_MSG="$(git log -3 --pretty='%h - %s')"
     git config --global user.email "info@appliedbrainresearch.com"
-    git config --global user.name "Nengo Bones"
+    git config --global user.name "NengoBones"
 
     {% for repo in repos %}
     # Update {{ repo }}
@@ -15,7 +15,7 @@
         echo "No changes to {{ repo }}"
     else
         exe git add --all
-        exe git commit -m "Automatic update to Nengo Bones $COMMIT_HASH" -m "$COMMIT_MSG"
+        exe git commit -m "Automatic update to NengoBones $COMMIT_HASH" -m "$COMMIT_MSG"
         exe git push -fq "https://$GH_TOKEN@github.com/{{ repo }}" master:bones-autoupdate
         echo "Updated {{ repo }}:bones-autoupdate"
     fi

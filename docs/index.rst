@@ -1,6 +1,6 @@
-***********
-Nengo Bones
-***********
+**********
+NengoBones
+**********
 
 .. toctree::
     :maxdepth: 2

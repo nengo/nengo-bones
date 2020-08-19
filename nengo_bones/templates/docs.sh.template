@@ -50,7 +50,7 @@
 
     cd {{ docs_dir }} || exit
     git config --global user.email "info@appliedbrainresearch.com"
-    git config --global user.name "Nengo Bones"
+    git config --global user.name "NengoBones"
     git add --all
 
     if [[ "$TRAVIS_BRANCH" == "$TRAVIS_TAG" ]]; then

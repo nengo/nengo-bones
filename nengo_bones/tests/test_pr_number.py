@@ -42,7 +42,7 @@ def test_pr_number(monkeypatch, tmpdir, mode):
             tmpdir=tmpdir,
             filename=".nengobones.yml",
             contents="""
-            project_name: Nengo Bones
+            project_name: NengoBones
             pkg_name: nengo-bones
             repo_name: %s
         """

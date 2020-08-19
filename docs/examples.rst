@@ -7,9 +7,9 @@ Examples
 
     examples/configuration
 
-It may also be helpful to look at other projects that use Nengo Bones
+It may also be helpful to look at other projects that use NengoBones
 to see it being deployed in practice:
 
 - `Nengo <https://github.com/nengo/nengo>`_
-- `Nengo DL <https://github.com/nengo/nengo-dl>`_
-- `Nengo Loihi <https://github.com/nengo/nengo-loihi>`_
+- `NengoDL <https://github.com/nengo/nengo-dl>`_
+- `NengoLoihi <https://github.com/nengo/nengo-loihi>`_

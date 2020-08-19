@@ -2,7 +2,7 @@
 Style guide
 ***********
 
-Nengo Bones attempts to enforce
+NengoBones attempts to enforce
 as much of this style guide as possible.
 However, since not everything can be automatically enforced,
 all Nengo developers should be familiar with this style guide

@@ -16,7 +16,7 @@ import jinja2
 
 class BonesTemplate:
     """
-    A templated file known to Nengo Bones.
+    A templated file known to NengoBones.
 
     The only necessary information is the output filename, relative to the
     ``templates`` directory, which means that the output filename for the

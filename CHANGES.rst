@@ -267,7 +267,7 @@ Release History
   ``docs`` folder (not just ``docs/examples``). (`#46`_)
 - ``bones-check`` now checks that the content of the generated files
   matches the expected content, rather than relying on version numbers.
-  This means most files will not need to be regenerated when new Nengo Bones
+  This means most files will not need to be regenerated when new NengoBones
   versions are released, and that ``bones-check`` will be sensitive to changes
   within a dev version. (`#45`_)
 
@@ -348,5 +348,5 @@ Release History
 0.1.0 (April 15, 2019)
 ======================
 
-Initial release of Nengo Bones!
+Initial release of NengoBones!
 Thanks to all of the contributors for making this possible!
