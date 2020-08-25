@@ -107,6 +107,7 @@ ci_scripts:
     pre_commands:
       - cat .ci/auto-update.sh
     repos:
+      - nengo/keras-spiking
       - nengo/nengo
       - nengo/nengo-control
       - nengo/nengo-de1
@@ -122,6 +123,7 @@ ci_scripts:
       - nengo/pytest-allclose
       - nengo/pytest-plt
       - nengo/pytest-rng
+      - nengo/pytorch-spiking
 
 contributing_rst: {}
 
