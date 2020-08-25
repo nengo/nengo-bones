@@ -19,7 +19,7 @@
         exe git push -fq "https://$GH_TOKEN@github.com/{{ repo }}" master:bones-autoupdate
         echo "Updated {{ repo }}:bones-autoupdate"
     fi
-    cd .. || exit
+    cd ../.. || exit
 
     {% endfor %}
 {% endblock %}
