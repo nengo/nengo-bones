@@ -28,8 +28,8 @@ Release History
 - Added ``tagmanager_id`` option to ``docs_conf.py.template``,
   which will enable Google Tag Manager tracking. This option takes precedence
   over ``analytics_id`` if both are specified. (`#114`_)
-- Added the ``bones-format-notebook`` script to apply black formatting to notebooks
-  and clear notebook outputs/unnecessary metadata. (`#32`_)
+- Added the ``bones-format-notebook`` script to apply automated formatting, cleanup,
+  and spell checking to Jupyter notebooks. (`#32`_)
 
 **Changed**
 

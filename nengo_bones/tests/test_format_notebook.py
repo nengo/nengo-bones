@@ -57,16 +57,17 @@ def check_notebook(nb_path):
 
 def test_format_notebook(tmpdir):
     # pylint: disable=import-outside-toplevel
-    pytest.importorskip("IPython", minversion="3.0")
+    pytest.importorskip("jupyter")
     pytest.importorskip("black")
+    pytest.importorskip("codespell_lib")
     import nbformat
     from nbconvert.preprocessors import ExecutePreprocessor
     from nengo_bones.scripts import format_notebook
 
     nb = nbformat.v4.new_notebook()
     nb["cells"] = [
-        nbformat.v4.new_markdown_cell("""Title   \n\n"""),
-        nbformat.v4.new_code_cell("""%dirs\nprint("foo")   \n\n"""),
+        nbformat.v4.new_markdown_cell("""Title   \nserach\n\n"""),
+        nbformat.v4.new_code_cell("""%dirs\nprint("foo")   \n# coment\n\n"""),
         nbformat.v4.new_code_cell("  "),
     ]
 
@@ -100,6 +101,10 @@ def test_format_notebook(tmpdir):
     # check that all files were found
     for path in paths:
         assert path in result.output
+
+    # check that spelling errors were detected/corrected
+    assert "search" in result.output
+    assert "comment" in result.output
 
     # check that the notebooks are now clear
     for path in paths:

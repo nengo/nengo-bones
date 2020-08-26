@@ -38,6 +38,7 @@ install_req = [
 ]
 docs_req = []
 optional_req = [
+    "codespell>=1.17.1",
     "jupyter>=1.0.0",
 ]
 tests_req = []

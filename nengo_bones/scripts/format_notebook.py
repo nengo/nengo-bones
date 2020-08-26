@@ -2,6 +2,7 @@
 
 import os
 import re
+import subprocess
 
 import black
 import click
@@ -67,6 +68,9 @@ def format_code(cell):
     clear_cell_metadata_entry(cell, "deletable", value=True)
     clear_cell_metadata_entry(cell, "editable", value=True)
 
+    # check with codespell
+    apply_codespell(cell["source"])
+
 
 def format_markdown(cell):
     """Format a markdown cell."""
@@ -83,6 +87,9 @@ def format_markdown(cell):
     if source is not None and len(source) > 0:
         assert isinstance(source, str)
         cell["source"] = "\n".join(line.rstrip(" ") for line in source.split("\n"))
+
+    # check with codespell
+    apply_codespell(cell["source"])
 
 
 def apply_black(source):
@@ -124,6 +131,31 @@ def apply_black(source):
         source = source.replace(replacement, magic)
 
     return source
+
+
+def apply_codespell(source):
+    """Use codespell to check spelling in a cell.
+
+    Note: this simply prints any potential spelling mistakes to stdout for the user
+    to manually verify (since trying to automatically correct them seems too unsafe).
+
+    Parameters
+    ----------
+    source : str
+        Content of cell.
+    """
+    result = subprocess.run(
+        "codespell -",
+        input=source,
+        encoding="utf-8",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        shell=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        print("Potential spelling mistakes detected:")
+        print(result.stdout)
 
 
 def clear_cell_metadata_entry(cell, key, value="_ANY_"):
