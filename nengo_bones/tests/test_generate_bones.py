@@ -518,10 +518,18 @@ def test_setup_py(tmpdir):
     assert has_line('    "pkg1>=3"')
     assert has_line("setup(")
     assert has_line("    package_data={")
-    assert has_line('        "dummy": ["dummy-data/file1",]')
-    assert has_line('        "other": ["other-data/file2", "other-data/file3",]')
-    assert has_line('    entry_points={"point.a": ["a = b", "c = d",],}')
-    assert has_line('    classifiers=["Classifier :: 1", "ClassifierTwo :: B",]')
+    assert has_line('        "dummy": [')
+    assert has_line('            "dummy-data/file1",')
+    assert has_line('        "other": [')
+    assert has_line('            "other-data/file2",')
+    assert has_line('            "other-data/file3",')
+    assert has_line("    entry_points={")
+    assert has_line('        "point.a": [')
+    assert has_line('            "a = b",')
+    assert has_line('            "c = d",')
+    assert has_line("    classifiers=[")
+    assert has_line('        "Classifier :: 1",')
+    assert has_line('        "ClassifierTwo :: B",')
 
 
 def test_setup_cfg(tmpdir):

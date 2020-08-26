@@ -30,7 +30,7 @@ root = os.path.dirname(os.path.realpath(__file__))
 version = runpy.run_path(os.path.join(root, "nengo_bones", "version.py"))["version"]
 
 install_req = [
-    "black>=19.3b0; python_version>='3.6'",
+    "black>=20.8b0; python_version>='3.6'",
     "click>=7.0",
     "jinja2>=2.11",
     "pyyaml>=5.1",
