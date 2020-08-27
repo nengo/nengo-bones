@@ -3,13 +3,26 @@
 import os
 import re
 import subprocess
+import textwrap
+import warnings
 
 import black
 import click
 import nbformat
 
+HAS_PRETTIER = (
+    subprocess.run(
+        "npx --no-install --quiet prettier --version ",
+        shell=True,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    ).returncode
+    == 0
+)
 
-def format_notebook(nb):
+
+def format_notebook(nb, prettier=None):
     """Formats an opened Jupyter notebook."""
 
     # --- Remove bad metadata
@@ -44,7 +57,10 @@ def format_notebook(nb):
             if cell.cell_type == "code":
                 format_code(cell)
             elif cell.cell_type == "markdown":
-                format_markdown(cell)
+                format_markdown(cell, prettier=prettier)
+
+            # remove empty lines from the end
+            cell["source"] = cell["source"].rstrip()
 
         # remove empty cells
         for cell in empty:
@@ -72,15 +88,12 @@ def format_code(cell):
     apply_codespell(cell["source"])
 
 
-def format_markdown(cell):
+def format_markdown(cell, prettier=None):
     """Format a markdown cell."""
 
     # clear useless metadata
     clear_cell_metadata_entry(cell, "deletable", value=True)
     clear_cell_metadata_entry(cell, "editable", value=True)
-
-    # remove empty lines from the end
-    cell["source"] = cell["source"].rstrip()
 
     # clear whitespace at ends of lines
     source = getattr(cell, "source", None)
@@ -90,6 +103,23 @@ def format_markdown(cell):
 
     # check with codespell
     apply_codespell(cell["source"])
+
+    # apply text wrapping
+    wrapper = textwrap.TextWrapper(
+        width=88,
+        tabsize=4,
+        break_long_words=False,
+        break_on_hyphens=False,
+        replace_whitespace=False,
+        drop_whitespace=True,
+    )
+    cell["source"] = "\n".join(
+        wrapper.fill(line) for line in cell["source"].splitlines()
+    )
+
+    # apply prettier
+    if prettier:
+        cell["source"] = apply_prettier(cell["source"])
 
 
 def apply_black(source):
@@ -158,6 +188,37 @@ def apply_codespell(source):
         print(result.stdout)
 
 
+def apply_prettier(source):
+    """
+    Apply prettier formatting to a cell.
+
+    Notes
+    -----
+    If prettier is not installed then this is ignored.
+
+    Parameters
+    ----------
+    source : str
+        Content of cell.
+
+    Returns
+    -------
+    source : str
+        Formatted cell contents.
+    """
+
+    result = subprocess.run(
+        "npx prettier --parser markdown --print-width 88 --prose-wrap always",
+        input=source,
+        encoding="utf-8",
+        stdout=subprocess.PIPE,
+        shell=True,
+        check=False,
+    )
+
+    return result.stdout
+
+
 def clear_cell_metadata_entry(cell, key, value="_ANY_"):
     """Remove metadata entry from a cell
 
@@ -176,13 +237,13 @@ def clear_cell_metadata_entry(cell, key, value="_ANY_"):
         del metadata[key]
 
 
-def clear_file(fname, target_version=4, verbose=False):
+def clear_file(fname, target_version=4, verbose=False, prettier=None):
     """Clear outputs and metadata from an unopened Jupyter notebook."""
 
     with open(fname, "r", encoding="utf-8") as f:
         nb = nbformat.read(f, as_version=4)
 
-    format_notebook(nb)
+    format_notebook(nb, prettier=prettier)
 
     with open(fname, "w", encoding="utf-8") as f:
         nbformat.write(nb, f, version=target_version)
@@ -221,8 +282,18 @@ def clear_paths(fnames, **kwargs):
 @click.option(
     "--verbose/--no-verbose", default=False, help="Enable/disable verbose output."
 )
+@click.option(
+    "--prettier/--no-prettier",
+    default=False,
+    help="Enable/disable markdown cell formatting with Prettier.",
+)
 def main(files, **kwargs):
     """
     Clears the output and extra metadata of Jupyter Notebook (.ipynb) files.
     """
+
+    if kwargs["prettier"] and not HAS_PRETTIER:
+        # user explicitly asked for prettier, but it is not installed, so fail
+        raise ValueError("Cannot format markdown with Prettier; it is not installed.")
+
     clear_paths(files, **kwargs)

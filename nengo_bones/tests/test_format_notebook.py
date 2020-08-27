@@ -1,6 +1,8 @@
 # pylint: disable=missing-docstring
 
 import os
+import re
+import sys
 
 from click.testing import CliRunner
 import pytest
@@ -8,8 +10,8 @@ import pytest
 from nengo_bones.tests.utils import assert_exit
 
 
-def check_notebook(nb_path):
-    """Check that the notebook is perfectly clear"""
+def check_notebook(nb_path, correct):
+    """Check that the notebook is perfectly clear and contains the expected content."""
     # pylint: disable=import-outside-toplevel
     import nbformat
 
@@ -38,21 +40,10 @@ def check_notebook(nb_path):
     for info in badinfo:
         no_metadata &= info not in nb.metadata.language_info
 
-    # check whitespace at end of line
-    no_whitespace = not any(
-        line.endswith(" ") for cell in nb.cells for line in cell["source"].split("\n")
-    )
-    # newlines at end of cell (we eliminate all terminal newlines for markdown cells,
-    # but code cells are expected to end with one newline)
-    no_whitespace &= not any(
-        cell["source"].endswith("\n" if cell.cell_type == "markdown" else "\n\n")
-        for cell in nb.cells
-    )
+    # check that content matches expected content
+    content_match = [cell["source"] for cell in nb.cells] == correct
 
-    # check empty cells are deleted
-    not_empty = not any(cell["source"].strip() == "" for cell in nb.cells)
-
-    return no_output, no_metadata, no_whitespace, not_empty
+    return no_output, no_metadata, content_match
 
 
 def test_format_notebook(tmpdir):
@@ -66,9 +57,21 @@ def test_format_notebook(tmpdir):
 
     nb = nbformat.v4.new_notebook()
     nb["cells"] = [
-        nbformat.v4.new_markdown_cell("""Title   \nserach\n\n"""),
-        nbformat.v4.new_code_cell("""%dirs\nprint("foo")   \n# coment\n\n"""),
+        nbformat.v4.new_markdown_cell("Title   \n\nserach\n\n"),
+        nbformat.v4.new_code_cell("%dirs\nprint('foo')   \n# coment\n\n"),
         nbformat.v4.new_code_cell("  "),
+        nbformat.v4.new_markdown_cell(
+            "this is a long line that should wrap aaaaaaaaaaaaaaaaaaaaaaa "
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ),
+    ]
+
+    # this should be the content of the cells after formatting
+    correct = [
+        "Title\n\nserach",
+        '%dirs\nprint("foo")\n# coment',
+        "this is a long line that should wrap aaaaaaaaaaaaaaaaaaaaaaa\n"
+        "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     ]
 
     # run notebook to generate output
@@ -90,9 +93,9 @@ def test_format_notebook(tmpdir):
         with open(path, "w", encoding="utf-8") as f:
             nbformat.write(nb, f)
 
-    # check that the notebooks are un-clear
+    # check that the notebooks are not formatted
     for path in paths:
-        assert not any(check_notebook(path))
+        assert not any(check_notebook(path, correct))
 
     # run the clear-notebook script on the whole directory
     result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--verbose"])
@@ -106,6 +109,43 @@ def test_format_notebook(tmpdir):
     assert "search" in result.output
     assert "comment" in result.output
 
-    # check that the notebooks are now clear
+    # check that the notebooks are now formatted
     for path in paths:
-        assert all(check_notebook(path))
+        assert all(check_notebook(path, correct))
+
+
+@pytest.mark.xfail(
+    not format_notebook.HAS_PRETTIER,
+    reason="prettier not installed",
+)
+@pytest.mark.skipif(
+    sys.version_info < (3, 6, 0), reason="format-notebook requires Python>=3.6"
+)
+def test_format_notebook_prettier(tmpdir):
+    nb = nbformat.v4.new_notebook()
+    nb["cells"] = [
+        nbformat.v4.new_markdown_cell("prettier\nwill\nunwrap\nthese\nlines"),
+    ]
+
+    nb_path = str(tmpdir.join("test.ipynb"))
+    with open(nb_path, "w", encoding="utf-8") as f:
+        nbformat.write(nb, f)
+
+    result = CliRunner().invoke(
+        format_notebook.main, [str(tmpdir), "--verbose", "--prettier"]
+    )
+    assert_exit(result, 0)
+
+    with open(nb_path, "r", encoding="utf-8") as f:
+        nb = nbformat.read(f, as_version=4)
+    assert nb.cells[0]["source"] == "prettier will unwrap these lines"
+
+
+def test_format_notebook_noprettier_error(tmpdir, monkeypatch):
+    monkeypatch.setattr(format_notebook, "HAS_PRETTIER", False)
+
+    result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--prettier"])
+    assert_exit(result, 1)
+    assert isinstance(result.exception, ValueError) and (
+        re.match("Cannot format.*Prettier.*not installed", str(result.exception))
+    )
