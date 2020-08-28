@@ -1,8 +1,10 @@
 """Applies standard formatting to Jupyter Notebook (.ipynb) files."""
 
+import difflib
 import os
 import re
 import subprocess
+import sys
 import textwrap
 import warnings
 
@@ -237,43 +239,71 @@ def clear_cell_metadata_entry(cell, key, value="_ANY_"):
         del metadata[key]
 
 
-def clear_file(fname, target_version=4, verbose=False, prettier=None):
-    """Clear outputs and metadata from an unopened Jupyter notebook."""
+def format_file(fname, target_version=4, verbose=False, check=False, prettier=None):
+    """Formats a file containing a Jupyter notebook."""
 
     with open(fname, "r", encoding="utf-8") as f:
         nb = nbformat.read(f, as_version=4)
 
     format_notebook(nb, prettier=prettier)
 
-    with open(fname, "w", encoding="utf-8") as f:
-        nbformat.write(nb, f, version=target_version)
+    if check:
+        diff = list(
+            difflib.unified_diff(
+                current,
+                nbformat.writes(nb).splitlines(),
+                fromfile="current %s" % (fname,),
+                tofile="new %s" % (fname,),
+            )
+        )
 
-    if verbose:
-        print("wrote %s" % fname)
+        if len(diff) > 0:
+            click.secho(
+                "%s has not been formatted; please run `bones-format-notebook`" % fname,
+                fg="red",
+            )
+            if verbose:
+                click.echo("\nFull diff")
+                click.echo("=========")
+                for line in diff:
+                    click.echo(line.strip("\n"))
+            return False
+    else:
+        with open(fname, "w", encoding="utf-8") as f:
+            nbformat.write(nb, f, version=target_version)
+
+        if verbose:
+            print("wrote %s" % fname)
+
+    return True
 
 
-def clear_dir(dname, **kwargs):
-    """Clear all notebooks in a directory."""
+def format_dir(dname, **kwargs):
+    """Format all notebooks in a directory."""
 
     assert os.path.isdir(dname)
     fnames = os.listdir(dname)
     fpaths = [
         os.path.join(dname, fname) for fname in fnames if not fname.startswith(".")
     ]
-    clear_paths(
+    return format_paths(
         [fpath for fpath in fpaths if os.path.isdir(fpath) or fpath.endswith(".ipynb")],
         **kwargs,
     )
 
 
-def clear_paths(fnames, **kwargs):
-    """Clear all notebooks in list of notebook files and directories."""
+def format_paths(fnames, **kwargs):
+    """Format all notebooks in list of notebook files and directories."""
+
+    passed = True
 
     for fname in fnames:
         if os.path.isdir(fname):
-            clear_dir(fname, **kwargs)
+            passed &= format_dir(fname, **kwargs)
         else:
-            clear_file(fname, **kwargs)
+            passed &= format_file(fname, **kwargs)
+
+    return passed
 
 
 @click.command()
@@ -283,17 +313,25 @@ def clear_paths(fnames, **kwargs):
     "--verbose/--no-verbose", default=False, help="Enable/disable verbose output."
 )
 @click.option(
+    "--check/--no-check",
+    default=False,
+    help="Check that notebook is already formatted instead of modifying content.",
+)
+@click.option(
     "--prettier/--no-prettier",
     default=False,
     help="Enable/disable markdown cell formatting with Prettier.",
 )
 def main(files, **kwargs):
     """
-    Clears the output and extra metadata of Jupyter Notebook (.ipynb) files.
+    Apply standardized formatting to Jupyter notebooks.
     """
 
     if kwargs["prettier"] and not HAS_PRETTIER:
         # user explicitly asked for prettier, but it is not installed, so fail
         raise ValueError("Cannot format markdown with Prettier; it is not installed.")
 
-    clear_paths(files, **kwargs)
+    passed = format_paths(files, **kwargs)
+
+    if not passed:
+        sys.exit(1)

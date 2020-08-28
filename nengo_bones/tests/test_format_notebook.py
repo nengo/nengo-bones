@@ -97,6 +97,13 @@ def test_format_notebook(tmpdir):
     for path in paths:
         assert not any(check_notebook(path, correct))
 
+    # verify that --check correctly detects that notebooks are not formatted
+    result = CliRunner().invoke(
+        format_notebook.main, [str(tmpdir), "--check", "--verbose"]
+    )
+    assert_exit(result, 1)
+    assert '-    "Title   \\n",\n+    "Title\\n",' in result.output
+
     # run the clear-notebook script on the whole directory
     result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--verbose"])
     assert_exit(result, 0)
@@ -112,6 +119,10 @@ def test_format_notebook(tmpdir):
     # check that the notebooks are now formatted
     for path in paths:
         assert all(check_notebook(path, correct))
+
+    # verify that --check correctly detects that notebooks are now formatted
+    result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--check"])
+    assert_exit(result, 0)
 
 
 @pytest.mark.xfail(
