@@ -25,6 +25,9 @@ Release History
 **Added**
 
 - Added support for new ``one_page`` option in ``nengo-sphinx-theme``. (`#101`_)
+- Added ``tagmanager_id`` option to ``docs_conf.py.template``,
+  which will enable Google Tag Manager tracking. This option takes precedence
+  over ``analytics_id`` if both are specified. (`#114`_)
 
 **Changed**
 
@@ -39,6 +42,7 @@ Release History
 .. _#103: https://github.com/nengo/nengo-bones/pull/103
 .. _#104: https://github.com/nengo/nengo-bones/pull/104
 .. _#110: https://github.com/nengo/nengo-bones/pull/110
+.. _#114: https://github.com/nengo/nengo-bones/pull/114
 
 0.11.1 (April 13, 2020)
 =======================

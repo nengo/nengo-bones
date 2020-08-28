@@ -173,6 +173,19 @@ class BonesTemplate:
             os.chmod(output_path, st.st_mode | stat.S_IEXEC)
 
 
+@BonesTemplate.add_render_data("docs_conf_py")
+def add_docs_conf_py_data(data):
+    """Run checks on the docs/conf.py-specific entries in the 'data' dict."""
+    tagmanager_id = data["docs_conf_py"].get("tagmanager_id", None)
+    if tagmanager_id is not None and not (
+        tagmanager_id.startswith("GTM-") and len(tagmanager_id) == 11
+    ):
+        warnings.warn(
+            "'tagmanager_id' looks strange. It should look like "
+            "'GTM-XXXXXXX'; got %r" % (tagmanager_id,)
+        )
+
+
 @BonesTemplate.add_render_data("travis_yml")
 def add_travis_data(data):
     """Add travis.yml-specific entries to the 'data' dict."""

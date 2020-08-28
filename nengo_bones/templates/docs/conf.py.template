@@ -112,7 +112,9 @@ html_favicon = os.path.join("_static", "favicon.ico")
 html_theme_options = {
     "nengo_logo": "{{ nengo_logo }}",
     "nengo_logo_color": "{{ nengo_logo_color }}",
-    {% if analytics_id %}
+    {% if tagmanager_id %}
+    "tagmanager_id": "{{ tagmanager_id }}",
+    {% elif analytics_id %}
     "analytics_id": "{{ analytics_id }}",
     {% endif %}
     {% if one_page %}

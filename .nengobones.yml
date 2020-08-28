@@ -197,7 +197,7 @@ docs_conf_py:
     - sphinx_click.ext
   intersphinx_mapping:
     click: https://click.palletsprojects.com/en/7.x
-  analytics_id: UA-41658423-2
+  tagmanager_id: GTM-KWCR2HN
   doctest_setup:
     - "# Testing that doctest_setup works"
     - "# with multiple lines"
