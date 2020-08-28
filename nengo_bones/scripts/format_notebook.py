@@ -8,7 +8,12 @@ import sys
 import textwrap
 import warnings
 
-import black
+try:
+    import black
+
+    HAS_BLACK = True
+except ImportError:
+    HAS_BLACK = False
 import click
 import nbformat
 
@@ -138,6 +143,11 @@ def apply_black(source):
     source : str
         Formatted cell contents.
     """
+
+    if not HAS_BLACK:
+        warnings.warn("black not installed, skipping black formatting")
+        return source
+
     # if we have any IPython magic functions (starting with % or !),
     # replace them temporarily (black can't handle them)
     magic_re = re.compile(r"^(\s*)([%!][A-Za-z]+.*)$", flags=re.MULTILINE)
@@ -179,7 +189,7 @@ def apply_codespell(source):
     result = subprocess.run(
         "codespell -",
         input=source,
-        encoding="utf-8",
+        universal_newlines=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         shell=True,
@@ -212,7 +222,7 @@ def apply_prettier(source):
     result = subprocess.run(
         "npx prettier --parser markdown --print-width 88 --prose-wrap always",
         input=source,
-        encoding="utf-8",
+        universal_newlines=True,
         stdout=subprocess.PIPE,
         shell=True,
         check=False,

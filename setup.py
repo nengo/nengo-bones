@@ -32,15 +32,14 @@ version = runpy.run_path(os.path.join(root, "nengo_bones", "version.py"))["versi
 install_req = [
     "black>=20.8b0; python_version>='3.6'",
     "click>=7.0",
+    "codespell>=1.17.1",
     "jinja2>=2.11",
+    "jupyter>=1.0.0",
     "pyyaml>=5.1",
     "requests>=2.21",
 ]
 docs_req = []
-optional_req = [
-    "codespell>=1.17.1",
-    "jupyter>=1.0.0",
-]
+optional_req = []
 tests_req = []
 
 setup(

@@ -14,6 +14,7 @@ shopt -s globstar
 {% block script %}
     exe pylint {{ pkg_name }} --rcfile=setup.cfg --jobs=0
     exe flake8 {{ pkg_name }}
+    exe bones-format-notebook docs --verbose --check
     if ls docs/**/*.ipynb &>/dev/null; then
         exe jupyter nbconvert \
             --log-level WARN \

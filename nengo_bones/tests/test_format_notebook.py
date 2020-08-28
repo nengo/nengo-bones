@@ -5,15 +5,16 @@ import re
 import sys
 
 from click.testing import CliRunner
-import pytest
+from nbconvert.preprocessors import ExecutePreprocessor
+import nbformat
 
+
+from nengo_bones.scripts import format_notebook
 from nengo_bones.tests.utils import assert_exit
 
 
 def check_notebook(nb_path, correct):
     """Check that the notebook is perfectly clear and contains the expected content."""
-    # pylint: disable=import-outside-toplevel
-    import nbformat
 
     with open(nb_path, "r", encoding="utf-8") as f:
         nb = nbformat.read(f, as_version=4)
@@ -47,14 +48,6 @@ def check_notebook(nb_path, correct):
 
 
 def test_format_notebook(tmpdir):
-    # pylint: disable=import-outside-toplevel
-    pytest.importorskip("jupyter")
-    pytest.importorskip("black")
-    pytest.importorskip("codespell_lib")
-    import nbformat
-    from nbconvert.preprocessors import ExecutePreprocessor
-    from nengo_bones.scripts import format_notebook
-
     nb = nbformat.v4.new_notebook()
     nb["cells"] = [
         nbformat.v4.new_markdown_cell("Title   \n\nserach\n\n"),
@@ -69,7 +62,9 @@ def test_format_notebook(tmpdir):
     # this should be the content of the cells after formatting
     correct = [
         "Title\n\nserach",
-        '%dirs\nprint("foo")\n# coment',
+        "%dirs\n"
+        + ('print("foo")' if format_notebook.HAS_BLACK else "print('foo')   ")
+        + "\n# coment",
         "this is a long line that should wrap aaaaaaaaaaaaaaaaaaaaaaa\n"
         "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     ]

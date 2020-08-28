@@ -66,9 +66,6 @@ ci_scripts:
       - coment
       - serach
   - template: test
-    pip_install:
-      - "-e"
-      - .[optional]
     pre_commands:
       - cat .ci/test.sh
       - export TEST_PRE_COMMANDS=True
@@ -77,9 +74,6 @@ ci_scripts:
   - template: test
     output_name: test-coverage
     coverage: true
-    pip_install:
-      - "-e"
-      - .[optional]
     pre_commands:
       - cat .ci/test-coverage.sh
       - export TEST_PRE_COMMANDS=True
@@ -161,13 +155,11 @@ setup_py:
   install_req:
     - black>=20.8b0; python_version>='3.6'
     - click>=7.0
+    - codespell>=1.17.1
     - jinja2>=2.11
+    - jupyter>=1.0.0
     - pyyaml>=5.1
     - requests>=2.21
-  optional_req:
-    # required for format-notebook script
-    - codespell>=1.17.1
-    - jupyter>=1.0.0
   classifiers:
     - "Development Status :: 4 - Beta"
     - "Framework :: Nengo"
