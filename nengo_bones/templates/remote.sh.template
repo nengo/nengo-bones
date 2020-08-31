@@ -89,6 +89,7 @@ See https://docs.travis-ci.com/user/encrypting-files/ for more details.
         cd {{ pkg }} || REMOTE_STATUS=1
         echo "$ ({{ host }}) Installing {{ pkg }}"
         {% endblock %}
+        pip freeze
         cd ~/"$BUILD_DIR"/{{ pkg }} || REMOTE_STATUS=1
         {% block remote_script %}
         echo "$ ({{ host }}) Testing {{ pkg }}"
