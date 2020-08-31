@@ -7,7 +7,7 @@ import sys
 from click.testing import CliRunner
 from nbconvert.preprocessors import ExecutePreprocessor
 import nbformat
-
+import pytest
 
 from nengo_bones.scripts import format_notebook
 from nengo_bones.tests.utils import assert_exit
@@ -74,7 +74,11 @@ def test_format_notebook(tmpdir):
     ep.preprocess(nb, {"metadata": {"path": str(tmpdir)}})
 
     # write these manually to make sure they get cleared
-    nb["metadata"]["kernelspec"] = "dummy"
+    nb["metadata"]["kernelspec"] = {
+        "display_name": "Python 3",
+        "language": "python",
+        "name": "python3",
+    }
     nb["cells"][1]["execution_count"] = 3
     nb["cells"][1]["metadata"]["collapsed"] = True
 
@@ -93,9 +97,18 @@ def test_format_notebook(tmpdir):
         assert not any(check_notebook(path, correct))
 
     # verify that --check correctly detects that notebooks are not formatted
-    result = CliRunner().invoke(
-        format_notebook.main, [str(tmpdir), "--check", "--verbose"]
-    )
+    with pytest.warns(None) as recwarns:
+        result = CliRunner().invoke(
+            format_notebook.main, [str(tmpdir), "--check", "--verbose"]
+        )
+
+    if sys.version_info < (3, 6, 0):
+        assert any(
+            "bones-format-notebook requires Python>=3.6" in str(w.message)
+            for w in recwarns
+        )
+        return
+
     assert_exit(result, 1)
     assert '-    "Title   \\n",\n+    "Title\\n",' in result.output
 
@@ -155,3 +168,23 @@ def test_format_notebook_noprettier_error(tmpdir, monkeypatch):
     assert isinstance(result.exception, ValueError) and (
         re.match("Cannot format.*Prettier.*not installed", str(result.exception))
     )
+
+
+@pytest.mark.skipif(
+    sys.version_info < (3, 6, 0), reason="format-notebook requires Python>=3.6"
+)
+def test_format_notebook_static(tmpdir):
+    nb = nbformat.v4.new_notebook()
+    nb["cells"] = [
+        nbformat.v4.new_code_cell("def test(): a = b"),
+    ]
+
+    with open(str(tmpdir.join("test.ipynb")), "w", encoding="utf-8") as f:
+        nbformat.write(nb, f)
+
+    result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--verbose"])
+    assert_exit(result, 1)
+
+    # check that pylint/flake8 errors were detected
+    assert "undefined-variable" in result.output  # pylint
+    assert "F821" in result.output  # flake8

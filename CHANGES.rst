@@ -29,7 +29,7 @@ Release History
   which will enable Google Tag Manager tracking. This option takes precedence
   over ``analytics_id`` if both are specified. (`#114`_)
 - Added the ``bones-format-notebook`` script to apply automated formatting, cleanup,
-  and spell checking to Jupyter notebooks. (`#32`_)
+  and static checking to Jupyter notebooks. (`#32`_)
 - Static script will now check that ``bones-format-notebook`` has been applied to all
   notebooks in the ``docs`` directory. (`#32`_)
 

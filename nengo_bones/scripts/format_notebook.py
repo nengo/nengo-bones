@@ -29,8 +29,13 @@ HAS_PRETTIER = (
 )
 
 
-def format_notebook(nb, prettier=None):
+def format_notebook(nb, fname, verbose=False, prettier=None):
     """Formats an opened Jupyter notebook."""
+
+    if verbose:
+        print("Formatting", fname)
+
+    passed = True
 
     # --- Remove bad metadata
     # Should pass `nengo/tests/test_examples.py:test_minimal_metadata`
@@ -50,28 +55,50 @@ def format_notebook(nb, prettier=None):
             del language_info[badkey]
 
     # --- Clean up cells
-    worksheets = nb.worksheets if hasattr(nb, "worksheets") else [nb]
-    for ws in worksheets:
-        empty = []  # empty cells
+    empty = []  # empty cells
+    all_code = []  # code cells
+    all_markdown = []  # markdown cells
 
-        for cell in ws.cells:
-            source = getattr(cell, "source", None)
+    for cell in nb.cells:
+        source = getattr(cell, "source", None)
 
-            if source is not None and len(source.strip()) == 0:
-                empty.append(cell)
-                continue
+        if source is not None and len(source.strip()) == 0:
+            empty.append(cell)
+            continue
 
-            if cell.cell_type == "code":
-                format_code(cell)
-            elif cell.cell_type == "markdown":
-                format_markdown(cell, prettier=prettier)
+        if cell.cell_type == "code":
+            format_code(cell)
+            all_code.append(cell)
+        elif cell.cell_type == "markdown":
+            format_markdown(cell, prettier=prettier)
+            all_markdown.append(cell)
 
-            # remove empty lines from the end
-            cell["source"] = cell["source"].rstrip()
+        # remove empty lines from the end
+        cell["source"] = cell["source"].rstrip()
 
-        # remove empty cells
-        for cell in empty:
-            ws.cells.remove(cell)
+    # remove empty cells
+    for cell in empty:
+        nb.cells.remove(cell)
+
+    # static checks needs to see the whole file, so we call them on all the code cells
+    # together at the end
+    passed &= apply_static_checker(
+        "pylint --from-stdin "
+        "--disable=missing-docstring,trailing-whitespace,wrong-import-position,"
+        "unnecessary-semicolon,missing-final-newline %s" % fname,
+        all_code,
+    )
+    passed &= apply_static_checker(
+        "flake8 --extend-ignore=E402,E703,W291,W292,W293,W391 --stdin-display-name=%s "
+        "--show-source -" % fname,
+        all_code,
+    )
+    apply_static_checker(
+        "codespell -",
+        all_markdown + all_code,
+    )
+
+    return passed
 
 
 def format_code(cell):
@@ -91,9 +118,6 @@ def format_code(cell):
     clear_cell_metadata_entry(cell, "deletable", value=True)
     clear_cell_metadata_entry(cell, "editable", value=True)
 
-    # check with codespell
-    apply_codespell(cell["source"])
-
 
 def format_markdown(cell, prettier=None):
     """Format a markdown cell."""
@@ -107,9 +131,6 @@ def format_markdown(cell, prettier=None):
     if source is not None and len(source) > 0:
         assert isinstance(source, str)
         cell["source"] = "\n".join(line.rstrip(" ") for line in source.split("\n"))
-
-    # check with codespell
-    apply_codespell(cell["source"])
 
     # apply text wrapping
     wrapper = textwrap.TextWrapper(
@@ -126,7 +147,10 @@ def format_markdown(cell, prettier=None):
 
     # apply prettier
     if prettier:
-        cell["source"] = apply_prettier(cell["source"])
+        cell["source"] = run_command(
+            "npx prettier --parser markdown --print-width 88 --prose-wrap always",
+            cell["source"],
+        ).stdout
 
 
 def apply_black(source):
@@ -143,10 +167,6 @@ def apply_black(source):
     source : str
         Formatted cell contents.
     """
-
-    if not HAS_BLACK:
-        warnings.warn("black not installed, skipping black formatting")
-        return source
 
     # if we have any IPython magic functions (starting with % or !),
     # replace them temporarily (black can't handle them)
@@ -175,60 +195,70 @@ def apply_black(source):
     return source
 
 
-def apply_codespell(source):
-    """Use codespell to check spelling in a cell.
-
-    Note: this simply prints any potential spelling mistakes to stdout for the user
-    to manually verify (since trying to automatically correct them seems too unsafe).
+def run_command(command, inputs):
+    """
+    Run a command in external shell with input piped from string.
 
     Parameters
     ----------
-    source : str
-        Content of cell.
+    command : str
+        Shell command to be executed.
+    inputs : str
+        Input that will be piped to command through stdin.
+
+    Returns
+    -------
+    result : `subprocess.CompletedProcess`
+        Object containing results of executing shell command.
     """
-    result = subprocess.run(
-        "codespell -",
-        input=source,
-        universal_newlines=True,
+
+    return subprocess.run(
+        command,
+        input=inputs,
+        encoding="utf-8",
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         shell=True,
         check=False,
     )
-    if result.returncode != 0:
-        print("Potential spelling mistakes detected:")
-        print(result.stdout)
 
 
-def apply_prettier(source):
+def apply_static_checker(command, cells):
     """
-    Apply prettier formatting to a cell.
-
-    Notes
-    -----
-    If prettier is not installed then this is ignored.
+    Apply static checks to code in cells.
 
     Parameters
     ----------
-    source : str
-        Content of cell.
+    command : str
+        Command line code to be executed on content of cells.
+    cells : list
+        List of notebook code cells.
 
     Returns
     -------
-    source : str
-        Formatted cell contents.
+    passed : bool
+        True if static checks passed, else False
     """
 
-    result = subprocess.run(
-        "npx prettier --parser markdown --print-width 88 --prose-wrap always",
-        input=source,
-        universal_newlines=True,
-        stdout=subprocess.PIPE,
-        shell=True,
-        check=False,
-    )
+    def sanitize(source):
+        return "\n".join(
+            line
+            for line in source.splitlines()
+            if not line.startswith("%") and not line.startswith("!")
+        )
 
-    return result.stdout
+    # note: we put two blank lines between each cell so that cells that
+    # begin/end with a function/class definition will have the right whitespace
+    # when concatenated
+    all_source = "\n\n\n".join(sanitize(c["source"]) for c in cells)
+
+    result = run_command(command, all_source)
+
+    if result.returncode != 0:
+        print("%s errors detected:" % command.split()[0])
+        print(result.stdout)
+
+    return result.returncode == 0
 
 
 def clear_cell_metadata_entry(cell, key, value="_ANY_"):
@@ -252,10 +282,15 @@ def clear_cell_metadata_entry(cell, key, value="_ANY_"):
 def format_file(fname, target_version=4, verbose=False, check=False, prettier=None):
     """Formats a file containing a Jupyter notebook."""
 
+    passed = True
+
     with open(fname, "r", encoding="utf-8") as f:
         nb = nbformat.read(f, as_version=4)
 
-    format_notebook(nb, prettier=prettier)
+    if check:
+        current = nbformat.writes(nb).splitlines()
+
+    passed &= format_notebook(nb, fname, verbose=verbose, prettier=prettier)
 
     if check:
         diff = list(
@@ -277,15 +312,12 @@ def format_file(fname, target_version=4, verbose=False, check=False, prettier=No
                 click.echo("=========")
                 for line in diff:
                     click.echo(line.strip("\n"))
-            return False
+            passed = False
     else:
         with open(fname, "w", encoding="utf-8") as f:
             nbformat.write(nb, f, version=target_version)
 
-        if verbose:
-            print("wrote %s" % fname)
-
-    return True
+    return passed
 
 
 def format_dir(dname, **kwargs):
@@ -340,6 +372,9 @@ def main(files, **kwargs):
     if kwargs["prettier"] and not HAS_PRETTIER:
         # user explicitly asked for prettier, but it is not installed, so fail
         raise ValueError("Cannot format markdown with Prettier; it is not installed.")
+
+    if sys.version_info < (3, 6, 0):
+        warnings.warn("bones-format-notebook requires Python>=3.6")
 
     passed = format_paths(files, **kwargs)
 
