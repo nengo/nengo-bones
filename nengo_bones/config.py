@@ -195,12 +195,12 @@ def validate_config(config):  # noqa: C901
         for i, key in enumerate(entry.split(".")):
             try:
                 tmp = tmp[key]
-            except KeyError:
+            except KeyError as e:
                 if "." in entry and i == 0:
                     # if the toplevel isn't defined, ignore this
                     break
 
-                raise KeyError("Config file must define %s" % entry)
+                raise KeyError("Config file must define %s" % entry) from e
 
     if "ci_scripts" in config:
         for ci_config in config["ci_scripts"]:

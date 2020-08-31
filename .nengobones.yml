@@ -198,7 +198,7 @@ setup_cfg:
       - nengo_bones/tests/ignoreme
   pylint:
     ignore:
-      - nengo_bones/tests/ignoreme
+      - ignoreme
 
 docs_conf_py:
   exclude_patterns:

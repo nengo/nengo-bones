@@ -41,6 +41,7 @@ Release History
   <https://pip.pypa.io/en/stable/user_guide/#changes-to-the-pip-dependency-resolver-in-20-2-2020>`_
   during CI. (`#110`_)
 - Increased minimum ``black`` version to 20.8b0. (`#104`_)
+- Increased minimum ``pylint`` version to 2.5.1 (`#32`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101

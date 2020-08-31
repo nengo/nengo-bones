@@ -8,11 +8,11 @@ shopt -s globstar
 
 {% block install %}
 {{ super() }}
-    exe pip install "jupyter>=1.0.0" "pylint>=1.9.2,<2.5" "codespell>=1.12.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2" "flake8>=3.7.7"
+    exe pip install "jupyter>=1.0.0" "pylint>=2.5.1" "codespell>=1.12.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2" "flake8>=3.7.7"
 {% endblock %}
 
 {% block script %}
-    exe pylint {{ pkg_name }} --rcfile=setup.cfg --jobs=0
+    exe pylint {{ pkg_name }} --jobs=0
     exe flake8 {{ pkg_name }}
     exe bones-format-notebook docs --verbose --check
     if ls docs/**/*.ipynb &>/dev/null; then
@@ -37,7 +37,7 @@ shopt -s globstar
     if [[ "$(python -c 'import sys; print(sys.version_info >= (3, 6))')" == "True" ]]; then
         exe black --check {{ pkg_name }}
     fi
-    exe pylint docs --rcfile=setup.cfg --jobs=0 --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
+    exe pylint docs --jobs=0 --disable=missing-docstring,trailing-whitespace,wrong-import-position,unnecessary-semicolon
     exe flake8 docs --extend-ignore=E402,E703,W291,W293,W391
     for nb_file in docs/**/*.ipynb; do
         rm "${nb_file%.ipynb}.py"

@@ -748,9 +748,7 @@ def test_empty_travis_yml(tmpdir):
 
 
 def test_generate_all(tmpdir):
-    nengo_yml = (
-        "project_name: Dummy\n" "pkg_name: dummy\n" "repo_name: dummy/dummy_repo\n"
-    )
+    nengo_yml = "project_name: Dummy\npkg_name: dummy\nrepo_name: dummy/dummy_repo\n"
 
     for configname in all_sections:
         nengo_yml += "%s: %s\n" % (

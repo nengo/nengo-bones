@@ -104,14 +104,14 @@ markers =
 
 {% block pylint %}
 [pylint]
-# note: pylint doesn't look in setup.cfg by default, need to call it with
-# `pylint ... --rcfile=setup.cfg`
 {% if pylint.ignore %}
 ignore =
     {% for ignore in pylint.ignore %}
     {{ ignore }},
     {% endfor %}
 {% endif %}
+
+[pylint.messages]
 disable =
     arguments-differ,
     assignment-from-no-return,
@@ -152,6 +152,8 @@ disable =
     {% for disable in pylint.disable %}
     {{ disable }},
     {% endfor %}
+
+[pylint.imports]
 known-third-party =
     matplotlib,
     nengo,
@@ -160,8 +162,14 @@ known-third-party =
     {% for third_party in pylint.known_third_party %}
     {{ third_party }},
     {% endfor %}
+
+[pylint.format]
 max-line-length = 88
+
+[pylint.classes]
 valid-metaclass-classmethod-first-arg = metacls
+
+[pylint.reports]
 reports = no
 score = no
 {% endblock %}
