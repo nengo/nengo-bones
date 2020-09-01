@@ -14,6 +14,7 @@ def test_find_config():
 
 def test_fill_defaults():
     init_cfg = {
+        "repo_name": "test_org/test_repo",
         "travis_yml": {"jobs": [{"script": "docs-test"}, {"script": "examples-test"}]},
         "codecov_yml": {},
     }
@@ -92,7 +93,7 @@ def test_load_config(tmpdir):
     truth = {
         "project_name": "Dummy",
         "pkg_name": "dummy",
-        "repo_name": "dummyorg/dummy",
+        "repo_name": "abr/dummy",
         "author": "A Dummy",
         "author_email": "dummy@dummy.com",
         "copyright_start": 0,
@@ -113,6 +114,12 @@ def test_load_config(tmpdir):
             "abs_target": "test_abs",
             "diff_target": "test_diff",
         },
+        "setup_py": {
+            "license": "Free for non-commercial use",
+            "python_requires": ">=3.5",
+            "include_package_data": False,
+            "url": "https://www.appliedbrainresearch.com/dummy",
+        },
     }
 
     utils.write_file(
@@ -121,7 +128,7 @@ def test_load_config(tmpdir):
         contents="""
         project_name: Dummy
         pkg_name: dummy
-        repo_name: dummyorg/dummy
+        repo_name: abr/dummy
         author: A Dummy
         author_email: dummy@dummy.com
         copyright_start: 0
@@ -149,6 +156,8 @@ def test_load_config(tmpdir):
           skip_appveyor: false
           abs_target: test_abs
           diff_target: test_diff
+
+        setup_py: {}
         """,
     )
 

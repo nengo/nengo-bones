@@ -105,9 +105,13 @@ def fill_defaults(config):  # noqa: C901
         cfg.setdefault("license", "Free for non-commercial use")
         cfg.setdefault("python_requires", ">=3.5")
         cfg.setdefault("include_package_data", False)
-        cfg.setdefault(
-            "url", "https://www.nengo.ai/%s" % config["pkg_name"].replace("_", "-")
-        )
+        org_name, repo_name = config["repo_name"].split("/")
+        domain = {
+            "nengo": "https://www.nengo.ai",
+            "nengo-labs": "https://labs.nengo.ai",
+            "abr": "https://www.appliedbrainresearch.com",
+        }.get(org_name, "https://www.nengo.ai")
+        cfg.setdefault("url", "%s/%s" % (domain, repo_name))
 
     if "setup_cfg" in config:
         cfg = config["setup_cfg"]
