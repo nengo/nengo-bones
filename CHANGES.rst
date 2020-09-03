@@ -42,6 +42,7 @@ Release History
   during CI. (`#110`_)
 - Increased minimum ``black`` version to 20.8b0. (`#104`_)
 - Increased minimum ``pylint`` version to 2.5.1 (`#32`_)
+- Documentation ``[source]`` links now point to GitHub. (`#117`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
@@ -49,6 +50,7 @@ Release History
 .. _#104: https://github.com/nengo/nengo-bones/pull/104
 .. _#110: https://github.com/nengo/nengo-bones/pull/110
 .. _#114: https://github.com/nengo/nengo-bones/pull/114
+.. _#117: https://github.com/nengo/nengo-bones/pull/117
 
 0.11.1 (April 13, 2020)
 =======================

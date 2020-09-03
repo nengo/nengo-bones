@@ -14,13 +14,13 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.mathjax",
     "sphinx.ext.todo",
-    "sphinx.ext.viewcode",
     "nbsphinx",
     "nengo_sphinx_theme",
     "nengo_sphinx_theme.ext.backoff",
     {% if html_redirects %}
     "nengo_sphinx_theme.ext.redirects",
     {% endif %}
+    "nengo_sphinx_theme.ext.sourcelinks",
     "notfound.extension",
     "numpydoc",
     {% for ext in extensions %}
@@ -75,6 +75,10 @@ autoautosummary_change_modules = {
 }
 
 {% endif %}
+# -- nengo_sphinx_theme.ext.sourcelinks
+sourcelinks_module = "{{ pkg_name }}"
+sourcelinks_url = "https://github.com/{{ repo_name }}"
+
 # -- sphinx
 nitpicky = True
 exclude_patterns = [

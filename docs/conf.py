@@ -14,11 +14,11 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.mathjax",
     "sphinx.ext.todo",
-    "sphinx.ext.viewcode",
     "nbsphinx",
     "nengo_sphinx_theme",
     "nengo_sphinx_theme.ext.backoff",
     "nengo_sphinx_theme.ext.redirects",
+    "nengo_sphinx_theme.ext.sourcelinks",
     "notfound.extension",
     "numpydoc",
     "sphinx_click.ext",
@@ -56,6 +56,10 @@ notfound_urls_prefix = "/nengo-bones/"
 
 # -- numpydoc config
 numpydoc_show_class_members = False
+
+# -- nengo_sphinx_theme.ext.sourcelinks
+sourcelinks_module = "nengo_bones"
+sourcelinks_url = "https://github.com/nengo/nengo-bones"
 
 # -- sphinx
 nitpicky = True
