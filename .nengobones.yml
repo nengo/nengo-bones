@@ -82,7 +82,7 @@ ci_scripts:
       - npm install -g npm stable
       - npm install -g node --force
       - node --version
-      # install prettier for use in formate_notebook
+      # install prettier for use in bones-format-notebook
       - npm install prettier
     post_commands:
       - export TEST_POST_COMMANDS=True

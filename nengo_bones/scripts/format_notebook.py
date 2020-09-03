@@ -33,7 +33,7 @@ def format_notebook(nb, fname, verbose=False, prettier=None):
     """Formats an opened Jupyter notebook."""
 
     if verbose:
-        print("Formatting", fname)
+        click.echo("Formatting %r" % fname)
 
     passed = True
 
@@ -256,14 +256,15 @@ def apply_static_checker(command, cells):
     result = run_command(command, all_source)
 
     if result.returncode != 0:
-        print("%s errors detected:" % command.split()[0])
-        print(result.stdout)
+        click.echo("%s errors detected:" % command.split()[0])
+        click.echo(result.stdout)
 
     return result.returncode == 0
 
 
 def clear_cell_metadata_entry(cell, key, value="_ANY_"):
-    """Remove metadata entry from a cell
+    """
+    Remove metadata entry from a cell.
 
     Parameters
     ----------
@@ -283,15 +284,13 @@ def clear_cell_metadata_entry(cell, key, value="_ANY_"):
 def format_file(fname, target_version=4, verbose=False, check=False, prettier=None):
     """Formats a file containing a Jupyter notebook."""
 
-    passed = True
-
     with open(fname, "r", encoding="utf-8") as f:
         nb = nbformat.read(f, as_version=4)
 
     if check:
         current = nbformat.writes(nb).splitlines()
 
-    passed &= format_notebook(nb, fname, verbose=verbose, prettier=prettier)
+    passed = format_notebook(nb, fname, verbose=verbose, prettier=prettier)
 
     if check:
         diff = list(
@@ -366,9 +365,7 @@ def format_paths(fnames, **kwargs):
     help="Enable/disable markdown cell formatting with Prettier.",
 )
 def main(files, **kwargs):
-    """
-    Apply standardized formatting to Jupyter notebooks.
-    """
+    """Apply standardized formatting to Jupyter notebooks."""
 
     if kwargs["prettier"] and not HAS_PRETTIER:
         # user explicitly asked for prettier, but it is not installed, so fail
