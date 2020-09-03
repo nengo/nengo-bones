@@ -132,6 +132,13 @@ def format_markdown(cell, prettier=None):
         assert isinstance(source, str)
         cell["source"] = "\n".join(line.rstrip(" ") for line in source.split("\n"))
 
+    # apply prettier
+    if prettier:
+        cell["source"] = run_command(
+            "npx prettier --parser markdown --print-width 88 --prose-wrap always",
+            cell["source"],
+        ).stdout
+
     # apply text wrapping
     wrapper = textwrap.TextWrapper(
         width=88,
@@ -144,13 +151,6 @@ def format_markdown(cell, prettier=None):
     cell["source"] = "\n".join(
         wrapper.fill(line) for line in cell["source"].splitlines()
     )
-
-    # apply prettier
-    if prettier:
-        cell["source"] = run_command(
-            "npx prettier --parser markdown --print-width 88 --prose-wrap always",
-            cell["source"],
-        ).stdout
 
 
 def apply_black(source):
