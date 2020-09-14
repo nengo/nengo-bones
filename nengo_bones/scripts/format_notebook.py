@@ -126,6 +126,9 @@ def format_markdown(cell, prettier=None):
     clear_cell_metadata_entry(cell, "deletable", value=True)
     clear_cell_metadata_entry(cell, "editable", value=True)
 
+    # remove execution count (added (accidentally?) by nbconvert==6.0.2)
+    cell.pop("execution_count", None)
+
     # clear whitespace at ends of lines
     source = getattr(cell, "source", None)
     if source is not None and len(source) > 0:
