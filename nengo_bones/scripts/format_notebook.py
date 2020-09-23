@@ -115,6 +115,7 @@ def format_code(cell):
 
     # clear useless metadata
     clear_cell_metadata_entry(cell, "collapsed")
+    clear_cell_metadata_entry(cell, "scrolled")
     clear_cell_metadata_entry(cell, "deletable", value=True)
     clear_cell_metadata_entry(cell, "editable", value=True)
 
