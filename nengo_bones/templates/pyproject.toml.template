@@ -14,3 +14,7 @@ exclude = '''
 )
 '''
 {% endif %}
+
+[tool.isort]
+profile = "black"
+src_paths = ["{{ pkg_name }}"]

@@ -34,6 +34,8 @@ Release History
   notebooks in the ``docs`` directory. (`#32`_)
 - Added ``remote-script.sh`` CI script for running other CI scripts on a remote device.
   (`#124`_)
+- Added `isort <https://pycqa.github.io/isort/>`_ configuration to
+  ``pyproject.toml`` and check import order during static checks. (`#121`_)
 
 **Changed**
 
@@ -55,6 +57,7 @@ Release History
 .. _#110: https://github.com/nengo/nengo-bones/pull/110
 .. _#114: https://github.com/nengo/nengo-bones/pull/114
 .. _#117: https://github.com/nengo/nengo-bones/pull/117
+.. _#121: https://github.com/nengo/nengo-bones/pull/121
 .. _#124: https://github.com/nengo/nengo-bones/pull/124
 .. _#127: https://github.com/nengo/nengo-bones/pull/127
 

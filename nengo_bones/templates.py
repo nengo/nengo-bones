@@ -1,12 +1,12 @@
 """Handles the processing of nengo-bones templates using jinja2."""
 
-from collections import defaultdict, OrderedDict
 import os
 import stat
 import warnings
+from collections import OrderedDict, defaultdict
 
 try:
-    from black import FileMode, format_str, TargetVersion
+    from black import FileMode, TargetVersion, format_str
 
     HAS_BLACK = True
 except ImportError:

@@ -8,12 +8,13 @@ shopt -s globstar
 
 {% block install %}
 {{ super() }}
-    exe pip install "jupyter>=1.0.0" "pylint>=2.5.1" "codespell>=1.12.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2" "flake8>=3.7.7"
+    exe pip install "jupyter>=1.0.0" "pylint>=2.5.1" "codespell>=1.12.0" "gitlint>=0.1.2" "collective.checkdocs>=0.2" "flake8>=3.7.7" "isort>=5.6.4"
 {% endblock %}
 
 {% block script %}
     exe pylint {{ pkg_name }} --jobs=0
     exe flake8 {{ pkg_name }}
+    exe isort {{ pkg_name }} --check
     exe bones-format-notebook docs --verbose --check
     if [[ "$(python -c 'import sys; print(sys.version_info >= (3, 6))')" == "True" ]]; then
         exe black --check {{ pkg_name }}

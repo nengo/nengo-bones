@@ -1,10 +1,10 @@
 # pylint: disable=missing-docstring
 
-from functools import partial
 import os
+from functools import partial
 
-from click.testing import CliRunner
 import pytest
+from click.testing import CliRunner
 
 from nengo_bones.scripts import pr_number
 from nengo_bones.tests.utils import assert_exit, make_has_line, write_file

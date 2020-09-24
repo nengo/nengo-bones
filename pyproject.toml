@@ -11,3 +11,7 @@ exclude = '''
     | tests/ignoreme/ignoreme.py
 )
 '''
+
+[tool.isort]
+profile = "black"
+src_paths = ["nengo_bones"]

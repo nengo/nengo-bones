@@ -1,8 +1,8 @@
 """Handles the processing of nengo-bones configuration settings."""
 
-from collections import OrderedDict
 import datetime
 import os
+from collections import OrderedDict
 
 import yaml
 

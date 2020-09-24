@@ -4,10 +4,10 @@ import os
 import re
 import sys
 
-from click.testing import CliRunner
-from nbconvert.preprocessors import ExecutePreprocessor
 import nbformat
 import pytest
+from click.testing import CliRunner
+from nbconvert.preprocessors import ExecutePreprocessor
 
 from nengo_bones.scripts import format_notebook
 from nengo_bones.tests.utils import assert_exit
