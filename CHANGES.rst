@@ -50,6 +50,7 @@ Release History
 - Separate tokens, ``PYPI_TOKEN`` and ``PYPI_TEST_TOKEN``, must now be specified
   for deploying to PyPI and TestPyPI, respectively. (`#127`_)
 - Builds for this repository now run on TravisCI.com instead of TravisCI.org. (`#130`_)
+- Drop support for Python 3.5. (`#123`_)
 
 **Fixed**
 
@@ -64,6 +65,7 @@ Release History
 .. _#114: https://github.com/nengo/nengo-bones/pull/114
 .. _#117: https://github.com/nengo/nengo-bones/pull/117
 .. _#121: https://github.com/nengo/nengo-bones/pull/121
+.. _#123: https://github.com/nengo/nengo-bones/pull/123
 .. _#124: https://github.com/nengo/nengo-bones/pull/124
 .. _#127: https://github.com/nengo/nengo-bones/pull/127
 .. _#130: https://github.com/nengo/nengo-bones/pull/130

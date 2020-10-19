@@ -1,8 +1,7 @@
 """Handles the processing of nengo-bones configuration settings."""
 
 import datetime
-import os
-from collections import OrderedDict
+import pathlib
 
 import yaml
 
@@ -39,8 +38,8 @@ def check_list(cfg, key):
     """
     if key in cfg and not isinstance(cfg[key], list):
         raise TypeError(
-            "%s should be a list, found '%s'; did you forget "
-            "to add '-' before each entry?" % (key, cfg[key])
+            f"{key} should be a list, found '{cfg[key]}'; did you forget "
+            "to add '-' before each entry?"
         )
 
 
@@ -50,11 +49,11 @@ def find_config():
 
     Returns
     -------
-    conf_file : str
+    conf_file : `pathlib.Path`
         Path to the default config file.
     """
     # for now, assume that config file is in cwd
-    conf_file = os.path.join(os.getcwd(), ".nengobones.yml")
+    conf_file = pathlib.Path.cwd() / ".nengobones.yml"
 
     return conf_file
 
@@ -77,7 +76,7 @@ def fill_defaults(config):  # noqa: C901
     if "travis_yml" in config:
         cfg = config["travis_yml"]
         cfg.setdefault("python", "3.6")
-        cfg.setdefault("global_vars", OrderedDict())
+        cfg.setdefault("global_vars", {})
         cfg.setdefault("pypi_user", None)
         cfg.setdefault("deploy_dists", ["sdist"])
         cfg.setdefault(
@@ -103,7 +102,7 @@ def fill_defaults(config):  # noqa: C901
     if "setup_py" in config:
         cfg = config["setup_py"]
         cfg.setdefault("license", "Free for non-commercial use")
-        cfg.setdefault("python_requires", ">=3.5")
+        cfg.setdefault("python_requires", ">=3.6")
         cfg.setdefault("include_package_data", False)
         org_name, repo_name = config["repo_name"].split("/")
         domain = {
@@ -111,14 +110,14 @@ def fill_defaults(config):  # noqa: C901
             "nengo-labs": "https://labs.nengo.ai",
             "abr": "https://www.appliedbrainresearch.com",
         }.get(org_name, "https://www.nengo.ai")
-        cfg.setdefault("url", "%s/%s" % (domain, repo_name))
+        cfg.setdefault("url", f"{domain}/{repo_name}")
 
     if "setup_cfg" in config:
         cfg = config["setup_cfg"]
-        cfg.setdefault("pytest", OrderedDict())
-        cfg.setdefault("pylint", OrderedDict())
-        cfg.setdefault("flake8", OrderedDict())
-        cfg.setdefault("coverage", OrderedDict())
+        cfg.setdefault("pytest", {})
+        cfg.setdefault("pylint", {})
+        cfg.setdefault("flake8", {})
+        cfg.setdefault("coverage", {})
         cfg["pytest"].setdefault("xfail_strict", False)
 
     if "docs_conf_py" in config:
@@ -204,7 +203,7 @@ def validate_config(config):  # noqa: C901
                     # if the toplevel isn't defined, ignore this
                     break
 
-                raise KeyError("Config file must define %s" % entry) from e
+                raise KeyError(f"Config file must define {entry}") from e
 
     if "ci_scripts" in config:
         for ci_config in config["ci_scripts"]:
@@ -226,9 +225,7 @@ def validate_ci_config(ci_config):
         Dictionary containing ci_scripts configuration values.
     """
     if "template" not in ci_config:
-        raise KeyError(
-            "Script config must define 'template' " "(for entry %s)" % ci_config
-        )
+        raise KeyError(f"Script config must define 'template' (for entry {ci_config})")
 
     # make sure that people don't accidentally do things like
     # pip_install: dependency (which gives a string), rather than
@@ -263,29 +260,14 @@ def load_config(conf_file=None):
     if conf_file is None:
         conf_file = find_config()
 
-    if not os.path.exists(str(conf_file)):
+    if not pathlib.Path(conf_file).exists():
         raise RuntimeError(
-            "Could not find conf_file: %s\n\nPerhaps you are "
-            "not in the project's root directory?" % conf_file
+            f"Could not find conf_file: {conf_file}\n\nPerhaps you are "
+            "not in the project's root directory?"
         )
 
-    def ordered_load(stream):
-        """Use OrderedDict instead of dict for loading mappings."""
-
-        class OrderedLoader(yaml.SafeLoader):  # pylint: disable=too-many-ancestors
-            """Custom loader containing OrderedDict mapping."""
-
-        def construct_mapping(loader, node):
-            loader.flatten_mapping(node)
-            return OrderedDict(loader.construct_pairs(node))
-
-        OrderedLoader.add_constructor(
-            yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, construct_mapping
-        )
-        return yaml.load(stream, OrderedLoader)
-
-    with open(str(conf_file)) as f:
-        config = ordered_load(f)
+    with open(conf_file) as f:
+        config = yaml.load(f, Loader=yaml.SafeLoader)
 
     validate_config(config)
 

@@ -20,16 +20,14 @@ def mocked_requests_get(url, repo=None, number=None):
         def json(self):
             return self.json_data
 
-    assert url == (
-        "https://api.github.com/repos/%s/issues?state=all&sort=created" % repo
-    )
+    assert url == (f"https://api.github.com/repos/{repo}/issues?state=all&sort=created")
 
     return MockResponse([{"number": number}])
 
 
 @pytest.mark.parametrize("mode", ("repo", "conf-default", "conf-arg"))
-def test_pr_number(monkeypatch, tmpdir, mode):
-    repo = "a-repo/%s" % mode
+def test_pr_number(monkeypatch, tmp_path, mode):
+    repo = f"a-repo/{mode}"
 
     monkeypatch.setattr(
         pr_number.requests,
@@ -39,7 +37,7 @@ def test_pr_number(monkeypatch, tmpdir, mode):
 
     if mode != "repo":
         write_file(
-            tmpdir=tmpdir,
+            tmp_path=tmp_path,
             filename=".nengobones.yml",
             contents="""
             project_name: NengoBones
@@ -53,11 +51,11 @@ def test_pr_number(monkeypatch, tmpdir, mode):
         result = CliRunner().invoke(pr_number.main, [repo])
     elif mode == "conf-arg":
         result = CliRunner().invoke(
-            pr_number.main, ["--conf-file", str(tmpdir.join(".nengobones.yml"))]
+            pr_number.main, ["--conf-file", str(tmp_path / ".nengobones.yml")]
         )
     else:
         original_dir = os.getcwd()
-        os.chdir(str(tmpdir))
+        os.chdir(tmp_path)
         try:
             result = CliRunner().invoke(pr_number.main)
         finally:
@@ -67,5 +65,5 @@ def test_pr_number(monkeypatch, tmpdir, mode):
 
     lines = result.output.split("\n")
     has_line = make_has_line(lines, regex=True)
-    assert has_line(r"about %s\.\.\." % repo)
-    assert has_line(r"assigned #%s" % (len(mode) + 1))
+    assert has_line(f"about {repo}\\.\\.\\.")
+    assert has_line(f"assigned #{len(mode) + 1}")

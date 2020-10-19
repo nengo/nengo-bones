@@ -1,6 +1,7 @@
 # pylint: disable=missing-docstring
 
 import os
+import pathlib
 
 import pytest
 
@@ -9,7 +10,7 @@ from nengo_bones.tests import utils
 
 
 def test_find_config():
-    assert config.find_config() == os.path.join(os.getcwd(), ".nengobones.yml")
+    assert config.find_config() == pathlib.Path.cwd() / ".nengobones.yml"
 
 
 def test_fill_defaults():
@@ -37,7 +38,7 @@ def test_validate_config():
     mandatory = ["project_name", "pkg_name", "repo_name", "travis_yml.jobs"]
     init_cfg = {"travis_yml": {}}
     for entry in mandatory:
-        with pytest.raises(KeyError, match="must define %s" % entry):
+        with pytest.raises(KeyError, match=f"must define {entry}"):
             config.validate_config(init_cfg)
 
         keys = entry.split(".")
@@ -84,12 +85,12 @@ def test_validate_config():
     del init_cfg["pyproject_toml"]["exclude"]
 
 
-def test_missing_config(tmpdir):
+def test_missing_config(tmp_path):
     with pytest.raises(RuntimeError, match="Could not find conf_file"):
-        config.load_config(tmpdir.join(".does-not-exist.yml"))
+        config.load_config(tmp_path / ".does-not-exist.yml")
 
 
-def test_load_config(tmpdir):
+def test_load_config(tmp_path):
     truth = {
         "project_name": "Dummy",
         "pkg_name": "dummy",
@@ -116,14 +117,14 @@ def test_load_config(tmpdir):
         },
         "setup_py": {
             "license": "Free for non-commercial use",
-            "python_requires": ">=3.5",
+            "python_requires": ">=3.6",
             "include_package_data": False,
             "url": "https://www.appliedbrainresearch.com/dummy",
         },
     }
 
     utils.write_file(
-        tmpdir=tmpdir,
+        tmp_path=tmp_path,
         filename=".nengobones.yml",
         contents="""
         project_name: Dummy
@@ -161,20 +162,20 @@ def test_load_config(tmpdir):
         """,
     )
 
-    loaded = config.load_config(tmpdir.join(".nengobones.yml"))
+    loaded = config.load_config(tmp_path / ".nengobones.yml")
 
     try:
         assert loaded == truth
     except AssertionError:  # pragma: no cover
         print("loaded")
-        print("\n".join("%s: %s" % (k, v) for k, v in loaded.items()))
+        print("\n".join(f"{k}: {v}" for k, v in loaded.items()))
         print("truth")
-        print("\n".join("%s: %s" % (k, v) for k, v in truth.items()))
+        print("\n".join(f"{k}: {v}" for k, v in truth.items()))
         raise
 
     # check loading from cwd
-    cwd = os.getcwd()
-    os.chdir(str(tmpdir))
+    cwd = pathlib.Path.cwd()
+    os.chdir(tmp_path)
     try:
         loaded = config.load_config()
     finally:

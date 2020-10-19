@@ -5,12 +5,12 @@ from textwrap import dedent
 from traceback import print_tb
 
 
-def write_file(tmpdir, filename, contents):
+def write_file(tmp_path, filename, contents):
     """Writes a (multiline) string to file."""
 
     contents = contents.lstrip("\n")
 
-    tmpdir.join(filename).write(dedent(contents))
+    (tmp_path / filename).write_text(dedent(contents))
 
 
 def assert_exit(result, status):
@@ -48,7 +48,7 @@ def make_has_line(lines, strip=False, regex=False):
                 return True
 
         if print_on_fail:
-            print("Failed to find '%s' in\n" % target)
+            print(f"Failed to find '{target}' in\n")
             print("".join(lines))
 
         return False

@@ -1,7 +1,7 @@
 """Applies validation to auto-generated files."""
 
 import difflib
-import os
+import pathlib
 import sys
 
 import click
@@ -30,10 +30,11 @@ def main(root_dir, conf_file, verbose):
 
     config = load_config(conf_file)
     env = load_env()
+    path = pathlib.Path(root_dir)
 
     click.echo("*" * 50)
     click.echo("Checking content of nengo-bones generated files:")
-    click.echo("root dir: %s\n" % root_dir)
+    click.echo(f"root dir: {root_dir}\n")
 
     passed = True
 
@@ -41,11 +42,11 @@ def main(root_dir, conf_file, verbose):
         click.echo(filename + ":")
 
         # TODO: Ensure that the file is there <=> it is in the config
-        if not os.path.exists(os.path.join(root_dir, filename)):
+        if not (path / filename).exists():
             click.echo("  File not found")
             continue
 
-        with open(os.path.join(root_dir, filename)) as f:
+        with (path / filename).open() as f:
             current_lines = f.readlines()
 
         for line in current_lines[:50]:
@@ -74,23 +75,23 @@ def main(root_dir, conf_file, verbose):
             difflib.unified_diff(
                 current_lines,
                 new_lines,
-                fromfile="current %s" % (filename,),
-                tofile="new %s" % (filename,),
+                fromfile=f"current {filename}",
+                tofile=f"new {filename}",
             )
         )
 
         if len(diff) > 0:
             click.secho(
-                "  Content does not match nengo-bones (version %s);\n"
+                f"  Content does not match nengo-bones (version {__version__});\n"
                 "  please update by running `bones-generate` from\n"
-                "  the root directory." % (__version__,),
+                "  the root directory.",
                 fg="red",
             )
             if verbose:
                 click.echo("\n  Full diff")
                 click.echo("  =========")
                 for line in diff:
-                    click.echo("  %s" % (line.strip("\n"),))
+                    click.echo(f"  {line.rstrip()}")
             passed = False
         else:
             click.secho("  Up to date", fg="green")

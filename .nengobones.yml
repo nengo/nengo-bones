@@ -6,7 +6,7 @@ description: Tools for managing Nengo projects
 copyright_start: 2018
 
 travis_yml:
-  python: 3.6
+  python: 3.7
   global_vars:
     TEST_GLOBAL_VAR: test global var val
     TEST_LOCAL_VAR: this val will be overwritten
@@ -29,7 +29,7 @@ travis_yml:
       env:
         TEST_LOCAL_VAR: test local var val
       test_args: --test-arg
-      python: 3.5
+      python: 3.6
     - script: test-nengo
       env:
         TEST_LOCAL_VAR: test local var val
@@ -170,7 +170,7 @@ setup_py:
   # note: docs/tests_req are intentionally empty to test that the correct
   # requirements are built into the ci scripts
   install_req:
-    - black>=20.8b0; python_version>='3.6'
+    - black>=20.8b0
     - click>=7.0
     - codespell>=1.17.1
     - flake8>=3.7.7
@@ -187,7 +187,6 @@ setup_py:
     - "Operating System :: Microsoft :: Windows"
     - "Operating System :: POSIX :: Linux"
     - "Programming Language :: Python"
-    - "Programming Language :: Python :: 3.5"
     - "Programming Language :: Python :: 3.6"
     - "Programming Language :: Python :: 3.7"
     - "Programming Language :: Python :: 3.8"

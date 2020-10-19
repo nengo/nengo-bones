@@ -1,17 +1,12 @@
 """Handles the processing of nengo-bones templates using jinja2."""
 
-import os
+import pathlib
 import stat
 import warnings
-from collections import OrderedDict, defaultdict
+from collections import defaultdict
 
-try:
-    from black import FileMode, TargetVersion, format_str
-
-    HAS_BLACK = True
-except ImportError:
-    HAS_BLACK = False
 import jinja2
+from black import FileMode, TargetVersion, format_str
 
 
 class BonesTemplate:
@@ -58,7 +53,7 @@ class BonesTemplate:
         section = section.lower()
         self.section = section
 
-        self.template_file = "%s.template" % (output_file,)
+        self.template_file = f"{output_file}.template"
 
     @classmethod
     def add_render_data(cls, filename):
@@ -123,20 +118,15 @@ class BonesTemplate:
         rendered = self.env.get_template(self.template_file).render(**data)
 
         # Format Python templates with black
-        if HAS_BLACK:
-            if self.output_file.endswith(".py"):
-                black_mode = FileMode(
-                    target_versions={
-                        TargetVersion.PY35,
-                        TargetVersion.PY36,
-                        TargetVersion.PY37,
-                    }
-                )
-                rendered = format_str(rendered, mode=black_mode)
-        else:
-            warnings.warn(
-                "Black not installed, rendered template may not be formatted correctly"
+        if self.output_file.endswith(".py"):
+            black_mode = FileMode(
+                target_versions={
+                    TargetVersion.PY36,
+                    TargetVersion.PY37,
+                    TargetVersion.PY38,
+                }
             )
+            rendered = format_str(rendered, mode=black_mode)
 
         return rendered
 
@@ -159,18 +149,15 @@ class BonesTemplate:
         """
         if output_name is None:
             output_name = self.output_file
-        output_path = os.path.join(output_dir, output_name)
 
-        if not os.path.exists(os.path.dirname(output_path)):
-            os.makedirs(os.path.dirname(output_path))
-
-        with open(output_path, "w") as f:
-            f.write(self.render(**data))
+        output_path = pathlib.Path(output_dir, output_name)
+        output_path.parent.mkdir(exist_ok=True)
+        output_path.write_text(self.render(**data))
 
         # We mark all `.sh` files as executable
-        if output_name.endswith(".sh"):
-            st = os.stat(output_path)
-            os.chmod(output_path, st.st_mode | stat.S_IEXEC)
+        if output_path.suffix == ".sh":
+            st = output_path.stat()
+            output_path.chmod(st.st_mode | stat.S_IEXEC)
 
 
 @BonesTemplate.add_render_data("docs_conf_py")
@@ -182,7 +169,7 @@ def add_docs_conf_py_data(data):
     ):
         warnings.warn(
             "'tagmanager_id' looks strange. It should look like "
-            "'GTM-XXXXXXX'; got %r" % (tagmanager_id,)
+            f"'GTM-XXXXXXX'; got '{tagmanager_id}'"
         )
 
 
@@ -193,7 +180,7 @@ def add_travis_data(data):
     for job in jobs:
         # shortcuts for setting environment variables
         if "env" not in job:
-            job["env"] = OrderedDict()
+            job["env"] = {}
         for var in ("script", "test_args"):
             if var in job:
                 job["env"][var] = job.pop(var)
@@ -206,7 +193,7 @@ def add_manifest_data(data):
 
 
 def _get_extras(sect_data, extra_types):
-    extras = OrderedDict()
+    extras = {}
     # We iterate over sect_data (rather than extra_types) so that order is preserved
     for key in list(sect_data):
         if key in extra_types:
@@ -252,7 +239,7 @@ def add_setup_cfg_data(data):
 def load_env():
     """Creates a jinja environment for loading/rendering templates."""
 
-    bones_toplevel = os.path.normpath(os.path.dirname(__file__))
+    bones_toplevel = pathlib.Path(__file__).parent
 
     # Load overridden templates first.
     # Builtins are referenced with templates/*.template
@@ -261,7 +248,7 @@ def load_env():
     override_dirs.append(bones_toplevel)
     override_loader = jinja2.FileSystemLoader(override_dirs)
     # If those fail, use the builtins
-    builtin_loader = jinja2.FileSystemLoader(os.path.join(bones_toplevel, "templates"))
+    builtin_loader = jinja2.FileSystemLoader(bones_toplevel / "templates")
 
     env = jinja2.Environment(
         loader=jinja2.ChoiceLoader([override_loader, builtin_loader]),

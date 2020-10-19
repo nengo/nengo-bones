@@ -1,8 +1,6 @@
 # pylint: disable=missing-docstring
 
-import os
 import re
-import sys
 
 import nbformat
 import pytest
@@ -47,7 +45,7 @@ def check_notebook(nb_path, correct):
     return no_output, no_metadata, content_match
 
 
-def test_format_notebook(tmpdir):
+def test_format_notebook(tmp_path):
     nb = nbformat.v4.new_notebook()
     nb["cells"] = [
         nbformat.v4.new_markdown_cell("Title   \n\nserach\n\n"),
@@ -62,16 +60,14 @@ def test_format_notebook(tmpdir):
     # this should be the content of the cells after formatting
     correct = [
         "Title\n\nserach",
-        "%dirs\n"
-        + ('print("foo")' if format_notebook.HAS_BLACK else "print('foo')   ")
-        + "\n# coment",
+        '%dirs\nprint("foo")\n# coment',
         "this is a long line that should wrap aaaaaaaaaaaaaaaaaaaaaaa\n"
         "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     ]
 
     # run notebook to generate output
     ep = ExecutePreprocessor(timeout=600, kernel_name="python3")
-    ep.preprocess(nb, {"metadata": {"path": str(tmpdir)}})
+    ep.preprocess(nb, {"metadata": {"path": str(tmp_path)}})
 
     # write these manually to make sure they get cleared
     nb["metadata"]["kernelspec"] = {
@@ -83,13 +79,13 @@ def test_format_notebook(tmpdir):
     nb["cells"][1]["metadata"]["collapsed"] = True
 
     # write notebooks (put one in subdir to check we clear dirs properly)
-    os.mkdir(str(tmpdir.join("subdir")))
+    (tmp_path / "subdir").mkdir()
     paths = [
-        str(tmpdir.join("test1.ipynb")),
-        str(tmpdir.join("subdir").join("test2.ipynb")),
+        tmp_path / "test1.ipynb",
+        tmp_path / "subdir" / "test2.ipynb",
     ]
     for path in paths:
-        with open(path, "w", encoding="utf-8") as f:
+        with path.open("w", encoding="utf-8") as f:
             nbformat.write(nb, f)
 
     # check that the notebooks are not formatted
@@ -97,28 +93,20 @@ def test_format_notebook(tmpdir):
         assert not any(check_notebook(path, correct))
 
     # verify that --check correctly detects that notebooks are not formatted
-    with pytest.warns(None) as recwarns:
-        result = CliRunner().invoke(
-            format_notebook.main, [str(tmpdir), "--check", "--verbose"]
-        )
-
-    if sys.version_info < (3, 6, 0):
-        assert any(
-            "bones-format-notebook requires Python>=3.6" in str(w.message)
-            for w in recwarns
-        )
-        return
+    result = CliRunner().invoke(
+        format_notebook.main, [str(tmp_path), "--check", "--verbose"]
+    )
 
     assert_exit(result, 1)
     assert '-    "Title   \\n",\n+    "Title\\n",' in result.output
 
     # run the clear-notebook script on the whole directory
-    result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--verbose"])
+    result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--verbose"])
     assert_exit(result, 0)
 
     # check that all files were found
     for path in paths:
-        assert path in result.output
+        assert str(path) in result.output
 
     # check that spelling errors were detected/corrected
     assert "search" in result.output
@@ -129,7 +117,7 @@ def test_format_notebook(tmpdir):
         assert all(check_notebook(path, correct))
 
     # verify that --check correctly detects that notebooks are now formatted
-    result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--check"])
+    result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--check"])
     assert_exit(result, 0)
 
 
@@ -137,21 +125,18 @@ def test_format_notebook(tmpdir):
     not format_notebook.HAS_PRETTIER,
     reason="prettier not installed",
 )
-@pytest.mark.skipif(
-    sys.version_info < (3, 6, 0), reason="format-notebook requires Python>=3.6"
-)
-def test_format_notebook_prettier(tmpdir):
+def test_format_notebook_prettier(tmp_path):
     nb = nbformat.v4.new_notebook()
     nb["cells"] = [
         nbformat.v4.new_markdown_cell("prettier\nwill\nunwrap\nthese\nlines"),
     ]
 
-    nb_path = str(tmpdir.join("test.ipynb"))
+    nb_path = tmp_path / "test.ipynb"
     with open(nb_path, "w", encoding="utf-8") as f:
         nbformat.write(nb, f)
 
     result = CliRunner().invoke(
-        format_notebook.main, [str(tmpdir), "--verbose", "--prettier"]
+        format_notebook.main, [str(tmp_path), "--verbose", "--prettier"]
     )
     assert_exit(result, 0)
 
@@ -160,29 +145,26 @@ def test_format_notebook_prettier(tmpdir):
     assert nb.cells[0]["source"] == "prettier will unwrap these lines"
 
 
-def test_format_notebook_noprettier_error(tmpdir, monkeypatch):
+def test_format_notebook_noprettier_error(tmp_path, monkeypatch):
     monkeypatch.setattr(format_notebook, "HAS_PRETTIER", False)
 
-    result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--prettier"])
+    result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--prettier"])
     assert_exit(result, 1)
     assert isinstance(result.exception, ValueError) and (
         re.match("Cannot format.*Prettier.*not installed", str(result.exception))
     )
 
 
-@pytest.mark.skipif(
-    sys.version_info < (3, 6, 0), reason="format-notebook requires Python>=3.6"
-)
-def test_format_notebook_static(tmpdir):
+def test_format_notebook_static(tmp_path):
     nb = nbformat.v4.new_notebook()
     nb["cells"] = [
         nbformat.v4.new_code_cell("def test(): a = b"),
     ]
 
-    with open(str(tmpdir.join("test.ipynb")), "w", encoding="utf-8") as f:
+    with (tmp_path / "test.ipynb").open("w", encoding="utf-8") as f:
         nbformat.write(nb, f)
 
-    result = CliRunner().invoke(format_notebook.main, [str(tmpdir), "--verbose"])
+    result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--verbose"])
     assert_exit(result, 1)
 
     # check that pylint/flake8 errors were detected

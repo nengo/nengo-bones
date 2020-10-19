@@ -1,19 +1,13 @@
 """Applies standard formatting to Jupyter Notebook (.ipynb) files."""
 
 import difflib
-import os
+import pathlib
 import re
 import subprocess
 import sys
 import textwrap
-import warnings
 
-try:
-    import black
-
-    HAS_BLACK = True
-except ImportError:
-    HAS_BLACK = False
+import black
 import click
 import nbformat
 
@@ -85,12 +79,12 @@ def format_notebook(nb, fname, verbose=False, prettier=None):
     passed &= apply_static_checker(
         "pylint --from-stdin "
         "--disable=missing-docstring,trailing-whitespace,wrong-import-position,"
-        "unnecessary-semicolon,missing-final-newline %s" % fname,
+        f"unnecessary-semicolon,missing-final-newline {fname}",
         all_code,
     )
     passed &= apply_static_checker(
-        "flake8 --extend-ignore=E402,E703,W291,W292,W293,W391 --stdin-display-name=%s "
-        "--show-source -" % fname,
+        "flake8 --extend-ignore=E402,E703,W291,W292,W293,W391 "
+        f"--stdin-display-name={fname} --show-source -",
         all_code,
     )
     apply_static_checker(
@@ -181,7 +175,7 @@ def apply_black(source):
     for i, match in enumerate(matches[::-1]):
         space, magic = match.groups("")
 
-        replacement = "# MaGiC%04d" % i
+        replacement = f"# MaGiC{i:04d}"
         magic_pairs.append((magic, replacement))
         source = source[: match.start(1)] + space + replacement + source[match.end(2) :]
 
@@ -256,7 +250,7 @@ def apply_static_checker(command, cells):
     result = run_command(command, all_source)
 
     if result.returncode != 0:
-        click.echo("%s errors detected:" % command.split()[0])
+        click.echo(f"{command.split()[0]} errors detected:")
         click.echo(result.stdout)
 
     return result.returncode == 0
@@ -297,14 +291,14 @@ def format_file(fname, target_version=4, verbose=False, check=False, prettier=No
             difflib.unified_diff(
                 current,
                 nbformat.writes(nb).splitlines(),
-                fromfile="current %s" % (fname,),
-                tofile="new %s" % (fname,),
+                fromfile=f"current {fname}",
+                tofile=f"new {fname}",
             )
         )
 
         if len(diff) > 0:
             click.secho(
-                "%s has not been formatted; please run `bones-format-notebook`" % fname,
+                f"{fname} has not been formatted; please run `bones-format-notebook`",
                 fg="red",
             )
             if verbose:
@@ -323,17 +317,18 @@ def format_file(fname, target_version=4, verbose=False, check=False, prettier=No
 def format_dir(dname, **kwargs):
     """Format all notebooks in a directory."""
 
-    assert os.path.isdir(dname)
-    if dname.endswith(".ipynb_checkpoints") or dname.endswith("_build"):
-        click.echo("Ignoring directory %r" % (dname,))
+    assert dname.is_dir()
+    str_dname = str(dname)
+    if str_dname.endswith(".ipynb_checkpoints") or str_dname.endswith("_build"):
+        click.echo(f"Ignoring directory '{dname}'")
         return True
 
-    fnames = os.listdir(dname)
-    fpaths = [
-        os.path.join(dname, fname) for fname in fnames if not fname.startswith(".")
-    ]
     return format_paths(
-        [fpath for fpath in fpaths if os.path.isdir(fpath) or fpath.endswith(".ipynb")],
+        [
+            fpath
+            for fpath in dname.glob("[!.]*")
+            if fpath.is_dir() or fpath.suffix == ".ipynb"
+        ],
         **kwargs,
     )
 
@@ -344,7 +339,8 @@ def format_paths(fnames, **kwargs):
     passed = True
 
     for fname in fnames:
-        if os.path.isdir(fname):
+        fname = pathlib.Path(fname)
+        if fname.is_dir():
             passed &= format_dir(fname, **kwargs)
         else:
             passed &= format_file(fname, **kwargs)
@@ -374,9 +370,6 @@ def main(files, **kwargs):
     if kwargs["prettier"] and not HAS_PRETTIER:
         # user explicitly asked for prettier, but it is not installed, so fail
         raise ValueError("Cannot format markdown with Prettier; it is not installed.")
-
-    if sys.version_info < (3, 6, 0):
-        warnings.warn("bones-format-notebook requires Python>=3.6")
 
     passed = format_paths(files, **kwargs)
 

@@ -10,7 +10,7 @@ def get_issue_count(repo):
     """Count the number of issues and PRs in a repository."""
 
     response = requests.get(
-        "https://api.github.com/repos/%s/issues?state=all&sort=created" % (repo,)
+        f"https://api.github.com/repos/{repo}/issues?state=all&sort=created"
     )
     return int(response.json()[0]["number"])
 
@@ -33,12 +33,12 @@ def main(repo, conf_file):
         config = nengo_bones.config.load_config(conf_file)
         repo = config["repo_name"]
 
-    click.echo("Asking GitHub for information about %s..." % (repo,))
+    click.echo(f"Asking GitHub for information about {repo}...")
     current_num = get_issue_count(repo)
     next_num = current_num + 1
-    click.echo("If you open a PR now it will be assigned #%d" % (next_num,))
+    click.echo(f"If you open a PR now it will be assigned #{next_num}")
     click.echo("Use this link for the changelog entry:")
-    click.echo("https://github.com/%s/pull/%d" % (repo, next_num))
+    click.echo(f"https://github.com/{repo}/pull/{next_num}")
 
 
 if __name__ == "__main__":

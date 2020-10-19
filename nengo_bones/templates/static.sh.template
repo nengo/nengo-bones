@@ -16,9 +16,7 @@ shopt -s globstar
     exe flake8 {{ pkg_name }}
     exe isort {{ pkg_name }} --check
     exe bones-format-notebook docs --verbose --check
-    if [[ "$(python -c 'import sys; print(sys.version_info >= (3, 6))')" == "True" ]]; then
-        exe black --check {{ pkg_name }}
-    fi
+    exe black --check {{ pkg_name }}
     exe codespell -q 3 \
         --skip="./build,*/_build,*-checkpoint.ipynb,./.eggs,./.git,*/_vendor"
         {%- if codespell_ignore_words %} \

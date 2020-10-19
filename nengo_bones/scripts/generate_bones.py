@@ -1,6 +1,6 @@
 """Scripts for auto-generating nengo-bones files."""
 
-import os
+import pathlib
 import sys
 
 import click
@@ -65,8 +65,7 @@ def main(ctx, conf_file, output_dir):
 
     config = load_config(conf_file)
 
-    if not os.path.exists(output_dir):
-        os.makedirs(os.path.normpath(output_dir))
+    pathlib.Path(output_dir).mkdir(exist_ok=True)
 
     ctx.obj["config"] = config
     ctx.obj["output_dir"] = output_dir
@@ -75,7 +74,7 @@ def main(ctx, conf_file, output_dir):
     def check_cfg(name):
         name = name.replace("-", "_")
         if name not in config:
-            print("No config entry detected for %s, skipping" % name)
+            print(f"No config entry detected for {name}, skipping")
             return False
         return True
 
