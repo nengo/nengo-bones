@@ -68,6 +68,19 @@ See https://docs.travis-ci.com/user/encrypting-files/ for more details.
     exe mkdir -p ~/.ssh
     exe tar xvf .ci/secret.tar -C ~/.ssh --overwrite
     exe chmod 600 ~/.ssh/id_rsa
+
+    {% if azure_name %}
+    if ssh {{ host }} -q exit; then
+        echo "VM already running"
+    else
+        echo "Starting VM"
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        exe chmod 400 ~/.ssh/azure.pem
+        exe az login --service-principal -u http://travis-ci -p ~/.ssh/azure.pem --tenant appliedbrainresearch.com
+        exe az vm start --resource-group {{ azure_group }} --name {{ azure_name }}
+    fi
+    {% endif %}
+
     ssh {{ host }} -q "echo 'Connected to {{ host }}'"
 {% endblock %}
 
@@ -99,10 +112,6 @@ EOF
 {% endblock %}
 
 {% block after_script %}
-    {% if coverage %}
-    exe scp "{{ host }}:./tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}/coverage.xml" coverage.xml
-    eval "bash <(curl -s https://codecov.io/bash)"
-    {% endif %}
     exe ssh {{ host }} -q << EOF
         echo "$ ({{ host }}) Cleaning up {{ pkg }}"
         cd ~/tmp

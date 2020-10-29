@@ -1,0 +1,58 @@
+{% extends "templates/remote.sh.template" %}
+
+{% block remote_install %}
+{{ super() }}
+        # copy environment variables into remote environment
+        export TRAVIS_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
+        export TRAVIS_BRANCH="$TRAVIS_BRANCH"
+        export TRAVIS_TAG="$TRAVIS_TAG"
+        export TEST_ARGS="$TEST_ARGS"
+        export PIP_USE_FEATURE="$PIP_USE_FEATURE"
+        {% if remote_vars %}
+        {% for var, val in remote_vars.items() %}
+        export {{ var }}="{{ val }}"
+        {% endfor %}
+        {% endif %}
+
+        # generate CI scripts on remote device
+        # ensure nengo-bones version is the same as the one installed on host
+        pip install $(pip freeze | grep nengo-bones | awk '{print $(NF)}')
+        bones-generate --output-dir .ci ci-scripts || REMOTE_STATUS=1
+
+        {% for line in remote_setup %}
+        {{ line }}
+        {% endfor %}
+
+        bash .ci/{{ remote_script }}.sh install || REMOTE_STATUS=1
+{% endblock %}
+
+{% block remote_script %}
+{{ super() }}
+        export TRAVIS_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
+        export TRAVIS_BRANCH="$TRAVIS_BRANCH"
+        export TRAVIS_TAG="$TRAVIS_TAG"
+        export TEST_ARGS="$TEST_ARGS{% if coverage %} --cov-report=xml{% endif %}"
+        export PIP_USE_FEATURE="$PIP_USE_FEATURE"
+        {% for var in remote_vars %}
+        export {{ var }}="${{ var }}"
+        {% endfor %}
+
+        echo "Waiting for lock on device $DEVICE_ID"
+        (
+            flock -x -w 540 200 || exit 1
+            bash .ci/{{ remote_script }}.sh script || exit 1
+        ) 200>/var/lock/.travis-ci.exclusivelock."$DEVICE_ID" || REMOTE_STATUS=1
+{% endblock %}
+
+{% block after_script %}
+    {% if remote_script == "docs" %}
+    REMOTE_FAILED_FILE="tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}/$TRAVIS_JOB_NUMBER.failed"
+    ssh -q {{ host }} [[ -e "$REMOTE_FAILED_FILE" ]] && exe scp {{ host }}:"$REMOTE_FAILED_FILE" .
+    exe rsync -azh "{{ host }}:./tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}-docs" ..
+    {% elif coverage %}
+    COVERAGE_FILE="tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}/coverage.xml"
+    exe scp {{ host }}:"$COVERAGE_FILE" .
+    {% endif %}
+    exe bash .ci/{{ remote_script }}.sh after_script
+{{ super() }}
+{% endblock %}

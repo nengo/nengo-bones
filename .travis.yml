@@ -53,6 +53,9 @@ jobs:
       SCRIPT="remote"
   -
     env:
+      SCRIPT="remote-test"
+  -
+    env:
       TEST_LOCAL_VAR="test local var val"
       SCRIPT="test-coverage"
       TEST_ARGS="--test-arg"

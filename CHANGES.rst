@@ -32,6 +32,8 @@ Release History
   and static checking to Jupyter notebooks. (`#32`_)
 - Static script will now check that ``bones-format-notebook`` has been applied to all
   notebooks in the ``docs`` directory. (`#32`_)
+- Added ``remote-script.sh`` CI script for running other CI scripts on a remote device.
+  (`#124`_)
 
 **Changed**
 
@@ -51,6 +53,7 @@ Release History
 .. _#110: https://github.com/nengo/nengo-bones/pull/110
 .. _#114: https://github.com/nengo/nengo-bones/pull/114
 .. _#117: https://github.com/nengo/nengo-bones/pull/117
+.. _#124: https://github.com/nengo/nengo-bones/pull/124
 
 0.11.1 (April 13, 2020)
 =======================
