@@ -117,6 +117,7 @@ ci_scripts:
       - cat .ci/auto-update.sh
     repos:
       - nengo/keras-spiking
+      - nengo/lmu
       - nengo/nengo
       - nengo/nengo-control
       - nengo/nengo-de1
