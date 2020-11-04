@@ -38,13 +38,8 @@ templating system, so if you would like an example of how to use it, check out
 Installation
 ============
 
-We recommend installing ``nengo-bones`` using ``pip``:
-
-.. code-block:: bash
-
-    pip install nengo-bones
-
-Or for the latest updates you can perform a developer installation:
+NengoBones is designed to be used based on the ``master`` branch (although we
+release occasional stable checkpoints to PyPI). This can be installed via
 
 .. code-block:: bash
 
