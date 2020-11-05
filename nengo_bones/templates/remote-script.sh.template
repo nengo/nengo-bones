@@ -1,18 +1,24 @@
 {% extends "templates/remote.sh.template" %}
 
-{% block remote_install %}
-{{ super() }}
+{% set env_vars %}
+{% block env_vars %}
         # copy environment variables into remote environment
         export TRAVIS_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
         export TRAVIS_BRANCH="$TRAVIS_BRANCH"
         export TRAVIS_TAG="$TRAVIS_TAG"
-        export TEST_ARGS="$TEST_ARGS"
+        export TEST_ARGS="$TEST_ARGS{% if coverage %} --cov-report=xml{% endif %}"
         export PIP_USE_FEATURE="$PIP_USE_FEATURE"
         {% if remote_vars %}
         {% for var, val in remote_vars.items() %}
         export {{ var }}="{{ val }}"
         {% endfor %}
         {% endif %}
+{% endblock %}
+{% endset %}
+
+{% block remote_install %}
+{{ super() }}
+{{ env_vars }}
 
         # generate CI scripts on remote device
         # ensure nengo-bones version is the same as the one installed on host
@@ -28,14 +34,7 @@
 
 {% block remote_script %}
 {{ super() }}
-        export TRAVIS_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
-        export TRAVIS_BRANCH="$TRAVIS_BRANCH"
-        export TRAVIS_TAG="$TRAVIS_TAG"
-        export TEST_ARGS="$TEST_ARGS{% if coverage %} --cov-report=xml{% endif %}"
-        export PIP_USE_FEATURE="$PIP_USE_FEATURE"
-        {% for var in remote_vars %}
-        export {{ var }}="${{ var }}"
-        {% endfor %}
+{{ env_vars }}
 
         echo "Waiting for lock on device $DEVICE_ID"
         (
