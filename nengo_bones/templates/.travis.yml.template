@@ -60,7 +60,7 @@ jobs:
       - provider: pypi
         server: https://test.pypi.org/legacy/
         user: {{ pypi_user }}
-        password: $PYPI_TOKEN
+        password: $PYPI_TEST_TOKEN
         distributions: "{% for dist in deploy_dists %}{{ dist }} {%+ endfor %}"
         on:
           all_branches: true

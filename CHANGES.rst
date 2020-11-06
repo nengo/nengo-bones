@@ -45,6 +45,8 @@ Release History
 - Increased minimum ``black`` version to 20.8b0. (`#104`_)
 - Increased minimum ``pylint`` version to 2.5.1 (`#32`_)
 - Documentation ``[source]`` links now point to GitHub. (`#117`_)
+- Separate tokens, ``PYPI_TOKEN`` and ``PYPI_TEST_TOKEN``, must now be specified
+  for deploying to PyPI and TestPyPI, respectively. (`#127`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
@@ -54,6 +56,7 @@ Release History
 .. _#114: https://github.com/nengo/nengo-bones/pull/114
 .. _#117: https://github.com/nengo/nengo-bones/pull/117
 .. _#124: https://github.com/nengo/nengo-bones/pull/124
+.. _#127: https://github.com/nengo/nengo-bones/pull/127
 
 0.11.1 (April 13, 2020)
 =======================

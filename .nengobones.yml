@@ -39,7 +39,7 @@ travis_yml:
     - stage: autoupdate
       script: auto-update
       if: type = push AND branch = master
-  pypi_user: drasmuss
+  pypi_user: __token__
   deploy_dists:
     - sdist
     - bdist_wheel
