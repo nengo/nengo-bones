@@ -131,6 +131,7 @@ ci_scripts:
     pre_commands:
       - cat .ci/auto-update.sh
     repos:
+      - nengo/keras-lmu
       - nengo/keras-spiking
       - nengo/lmu
       - nengo/nengo
