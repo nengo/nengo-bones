@@ -5,6 +5,7 @@ repos:
     rev: 20.8b0
     hooks:
     - id: black
+      files: \.py$
       exclude: |
           (?x)(
               tests/ignoreme/ignoreme.py
