@@ -324,6 +324,10 @@ def format_dir(dname, **kwargs):
     """Format all notebooks in a directory."""
 
     assert os.path.isdir(dname)
+    if dname.endswith(".ipynb_checkpoints") or dname.endswith("_build"):
+        click.echo("Ignoring directory %r" % (dname,))
+        return True
+
     fnames = os.listdir(dname)
     fpaths = [
         os.path.join(dname, fname) for fname in fnames if not fname.startswith(".")

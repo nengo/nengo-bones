@@ -188,3 +188,14 @@ def test_format_notebook_static(tmpdir):
     # check that pylint/flake8 errors were detected
     assert "undefined-variable" in result.output  # pylint
     assert "F821" in result.output  # flake8
+
+
+def test_format_dir_ignore(tmpdir):
+    rootdir = tmpdir.mkdir("rootdir")
+    rootdir.mkdir("_build")
+    rootdir.mkdir("my.ipynb_checkpoints")
+    rootdir.mkdir("format_this_dir")
+    result = CliRunner().invoke(format_notebook.main, [str(rootdir)])
+    assert re.search("Ignoring directory '[^']*_build'", result.output)
+    assert re.search(r"Ignoring directory '[^']*my\.ipynb_checkpoints'", result.output)
+    assert not re.search(r"Ignoring directory '[^']*format_this_dir'", result.output)
