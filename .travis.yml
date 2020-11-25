@@ -69,7 +69,7 @@ jobs:
     env:
       TEST_LOCAL_VAR="test local var val"
       SCRIPT="test-nengo"
-      TEST_ARGS="--test-arg -p nengo.tests.options"
+      TEST_ARGS="--test-arg"
     python: 3.8
     dist: bionic
   -
