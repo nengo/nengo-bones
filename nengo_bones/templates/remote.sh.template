@@ -7,7 +7,7 @@ Setup instructions
 
 Run all the following commands in a new empty folder.
 Make sure you have the Travis CLI installed
-and logged in with `travis login`
+and logged in with `travis login --com`
 (see https://github.com/travis-ci/travis.rb#installation).
 
 1. Set up an SSH key with no passphrase with the remote host.
@@ -35,7 +35,7 @@ and logged in with `travis login`
 
 5. Encrypt the file using the Travis CI command line client.
 
-       travis encrypt-file secret.tar -r nengo/<repo>
+       travis encrypt-file secret.tar -r nengo/<repo> --com
 
 6. This will create a new `secret.tar.enc` file and print some information to
    the console. It will print an `openssl` command with some environment variables.

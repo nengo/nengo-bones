@@ -49,6 +49,7 @@ Release History
 - Documentation ``[source]`` links now point to GitHub. (`#117`_)
 - Separate tokens, ``PYPI_TOKEN`` and ``PYPI_TEST_TOKEN``, must now be specified
   for deploying to PyPI and TestPyPI, respectively. (`#127`_)
+- Builds for this repository now run on TravisCI.com instead of TravisCI.org. (`#130`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101

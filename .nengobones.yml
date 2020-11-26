@@ -99,7 +99,7 @@ ci_scripts:
   - template: remote
     pre_commands:
       - cat .ci/remote.sh
-    travis_var_key: 5820152da3b2
+    travis_var_key: c4868fa006ab
     host: gl
   - template: test
     pre_commands:
@@ -111,7 +111,7 @@ ci_scripts:
       - cat .ci/remote-test.sh
     remote_script: test-for-remote
     output_name: remote-test
-    travis_var_key: 5820152da3b2
+    travis_var_key: c4868fa006ab
     host: gl
     coverage: true
   - template: docs
