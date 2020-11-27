@@ -51,6 +51,11 @@ Release History
   for deploying to PyPI and TestPyPI, respectively. (`#127`_)
 - Builds for this repository now run on TravisCI.com instead of TravisCI.org. (`#130`_)
 
+**Fixed**
+
+- Intermittent failures installing miniconda in the remote script have been fixed by
+  retrying the miniconda install if it fails. (`#130`_)
+
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
 .. _#103: https://github.com/nengo/nengo-bones/pull/103
@@ -61,6 +66,7 @@ Release History
 .. _#121: https://github.com/nengo/nengo-bones/pull/121
 .. _#124: https://github.com/nengo/nengo-bones/pull/124
 .. _#127: https://github.com/nengo/nengo-bones/pull/127
+.. _#130: https://github.com/nengo/nengo-bones/pull/130
 
 0.11.1 (April 13, 2020)
 =======================

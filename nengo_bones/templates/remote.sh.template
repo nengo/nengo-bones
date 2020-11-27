@@ -94,18 +94,31 @@ See https://docs.travis-ci.com/user/encrypting-files/ for more details.
         cd ~/"$BUILD_DIR"
         {% block remote_install %}
         echo "$ ({{ host }}) Installing miniconda"
-        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh --quiet -O miniconda.sh
-        bash miniconda.sh -b -p ./miniconda
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh --quiet -O miniconda.sh || exit 1
+        for i in \$(seq 1 5); do
+            [ -d "./miniconda" ] && rm -rf ./miniconda;
+            bash miniconda.sh -b -p ./miniconda && break;
+            if [ "\$i" = 5 ]; then
+                echo "({{ host }}) Failed to install miniconda after \$i tries. Exiting.";
+                exit 1;
+            else
+                echo "({{ host }}) Retrying miniconda installation (attempt \$i)";
+            fi
+        done
         export PATH="\$PWD/miniconda/bin:\$PATH"
         conda create -y -n travis-ci-"$TRAVIS_JOB_NUMBER" python="$TRAVIS_PYTHON_VERSION" || REMOTE_STATUS=1
         source activate travis-ci-"$TRAVIS_JOB_NUMBER" || REMOTE_STATUS=1
+        if [ "\$REMOTE_STATUS" -gt 0 ]; then
+            echo "({{ host }}) Failed to create conda environment. Exiting.";
+            exit \$REMOTE_STATUS;
+        fi
         cd {{ pkg }} || REMOTE_STATUS=1
         echo "$ ({{ host }}) Installing {{ pkg }}"
         {% endblock %}
         pip freeze
         cd ~/"$BUILD_DIR"/{{ pkg }} || REMOTE_STATUS=1
         {% block remote_script %}
-        echo "$ ({{ host }}) Testing {{ pkg }}"
+        echo "$ ({{ host }}) Running {{ pkg }}"
         {% endblock %}
         exit \$REMOTE_STATUS
 EOF
