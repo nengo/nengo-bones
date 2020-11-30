@@ -56,6 +56,8 @@ Release History
 
 - Intermittent failures installing miniconda in the remote script have been fixed by
   retrying the miniconda install if it fails. (`#130`_)
+- Fixed an issue in which Codecov would not report on files where a file in a
+  deeper folder shares the same name. (`#132`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
@@ -69,6 +71,7 @@ Release History
 .. _#124: https://github.com/nengo/nengo-bones/pull/124
 .. _#127: https://github.com/nengo/nengo-bones/pull/127
 .. _#130: https://github.com/nengo/nengo-bones/pull/130
+.. _#132: https://github.com/nengo/nengo-bones/pull/132
 
 0.11.1 (April 13, 2020)
 =======================
