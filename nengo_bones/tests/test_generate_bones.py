@@ -340,16 +340,15 @@ def test_license(tmp_path, license_type):
     write_file(
         tmp_path=tmp_path,
         filename=".nengobones.yml",
-        contents="""
+        contents=f"""
         project_name: Dumdum
         pkg_name: dummy
         repo_name: dummy_org/dummy
         copyright_start: 2014
         copyright_end: 2017
         license_rst:
-          type: %(license_type)s
-    """
-        % dict(license_type=license_type, tmp_path=tmp_path),
+          type: {license_type}
+    """,
     )
 
     result = CliRunner().invoke(
@@ -706,14 +705,13 @@ def test_docs_conf_py_tagmanager_id_warn(tmp_path):
         write_file(
             tmp_path=tmp_path,
             filename=".nengobones.yml",
-            contents="""
+            contents=f"""
             project_name: Dummy
             pkg_name: dummy
             repo_name: dummy_org/dummy
             docs_conf_py:
-                tagmanager_id: %s
-        """
-            % (tagmanager_id,),
+                tagmanager_id: {tagmanager_id}
+        """,
         )
 
         result = CliRunner().invoke(

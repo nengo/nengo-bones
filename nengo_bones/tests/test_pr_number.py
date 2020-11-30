@@ -39,12 +39,11 @@ def test_pr_number(monkeypatch, tmp_path, mode):
         write_file(
             tmp_path=tmp_path,
             filename=".nengobones.yml",
-            contents="""
+            contents=f"""
             project_name: NengoBones
             pkg_name: nengo-bones
-            repo_name: %s
-        """
-            % repo,
+            repo_name: {repo}
+        """,
         )
 
     if mode == "repo":

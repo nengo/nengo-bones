@@ -27,7 +27,7 @@ def format_notebook(nb, fname, verbose=False, prettier=None):
     """Formats an opened Jupyter notebook."""
 
     if verbose:
-        click.echo("Formatting %r" % fname)
+        click.echo(f"Formatting '{fname}'")
 
     passed = True
 
