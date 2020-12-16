@@ -36,6 +36,7 @@ Release History
   (`#124`_)
 - Added `isort <https://pycqa.github.io/isort/>`_ configuration to
   ``pyproject.toml`` and check import order during static checks. (`#121`_)
+- Officially support and test against Python 3.9. (`#136`_)
 
 **Changed**
 
@@ -72,6 +73,7 @@ Release History
 .. _#127: https://github.com/nengo/nengo-bones/pull/127
 .. _#130: https://github.com/nengo/nengo-bones/pull/130
 .. _#132: https://github.com/nengo/nengo-bones/pull/132
+.. _#136: https://github.com/nengo/nengo-bones/pull/136
 
 0.11.1 (April 13, 2020)
 =======================
