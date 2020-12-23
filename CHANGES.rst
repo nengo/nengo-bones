@@ -52,6 +52,7 @@ Release History
   for deploying to PyPI and TestPyPI, respectively. (`#127`_)
 - Builds for this repository now run on TravisCI.com instead of TravisCI.org. (`#130`_)
 - Drop support for Python 3.5. (`#123`_)
+- Doc script will now install Sphinx>=3.1.2. (`#137`_)
 
 **Fixed**
 
@@ -74,6 +75,7 @@ Release History
 .. _#130: https://github.com/nengo/nengo-bones/pull/130
 .. _#132: https://github.com/nengo/nengo-bones/pull/132
 .. _#136: https://github.com/nengo/nengo-bones/pull/136
+.. _#137: https://github.com/nengo/nengo-bones/pull/137
 
 0.11.1 (April 13, 2020)
 =======================
