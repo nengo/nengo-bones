@@ -87,7 +87,7 @@ def format_notebook(nb, fname, verbose=False, prettier=None):
         f"--stdin-display-name={fname} --show-source -",
         all_code,
     )
-    apply_static_checker(
+    passed &= apply_static_checker(
         "codespell -",
         all_markdown + all_code,
     )

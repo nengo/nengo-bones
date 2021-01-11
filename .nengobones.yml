@@ -63,9 +63,6 @@ ci_scripts:
     post_commands:
       - "[ -f 'docs/tests/ignore-me.py' ]"
       - "[ ! -f 'docs/tests/test-example.py' ]"
-    codespell_ignore_words:
-      - coment
-      - serach
   - template: test
     pre_commands:
       - cat .ci/test.sh
@@ -172,7 +169,7 @@ setup_py:
   install_req:
     - black>=20.8b0
     - click>=7.0
-    - codespell>=1.17.1
+    - codespell>=2.0.0
     - flake8>=3.7.7
     - jinja2>=2.11
     - jupyter>=1.0.0
@@ -218,6 +215,12 @@ setup_cfg:
   pylint:
     ignore:
       - ignoreme
+  codespell:
+    ignore_words:
+      - coment
+      - serach
+    skip:
+      - test_format_notebook.py
 
 docs_conf_py:
   exclude_patterns:

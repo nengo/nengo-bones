@@ -48,8 +48,8 @@ def check_notebook(nb_path, correct):
 def test_format_notebook(tmp_path):
     nb = nbformat.v4.new_notebook()
     nb["cells"] = [
-        nbformat.v4.new_markdown_cell("Title   \n\nserach\n\n"),
-        nbformat.v4.new_code_cell("%dirs\nprint('foo')   \n# coment\n\n"),
+        nbformat.v4.new_markdown_cell("Title   \n\ntext\n\n"),
+        nbformat.v4.new_code_cell("%dirs\nprint('foo')   \n\n"),
         nbformat.v4.new_code_cell("  "),
         nbformat.v4.new_markdown_cell(
             "this is a long line that should wrap aaaaaaaaaaaaaaaaaaaaaaa "
@@ -59,8 +59,8 @@ def test_format_notebook(tmp_path):
 
     # this should be the content of the cells after formatting
     correct = [
-        "Title\n\nserach",
-        '%dirs\nprint("foo")\n# coment',
+        "Title\n\ntext",
+        '%dirs\nprint("foo")',
         "this is a long line that should wrap aaaaaaaaaaaaaaaaaaaaaaa\n"
         "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     ]
@@ -100,17 +100,13 @@ def test_format_notebook(tmp_path):
     assert_exit(result, 1)
     assert '-    "Title   \\n",\n+    "Title\\n",' in result.output
 
-    # run the clear-notebook script on the whole directory
+    # run the format-notebook script on the whole directory
     result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--verbose"])
     assert_exit(result, 0)
 
     # check that all files were found
     for path in paths:
         assert str(path) in result.output
-
-    # check that spelling errors were detected/corrected
-    assert "search" in result.output
-    assert "comment" in result.output
 
     # check that the notebooks are now formatted
     for path in paths:
@@ -159,6 +155,8 @@ def test_format_notebook_static(tmp_path):
     nb = nbformat.v4.new_notebook()
     nb["cells"] = [
         nbformat.v4.new_code_cell("def test(): a = b"),
+        nbformat.v4.new_markdown_cell("serach\n\nreasearch"),
+        nbformat.v4.new_code_cell("# coment\n\n# cometed"),
     ]
 
     with (tmp_path / "test.ipynb").open("w", encoding="utf-8") as f:
@@ -170,6 +168,14 @@ def test_format_notebook_static(tmp_path):
     # check that pylint/flake8 errors were detected
     assert "undefined-variable" in result.output  # pylint
     assert "F821" in result.output  # flake8
+
+    # check that spelling errors were detected
+    assert "reasearch" in result.output
+    assert "cometed" in result.output
+
+    # these misspellings are intentionally ignored in codespell config
+    assert "serach" not in result.output
+    assert "coment" not in result.output
 
 
 def test_format_dir_ignore(tmpdir):

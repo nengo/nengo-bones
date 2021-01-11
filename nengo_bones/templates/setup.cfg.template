@@ -173,3 +173,11 @@ valid-metaclass-classmethod-first-arg = metacls
 reports = no
 score = no
 {% endblock %}
+
+{% block codespell %}
+[codespell]
+skip = ./build,*/_build,*-checkpoint.ipynb,./.eggs,./.git,*/_vendor,{{ codespell.skip | join(",") }}
+{% if codespell.ignore_words %}
+ignore-words-list = {{ codespell.ignore_words | join(",") }}
+{% endif %}
+{% endblock %}

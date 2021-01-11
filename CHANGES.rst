@@ -37,6 +37,8 @@ Release History
 - Added `isort <https://pycqa.github.io/isort/>`_ configuration to
   ``pyproject.toml`` and check import order during static checks. (`#121`_)
 - Officially support and test against Python 3.9. (`#136`_)
+- Added ``skip`` option to codespell config, which can be used to specify files that
+  should be ignored. (`#138`_)
 
 **Changed**
 
@@ -53,6 +55,11 @@ Release History
 - Builds for this repository now run on TravisCI.com instead of TravisCI.org. (`#130`_)
 - Drop support for Python 3.5. (`#123`_)
 - Doc script will now install Sphinx>=3.1.2. (`#137`_)
+- Codespell ignore words is now specified via the ``codespell.ignore_words`` section
+  of ``setup_cfg`` (instead of in the static CI script config). As a result, it will
+  now apply to all invocations of codespell (not just from the static script). (`#138`_)
+- ``bones-format-notebook --check`` will now require that all ``codespell`` checks pass.
+  (`#138`_)
 
 **Fixed**
 
@@ -76,6 +83,7 @@ Release History
 .. _#132: https://github.com/nengo/nengo-bones/pull/132
 .. _#136: https://github.com/nengo/nengo-bones/pull/136
 .. _#137: https://github.com/nengo/nengo-bones/pull/137
+.. _#138: https://github.com/nengo/nengo-bones/pull/138
 
 0.11.1 (April 13, 2020)
 =======================

@@ -118,6 +118,7 @@ def fill_defaults(config):  # noqa: C901
         cfg.setdefault("pylint", {})
         cfg.setdefault("flake8", {})
         cfg.setdefault("coverage", {})
+        cfg.setdefault("codespell", {})
         cfg["pytest"].setdefault("xfail_strict", False)
 
     if "docs_conf_py" in config:
