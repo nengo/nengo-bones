@@ -13,6 +13,6 @@ today = date.today()
 version_info = (today.year - 2000, today.month)
 dev = 0
 
-version = (
-    f'{".".join(str(v) for v in version_info)}{".dev{dev}" if dev is not None else ""}'
+version = ".".join(str(v) for v in version_info) + (
+    f".dev{dev}" if dev is not None else ""
 )
