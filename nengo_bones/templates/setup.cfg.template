@@ -185,6 +185,6 @@ ignore-words-list = {{ codespell.ignore_words | join(",") }}
 
 {% block mypy %}
 [mypy]
-python_version = 3.6
+python_version = {{ min_python }}
 {% endblock %}
 {% endif %}

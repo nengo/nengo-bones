@@ -72,6 +72,7 @@ def fill_defaults(config):  # noqa: C901
     config.setdefault("author_email", "info@appliedbrainresearch.com")
     config.setdefault("copyright_start", datetime.datetime.now().year)
     config.setdefault("copyright_end", datetime.datetime.now().year)
+    config.setdefault("min_python", "3.6")
 
     if "travis_yml" in config:
         cfg = config["travis_yml"]
@@ -102,7 +103,7 @@ def fill_defaults(config):  # noqa: C901
     if "setup_py" in config:
         cfg = config["setup_py"]
         cfg.setdefault("license", "Free for non-commercial use")
-        cfg.setdefault("python_requires", ">=3.6")
+        cfg.setdefault("python_requires", f">={config['min_python']}")
         cfg.setdefault("include_package_data", False)
         org_name, repo_name = config["repo_name"].split("/")
         domain = {

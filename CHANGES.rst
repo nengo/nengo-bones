@@ -40,6 +40,8 @@ Release History
 - Added ``skip`` option to codespell config, which can be used to specify files that
   should be ignored. (`#138`_)
 - Added support for projects with type hints through the ``py_typed`` section. (`#140`_)
+- Added ``min_python`` option to the main section. The default ``python_requires``
+  in ``setup.py`` is now based on this, if not overridden. (`#140`_)
 
 **Changed**
 

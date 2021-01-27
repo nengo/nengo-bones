@@ -487,9 +487,9 @@ def test_setup_py(tmp_path):
         project_name: Dummy
         pkg_name: dummy
         repo_name: dummy_org/dummy
+        min_python: 3.8
         setup_py:
           description: My project description
-          python_require: ">=3.6"
           install_req:
             - numpy>=1.11
             - pkg2<8
@@ -533,6 +533,7 @@ def test_setup_py(tmp_path):
     assert has_line("docs_req = [")
     assert has_line('    "pkg1>=3"')
     assert has_line("setup(")
+    assert has_line('    python_requires=">=3.8",')
     assert has_line("    package_data={")
     assert has_line('        "dummy": [')
     assert has_line('            "dummy-data/file1",')
