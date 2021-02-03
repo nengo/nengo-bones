@@ -76,7 +76,7 @@ ci_scripts:
       - cat .ci/test-coverage.sh
       - export TEST_PRE_COMMANDS=True
       # update nodejs version
-      - npm install -g npm stable
+      - npm install -g npm@latest-6
       - npm install -g node --force
       - node --version
       # install prettier for use in bones-format-notebook
