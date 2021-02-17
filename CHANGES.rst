@@ -49,9 +49,6 @@ Release History
 
 - Restrict pylint version to <2.5 due to issue when the package being checked
   is not installed in the current environment. (`#103`_)
-- Enable the new `pip dependency resolver
-  <https://pip.pypa.io/en/stable/user_guide/#changes-to-the-pip-dependency-resolver-in-20-2-2020>`_
-  during CI. (`#110`_)
 - Increased minimum ``black`` version to 20.8b0. (`#104`_)
 - Increased minimum ``pylint`` version to 2.5.1 (`#32`_)
 - Documentation ``[source]`` links now point to GitHub. (`#117`_)
@@ -79,7 +76,6 @@ Release History
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
 .. _#103: https://github.com/nengo/nengo-bones/pull/103
 .. _#104: https://github.com/nengo/nengo-bones/pull/104
-.. _#110: https://github.com/nengo/nengo-bones/pull/110
 .. _#114: https://github.com/nengo/nengo-bones/pull/114
 .. _#117: https://github.com/nengo/nengo-bones/pull/117
 .. _#121: https://github.com/nengo/nengo-bones/pull/121

@@ -7,7 +7,6 @@
         export TRAVIS_BRANCH="$TRAVIS_BRANCH"
         export TRAVIS_TAG="$TRAVIS_TAG"
         export TEST_ARGS="$TEST_ARGS{% if coverage %} --cov-report=xml{% endif %}"
-        export PIP_USE_FEATURE="$PIP_USE_FEATURE"
         {% if remote_vars %}
         {% for var, val in remote_vars.items() %}
         export {{ var }}="{{ val }}"
