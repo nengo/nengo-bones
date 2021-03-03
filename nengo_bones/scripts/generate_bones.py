@@ -95,12 +95,11 @@ def ci_scripts(ctx):
     for params in config["ci_scripts"]:
         script_name = params.pop("template")
         output_file = params.pop("output_name", script_name)
-        BonesTemplate(script_name + ".sh", ctx.obj["env"]).render_to_file(
+        BonesTemplate(f"{script_name}.sh", ctx.obj["env"]).render_to_file(
             ctx.obj["output_dir"],
-            output_name=output_file + ".sh",
-            pkg_name=config["pkg_name"],
-            repo_name=config["repo_name"],
-            **params,
+            output_name=f"{output_file}.sh",
+            # pass top-level config and script-specific params
+            **{**config, **params},
         )
 
 

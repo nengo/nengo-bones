@@ -70,6 +70,8 @@ Release History
   retrying the miniconda install if it fails. (`#130`_)
 - Fixed an issue in which Codecov would not report on files where a file in a
   deeper folder shares the same name. (`#132`_)
+- Fixed an issue in which CI scripts did not have access to the same configuration
+  options as other templates. (`#144`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
@@ -88,6 +90,7 @@ Release History
 .. _#137: https://github.com/nengo/nengo-bones/pull/137
 .. _#138: https://github.com/nengo/nengo-bones/pull/138
 .. _#140: https://github.com/nengo/nengo-bones/pull/140
+.. _#144: https://github.com/nengo/nengo-bones/pull/144
 
 0.11.1 (April 13, 2020)
 =======================
