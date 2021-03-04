@@ -1,6 +1,7 @@
 project_name: NengoBones
 pkg_name: nengo_bones
 repo_name: nengo/nengo-bones
+main_branch: master
 
 description: Tools for managing Nengo projects
 copyright_start: 2018

@@ -8,7 +8,7 @@ notifications:
     on_failure: change
   {% if slack_notifications %}
   slack:
-    if: branch = master
+    if: branch = {{ main_branch }}
     on_pull_requests: false
     on_success: change
     on_failure: always

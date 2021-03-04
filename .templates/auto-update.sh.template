@@ -16,7 +16,7 @@
     else
         exe git add --all
         exe git commit -m "Automatic update to NengoBones $COMMIT_HASH" -m "$COMMIT_MSG"
-        exe git push -fq "https://$GH_TOKEN@github.com/{{ repo }}" master:bones-autoupdate
+        exe git push -fq "https://$GH_TOKEN@github.com/{{ repo }}" {{ main_branch }}:bones-autoupdate
         echo "Updated {{ repo }}:bones-autoupdate"
     fi
     cd ../.. || exit

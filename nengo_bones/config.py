@@ -73,6 +73,7 @@ def fill_defaults(config):  # noqa: C901
     config.setdefault("copyright_start", datetime.datetime.now().year)
     config.setdefault("copyright_end", datetime.datetime.now().year)
     config.setdefault("min_python", "3.6")
+    config.setdefault("main_branch", "master")
 
     if "travis_yml" in config:
         cfg = config["travis_yml"]

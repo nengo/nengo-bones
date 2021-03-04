@@ -96,6 +96,7 @@ def test_load_config(tmp_path):
         "pkg_name": "dummy",
         "repo_name": "abr/dummy",
         "min_python": "3.6",
+        "main_branch": "master",
         "author": "A Dummy",
         "author_email": "dummy@dummy.com",
         "copyright_start": 0,

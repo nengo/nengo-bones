@@ -42,6 +42,8 @@ Release History
 - Added support for projects with type hints through the ``py_typed`` section. (`#140`_)
 - Added ``min_python`` option to the main section. The default ``python_requires``
   in ``setup.py`` is now based on this, if not overridden. (`#140`_)
+- Added support for changing the main branch name with the ``main_branch``
+  config option. (`#145`_)
 
 **Changed**
 
@@ -91,6 +93,7 @@ Release History
 .. _#138: https://github.com/nengo/nengo-bones/pull/138
 .. _#140: https://github.com/nengo/nengo-bones/pull/140
 .. _#144: https://github.com/nengo/nengo-bones/pull/144
+.. _#145: https://github.com/nengo/nengo-bones/pull/145
 
 0.11.1 (April 13, 2020)
 =======================
