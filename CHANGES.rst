@@ -63,6 +63,7 @@ Release History
   now apply to all invocations of codespell (not just from the static script). (`#138`_)
 - ``bones-format-notebook --check`` will now require that all ``codespell`` checks pass.
   (`#138`_)
+- Switched to new version of Codecov uploader and added checksum verification. (`#150`_)
 
 **Fixed**
 
@@ -91,6 +92,7 @@ Release History
 .. _#140: https://github.com/nengo/nengo-bones/pull/140
 .. _#144: https://github.com/nengo/nengo-bones/pull/144
 .. _#145: https://github.com/nengo/nengo-bones/pull/145
+.. _#150: https://github.com/nengo/nengo-bones/pull/150
 .. _#151: https://github.com/nengo/nengo-bones/pull/151
 
 0.11.1 (April 13, 2020)

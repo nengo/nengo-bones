@@ -13,17 +13,25 @@
 
 {% block script %}
     # shellcheck disable=SC2086
-    exe pytest {{ pkg_name }} -v -n 2 --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-report=term-missing {%- endif %} $TEST_ARGS
+    exe pytest {{ pkg_name }} -v -n 2 --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-report=term-missing --cov-report=xml{%- endif %} $TEST_ARGS
 
     {% if nengo_tests %}
     # shellcheck disable=SC2086
-    exe pytest --pyargs nengo -v -n 2 --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-append --cov-report=term-missing {%- endif %} $TEST_ARGS
+    exe pytest --pyargs nengo -v -n 2 --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-append --cov-report=term-missing --cov-report=xml{%- endif %} $TEST_ARGS
     {% endif %}
 {% endblock %}
 
 {% block after_script %}
     {% if coverage %}
-    exe eval "bash <(curl -s https://codecov.io/bash)"
+    curl https://keybase.io/codecovsecurity/pgp_keys.asc \
+      | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+
+    codecov="https://uploader.codecov.io/latest/linux/codecov"
+    curl -O "$codecov" -O "$codecov.SHA256SUM" -O "$codecov.SHA256SUM.sig"
+    gpgv codecov.SHA256SUM.sig codecov.SHA256SUM \
+      && shasum -a 256 -c codecov.SHA256SUM \
+      && chmod +x codecov \
+      && ./codecov -f coverage.xml
     {% else %}
     :
     {% endif %}
