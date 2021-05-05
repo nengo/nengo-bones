@@ -31,3 +31,5 @@ version = "{v}{dev}".format(
     v=".".join(str(v) for v in version_info),
     dev=(".dev%d" % dev) if dev is not None else "",
 )
+
+copyright = "Copyright (c) {{ copyright_start }}-{{ copyright_end }} {{ author }}"
