@@ -33,11 +33,10 @@ def format_notebook(nb, fname, verbose=False, prettier=None):  # noqa: C901
 
     # --- Remove bad metadata
     # Should pass `nengo/tests/test_examples.py:test_minimal_metadata`
-    if "kernelspec" in nb.metadata:
-        del nb.metadata["kernelspec"]
-
-    if "widgets" in nb.metadata:
-        del nb.metadata["widgets"]
+    badmeta = ["kernelspec", "widgets"]
+    for badkey in badmeta:
+        if badkey in nb.metadata:
+            del nb.metadata[badkey]
 
     language_info = getattr(nb.metadata, "language_info", {})
     badinfo = (
@@ -115,6 +114,7 @@ def format_code(cell):
     clear_cell_metadata_entry(cell, "scrolled")
     clear_cell_metadata_entry(cell, "deletable", value=True)
     clear_cell_metadata_entry(cell, "editable", value=True)
+    clear_cell_metadata_entry(cell, "pycharm")
 
 
 def format_markdown(cell, prettier=None):
@@ -123,6 +123,7 @@ def format_markdown(cell, prettier=None):
     # clear useless metadata
     clear_cell_metadata_entry(cell, "deletable", value=True)
     clear_cell_metadata_entry(cell, "editable", value=True)
+    clear_cell_metadata_entry(cell, "pycharm")
 
     # clear whitespace at ends of lines
     source = getattr(cell, "source", None)
