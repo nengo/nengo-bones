@@ -248,3 +248,7 @@ pyproject_toml:
   exclude:
     - tests/ignoreme/ignoreme.py
     - tests/ignoreme/ignoreme.py
+
+version_py:
+  type: calver
+  release: false

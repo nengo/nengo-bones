@@ -134,6 +134,10 @@ def fill_defaults(config):  # noqa: C901
             "nengo_list", config.get("license_rst", {}).get("type", "") == "nengo"
         )
 
+    if "version_py" in config:
+        cfg = config["version_py"]
+        cfg.setdefault("type", "semver")
+
 
 def validate_black_config(config):
     """
@@ -194,7 +198,13 @@ def validate_config(config):  # noqa: C901
     config : dict
         Dictionary containing configuration values.
     """
-    mandatory = ["project_name", "pkg_name", "repo_name", "travis_yml.jobs"]
+    mandatory = [
+        "project_name",
+        "pkg_name",
+        "repo_name",
+        "travis_yml.jobs",
+        "version_py.release",
+    ]
 
     for entry in mandatory:
         tmp = config

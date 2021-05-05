@@ -39,14 +39,15 @@ def main(root_dir, conf_file, verbose):
     passed = True
 
     for filename in all_files:
-        click.echo(filename + ":")
+        full_filename = filename.replace("pkg", config["pkg_name"])
+        click.echo(full_filename + ":")
 
         # TODO: Ensure that the file is there <=> it is in the config
-        if not (path / filename).exists():
+        if not (path / full_filename).exists():
             click.echo("  File not found")
             continue
 
-        with (path / filename).open() as f:
+        with (path / full_filename).open() as f:
             current_lines = f.readlines()
 
         for line in current_lines[:50]:

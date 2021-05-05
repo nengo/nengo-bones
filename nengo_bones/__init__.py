@@ -19,6 +19,7 @@ all_sections = [
     "pre_commit_config_yaml",
     "pyproject_toml",
     "py_typed",
+    "version_py",
 ]
 
 all_files = [
@@ -34,4 +35,5 @@ all_files = [
     ".pre-commit-config.yaml",
     "pyproject.toml",
     "pkg/py.typed",
+    "pkg/version.py",
 ]

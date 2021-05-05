@@ -199,5 +199,13 @@ def py_typed(ctx):
     render_template(ctx, "pkg/py.typed")
 
 
+@main.command()
+@click.pass_context
+def version_py(ctx):
+    """Generate {{ pkg_name }}/version.py file."""
+
+    render_template(ctx, "pkg/version.py")
+
+
 if __name__ == "__main__":
     main(obj={})  # pragma: no cover pylint: disable=no-value-for-parameter
