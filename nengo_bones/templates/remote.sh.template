@@ -53,6 +53,24 @@ and logged in with `travis login --com`
 
 See https://docs.travis-ci.com/user/encrypting-files/ for more details.
 
+
+Usage Instructions
+==================
+
+This script executes a NengoBones generated CI script on a remote machine.
+
+.nengobones.yml parameters:
+
+`host`: The <hostname> of the remote machine defined in the `config` file above.
+
+`travis_var_key`: The TravisCI variable key as defined in Step 6 of the setup
+instructions above.
+
+`remote_script`: The name of the script to be executed on the remote machine. This
+script must be defined as a separate entry in the `ci_scripts` section of yml file.
+
+`output_name`: Desired output name of the generated CI script.
+
 #}
 
 {% set pkg = pkg_name | replace("_", "-") %}

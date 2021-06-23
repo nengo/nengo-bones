@@ -249,6 +249,7 @@ def validate_ci_config(ci_config):
         "pre_commands",
         "post_commands",
         "codespell_ignore_words",
+        "wrapped_commands",
     )
     for opt in list_opts:
         check_list(ci_config, opt)

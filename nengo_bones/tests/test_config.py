@@ -70,6 +70,12 @@ def test_validate_config():
         config.validate_config(init_cfg)
     test_cfg["pre_commands"] = ["command"]
 
+    # error when wrapped_commands is a string instead of list
+    test_cfg["wrapped_commands"] = "command"
+    with pytest.raises(TypeError, match="wrapped_commands should be a list"):
+        config.validate_config(init_cfg)
+    test_cfg["wrapped_commands"] = ["command"]
+
     # error when only one of pre_commit_config_yaml or pyproject_toml exists
     init_cfg["pyproject_toml"] = {}
     with pytest.raises(KeyError, match="must define both"):
