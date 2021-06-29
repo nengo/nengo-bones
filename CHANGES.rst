@@ -45,6 +45,7 @@ Release History
 - Added support for changing the main branch name with the ``main_branch``
   config option. (`#145`_)
 - Added template for ``version.py``. (`#151`_)
+- Added template for running CI scripts through SLURM on remote machines. (`#152`_)
 
 **Changed**
 
@@ -63,6 +64,8 @@ Release History
   now apply to all invocations of codespell (not just from the static script). (`#138`_)
 - ``bones-format-notebook --check`` will now require that all ``codespell`` checks pass.
   (`#138`_)
+- Modified ``remote-script`` to perform docs functionality on any scripts ending with
+  "docs". (`#152`_)
 
 **Fixed**
 
@@ -92,6 +95,7 @@ Release History
 .. _#144: https://github.com/nengo/nengo-bones/pull/144
 .. _#145: https://github.com/nengo/nengo-bones/pull/145
 .. _#151: https://github.com/nengo/nengo-bones/pull/151
+.. _#152: https://github.com/nengo/nengo-bones/pull/152
 
 0.11.1 (April 13, 2020)
 =======================

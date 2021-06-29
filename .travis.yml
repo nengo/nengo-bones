@@ -55,6 +55,9 @@ jobs:
       SCRIPT="remote-test"
   -
     env:
+      SCRIPT="remote-slurm-test"
+  -
+    env:
       TEST_LOCAL_VAR="test local var val"
       SCRIPT="test-coverage"
       TEST_ARGS="--test-arg"

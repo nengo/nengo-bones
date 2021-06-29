@@ -43,7 +43,7 @@
 {% endblock %}
 
 {% block after_script %}
-    {% if remote_script == "docs" %}
+    {% if remote_script.endswith("docs") %}
     REMOTE_FAILED_FILE="tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}/$TRAVIS_JOB_NUMBER.failed"
     ssh -q {{ host }} [[ -e "$REMOTE_FAILED_FILE" ]] && exe scp {{ host }}:"$REMOTE_FAILED_FILE" .
     exe rsync -azh "{{ host }}:./tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}-docs" ..

@@ -22,6 +22,7 @@ travis_yml:
       test_args: --test-arg --test-arg
     - script: remote
     - script: remote-test
+    - script: remote-slurm-test
     - script: test-coverage
       env:
         TEST_LOCAL_VAR: test local var val
@@ -98,7 +99,7 @@ ci_scripts:
     pre_commands:
       - cat .ci/remote.sh
     travis_var_key: 2895d60e3414
-    host: gl
+    host: abrghost
   - template: test
     pre_commands:
       - cat .ci/test-for-remote.sh
@@ -110,7 +111,24 @@ ci_scripts:
     remote_script: test-for-remote
     output_name: remote-test
     travis_var_key: 2895d60e3414
-    host: gl
+    host: abrghost
+    coverage: true
+  - template: remote-script
+    pre_commands:
+      - cat .ci/remote-slurm-test.sh
+    remote_script: test-for-slurm
+    output_name: remote-slurm-test
+    travis_var_key: 2895d60e3414
+    host: abrghost
+    coverage: true
+  - template: slurm-script
+    pre_commands:
+      - cat .ci/test-for-slurm.sh
+    slurm_command: "srun -pCI"
+    wrapped_commands:
+      - pytest
+    slurm_script: test-for-remote
+    output_name: test-for-slurm
     coverage: true
   - template: docs
     pre_commands:
