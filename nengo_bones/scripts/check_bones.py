@@ -47,7 +47,7 @@ def main(root_dir, conf_file, verbose):
             click.echo("  File not found")
             continue
 
-        with (path / full_filename).open() as f:
+        with (path / full_filename).open(encoding="utf-8") as f:
             current_lines = f.readlines()
 
         for line in current_lines[:50]:

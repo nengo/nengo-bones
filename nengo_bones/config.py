@@ -279,7 +279,7 @@ def load_config(conf_file=None):
             "not in the project's root directory?"
         )
 
-    with open(conf_file) as f:
+    with open(conf_file, encoding="utf-8") as f:
         config = yaml.load(f, Loader=yaml.SafeLoader)
 
     validate_config(config)
