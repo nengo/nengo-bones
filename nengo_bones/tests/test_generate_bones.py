@@ -858,5 +858,5 @@ def test_version_py(version_type, release, tmp_path):
         assert version == "1.2.3.dev0"
     else:
         today = date.today()
-        version_info = (today.year - 2000, today.month)
-        assert version == ".".join(str(x) for x in version_info)
+        version_info = (today.year - 2000, today.month, today.day)
+        assert version == ".".join(f"{x:02}" for x in version_info)
