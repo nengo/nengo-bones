@@ -20,7 +20,7 @@ dev = 0
 
 # use old string formatting, so that this can still run in Python <= 3.5
 # (since this file is parsed in setup.py, before python_requires is applied)
-version = ".".join("%02d" % v for v in version_info)
+version = ".".join(str(v) for v in version_info)
 if dev is not None:
     version += ".dev%d" % dev
 

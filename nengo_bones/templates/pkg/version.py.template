@@ -29,11 +29,7 @@ dev = {% if release %}None{% else %}0{% endif %}
 
 # use old string formatting, so that this can still run in Python <= 3.5
 # (since this file is parsed in setup.py, before python_requires is applied)
-{% if type == "semver" %}
 version = ".".join(str(v) for v in version_info)
-{% elif type == "calver" %}
-version = ".".join("%02d" % v for v in version_info)
-{% endif %}
 if dev is not None:
     version += ".dev%d" % dev
 
