@@ -27,6 +27,9 @@ prune .github
 prune .tox
 prune .eggs
 prune .ci
+{% if py_typed is defined %}
+prune .mypy_cache
+{% endif %}
 
 # Exclude auto-generated files
 recursive-exclude docs *.py
