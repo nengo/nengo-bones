@@ -18,6 +18,7 @@ def test_fill_defaults():
         "repo_name": "test_org/test_repo",
         "travis_yml": {"jobs": [{"script": "docs-test"}, {"script": "examples-test"}]},
         "codecov_yml": {},
+        "setup_py": {},
     }
     config.fill_defaults(init_cfg)
 
@@ -33,11 +34,15 @@ def test_fill_defaults():
     assert init_cfg["codecov_yml"]["abs_target"] == "auto"
     assert init_cfg["codecov_yml"]["diff_target"] == "100%"
 
+    assert init_cfg["setup_py"]["license_string"] == "Proprietary"
+    assert init_cfg["setup_py"]["classifiers"] == [
+        "License :: Other/Proprietary License"
+    ]
+
 
 def test_validate_config():
-    mandatory = ["project_name", "pkg_name", "repo_name", "travis_yml.jobs"]
-    init_cfg = {"travis_yml": {}}
-    for entry in mandatory:
+    init_cfg = {"travis_yml": {}, "version_py": {}}
+    for entry in config.mandatory_entries:
         with pytest.raises(KeyError, match=f"must define {entry}"):
             config.validate_config(init_cfg)
 
@@ -52,11 +57,10 @@ def test_validate_config():
     init_cfg["ci_scripts"] = {}
 
     # error when license type is not recognized
-    test_cfg = {"type": "bsd"}
-    init_cfg["license_rst"] = test_cfg
-    with pytest.raises(ValueError, match='must be "nengo", "proprietary", "mit"'):
+    init_cfg["license"] = "bsd"
+    with pytest.raises(ValueError, match='must be one of "abr-free", "abr-nonfree"'):
         config.validate_config(init_cfg)
-    del init_cfg["license_rst"]
+    del init_cfg["license"]
 
     # error when license classifier manually specified
     test_cfg = {"classifiers": ["License :: Cool license"]}
@@ -115,6 +119,7 @@ def test_load_config(tmp_path):
         "author_email": "dummy@dummy.com",
         "copyright_start": 0,
         "copyright_end": 1,
+        "license": "proprietary",
         "ci_scripts": [
             {"template": "static", "pip_install": ["static_pip0", "static_pip1"]}
         ],
@@ -132,11 +137,11 @@ def test_load_config(tmp_path):
             "diff_target": "test_diff",
         },
         "setup_py": {
-            "license": "Free for non-commercial use",
+            "license_string": "Proprietary",
             "python_requires": ">=3.6",
             "include_package_data": False,
             "url": "https://www.appliedbrainresearch.com/dummy",
-            "classifiers": ["License :: Free for non-commercial use"],
+            "classifiers": ["License :: Other/Proprietary License"],
         },
     }
 

@@ -60,7 +60,7 @@ setup(
     packages=find_packages(),
     url="{{ url }}",
     include_package_data={{ include_package_data }},
-    license="{{ license }}",
+    license="{{ license_string }}",
     description="{{ description }}",
     long_description=read("README.rst", "CHANGES.rst"),
     zip_safe=False,

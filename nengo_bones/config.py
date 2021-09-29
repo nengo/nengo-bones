@@ -74,6 +74,7 @@ def fill_defaults(config):  # noqa: C901
     config.setdefault("copyright_end", datetime.datetime.now().year)
     config.setdefault("min_python", "3.6")
     config.setdefault("main_branch", "master")
+    config.setdefault("license", "proprietary")
 
     if "travis_yml" in config:
         cfg = config["travis_yml"]
@@ -97,29 +98,20 @@ def fill_defaults(config):  # noqa: C901
         cfg.setdefault("abs_target", "auto")
         cfg.setdefault("diff_target", "100%")
 
-    if "license_rst" in config:
-        cfg = config["license_rst"]
-        cfg.setdefault("type", "nengo")
-
-    license_type = config.get("license_rst", {}).get("type", "nengo")
-    license_string = {
-        "apache": "Apache 2.0 license",
-        "mit": "MIT license",
-        "nengo": "Free for non-commercial use",
-        "proprietary": "Proprietary",
-    }[license_type]
-    license_classifier = {
-        "apache": "License :: OSI Approved :: Apache Software License",
-        "mit": "License :: OSI Approved :: MIT License",
-        "nengo": "License :: Free for non-commercial use",
-        "proprietary": "License :: Other/Proprietary License",
-    }[license_type]
-
     if "setup_py" in config:
         cfg = config["setup_py"]
-        cfg.setdefault("license", license_string)
         cfg.setdefault("python_requires", f">={config['min_python']}")
         cfg.setdefault("include_package_data", False)
+
+        license_string = {
+            "abr-free": "Free for non-commercial use",
+            "abr-nonfree": "Proprietary",
+            "apache": "Apache 2.0 license",
+            "mit": "MIT license",
+            "proprietary": "Proprietary",
+        }[config["license"]]
+        cfg.setdefault("license_string", license_string)
+
         org_name, repo_name = config["repo_name"].split("/")
         domain = {
             "nengo": "https://www.nengo.ai",
@@ -127,7 +119,15 @@ def fill_defaults(config):  # noqa: C901
             "abr": "https://www.appliedbrainresearch.com",
         }.get(org_name, "https://www.nengo.ai")
         cfg.setdefault("url", f"{domain}/{repo_name}")
+
         classifiers = cfg.get("classifiers", [])
+        license_classifier = {
+            "abr-free": "License :: Free for non-commercial use",
+            "abr-nonfree": "License :: Other/Proprietary License",
+            "apache": "License :: OSI Approved :: Apache Software License",
+            "mit": "License :: OSI Approved :: MIT License",
+            "proprietary": "License :: Other/Proprietary License",
+        }[config["license"]]
         classifiers.append(license_classifier)
         cfg["classifiers"] = list(sorted(classifiers))
 
@@ -144,10 +144,6 @@ def fill_defaults(config):  # noqa: C901
         cfg = config["docs_conf_py"]
         cfg.setdefault("nengo_logo", "general-full-light.svg")
         cfg.setdefault("nengo_logo_color", "#a8acaf")
-
-    if "contributors_rst" in config:
-        cfg = config["contributors_rst"]
-        cfg.setdefault("nengo_list", license_type == "nengo")
 
     if "version_py" in config:
         cfg = config["version_py"]
@@ -202,6 +198,11 @@ def validate_setup_cfg_config(config):
             check_list(pytest, "nengo_neurons")
             check_list(pytest, "norecursedirs")
             check_list(pytest, "plt_filename_drop")
+        if "pylint" in config["setup_cfg"]:
+            pylint = config["setup_cfg"]["pylint"]
+            check_list(pylint, "disable")
+            check_list(pylint, "ignore")
+            check_list(pylint, "known_third_party")
 
 
 def validate_setup_py_config(config):
@@ -221,6 +222,17 @@ def validate_setup_py_config(config):
             )
 
 
+# Defined at top-level so they can be used in tests
+license_types = ["abr-free", "abr-nonfree", "proprietary", "mit", "apache"]
+mandatory_entries = [
+    "project_name",
+    "pkg_name",
+    "repo_name",
+    "travis_yml.jobs",
+    "version_py.release",
+]
+
+
 def validate_config(config):  # noqa: C901
     """
     Validates a populated config dict.
@@ -230,15 +242,7 @@ def validate_config(config):  # noqa: C901
     config : dict
         Dictionary containing configuration values.
     """
-    mandatory = [
-        "project_name",
-        "pkg_name",
-        "repo_name",
-        "travis_yml.jobs",
-        "version_py.release",
-    ]
-
-    for entry in mandatory:
+    for entry in mandatory_entries:
         tmp = config
         for i, key in enumerate(entry.split(".")):
             try:
@@ -250,11 +254,9 @@ def validate_config(config):  # noqa: C901
 
                 raise KeyError(f"Config file must define {entry}") from e
 
-    license_type = config.get("license_rst", {}).get("type", "nengo")
-    if license_type not in ["nengo", "proprietary", "mit", "apache"]:
-        raise ValueError(
-            'license.type must be "nengo", "proprietary", "mit", or "apache"'
-        )
+    if config.get("license", "proprietary") not in license_types:
+        license_types_str = ", ".join(f'"{ltype}"' for ltype in license_types)
+        raise ValueError(f"license must be one of {license_types_str}")
 
     if "ci_scripts" in config:
         for ci_config in config["ci_scripts"]:
