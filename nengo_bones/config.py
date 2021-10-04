@@ -149,17 +149,8 @@ def validate_black_config(config):
         Dictionary containing configuration values.
     """
 
-    has_precommit = "pre_commit_config_yaml" in config
-    has_pyproject = "pyproject_toml" in config
-    if not (has_precommit or has_pyproject):
-        return
-    if not (has_pyproject and has_precommit):
-        raise KeyError(
-            "Config file must define both 'pyproject_toml' "
-            "and 'pre_commit_config_yaml' or neither"
-        )
-    precommit = config["pre_commit_config_yaml"]
-    pyproject = config["pyproject_toml"]
+    precommit = config.get("pre_commit_config_yaml", {})
+    pyproject = config.get("pyproject_toml", {})
     check_list(precommit, "exclude")
     check_list(pyproject, "exclude")
     if precommit.get("exclude", []) != pyproject.get("exclude", []):

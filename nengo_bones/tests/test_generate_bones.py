@@ -860,3 +860,36 @@ def test_version_py(version_type, release, tmp_path):
         today = date.today()
         version_info = (today.year - 2000, today.month, today.day)
         assert version == ".".join(str(x) for x in version_info)
+
+
+def test_pyproject_toml(tmp_path):
+    write_file(
+        tmp_path=tmp_path,
+        filename=".nengobones.yml",
+        contents="""
+            project_name: Dummy
+            pkg_name: dummy
+            repo_name: dummy_org/dummy
+            pyproject_toml:
+                build_requires:
+                    - package0
+                    - package1
+        """,
+    )
+
+    result = CliRunner().invoke(
+        generate_bones.main,
+        [
+            "--conf-file",
+            str(tmp_path / ".nengobones.yml"),
+            "--output-dir",
+            str(tmp_path),
+        ],
+    )
+    assert_exit(result, 0)
+
+    with (tmp_path / "pyproject.toml").open() as f:
+        lines = f.readlines()
+
+    has_line = make_has_line(lines)
+    assert has_line('requires = ["setuptools", "wheel", "package0", "package1",]')
