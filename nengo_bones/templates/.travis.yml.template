@@ -15,7 +15,14 @@ notifications:
     rooms:
       - secure: "{{ slack_notifications }}"
   {% endif %}
-cache: pip
+cache:
+  pip: true
+  {% if cache %}
+  directories:
+  {% for dir in cache %}
+  - {{ dir }}
+  {% endfor %}
+  {% endif %}
 
 dist: xenial
 

@@ -45,6 +45,7 @@ Release History
 - Added support for changing the main branch name with the ``main_branch``
   config option. (`#145`_)
 - Added template for ``version.py``. (`#151`_)
+- Added ``cache`` option to ``.travis.yml`` template. (`#158`_)
 
 **Changed**
 
@@ -92,6 +93,7 @@ Release History
 .. _#144: https://github.com/nengo/nengo-bones/pull/144
 .. _#145: https://github.com/nengo/nengo-bones/pull/145
 .. _#151: https://github.com/nengo/nengo-bones/pull/151
+.. _#158: https://github.com/nengo/nengo-bones/pull/158
 
 0.11.1 (April 13, 2020)
 =======================
