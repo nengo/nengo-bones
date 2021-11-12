@@ -37,6 +37,7 @@ install_req = [
     "jinja2>=2.11",
     "jupyter>=1.0.0",
     "pylint>=2.5.1",
+    "astroid!=2.8.5",
     "pyyaml>=5.1",
     "requests>=2.21",
 ]
