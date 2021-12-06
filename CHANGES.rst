@@ -50,7 +50,6 @@ Release History
 
 - Restrict pylint version to <2.5 due to issue when the package being checked
   is not installed in the current environment. (`#103`_)
-- Increased minimum ``black`` version to 20.8b0. (`#104`_)
 - Increased minimum ``pylint`` version to 2.5.1 (`#32`_)
 - Documentation ``[source]`` links now point to GitHub. (`#117`_)
 - Separate tokens, ``PYPI_TOKEN`` and ``PYPI_TEST_TOKEN``, must now be specified
@@ -64,6 +63,7 @@ Release History
 - ``bones-format-notebook --check`` will now require that all ``codespell`` checks pass.
   (`#138`_)
 - Switched to new version of Codecov uploader and added checksum verification. (`#150`_)
+- Increased minimum ``black`` version to 21.12b0. (`#104`_, `#159`_)
 
 **Fixed**
 
@@ -94,6 +94,7 @@ Release History
 .. _#145: https://github.com/nengo/nengo-bones/pull/145
 .. _#150: https://github.com/nengo/nengo-bones/pull/150
 .. _#151: https://github.com/nengo/nengo-bones/pull/151
+.. _#159: https://github.com/nengo/nengo-bones/pull/159
 
 0.11.1 (April 13, 2020)
 =======================

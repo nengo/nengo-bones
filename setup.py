@@ -30,7 +30,7 @@ root = pathlib.Path(__file__).parent
 version = runpy.run_path(str(root / "nengo_bones" / "version.py"))["version"]
 
 install_req = [
-    "black>=20.8b0",
+    "black>=21.12b0",
     "click>=7.0",
     "codespell>=2.0.0",
     "flake8>=3.7.7",

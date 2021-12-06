@@ -168,7 +168,7 @@ setup_py:
   # note: docs/tests_req are intentionally empty to test that the correct
   # requirements are built into the ci scripts
   install_req:
-    - black>=20.8b0
+    - black>=21.12b0
     - click>=7.0
     - codespell>=2.0.0
     - flake8>=3.7.7
