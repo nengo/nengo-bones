@@ -377,7 +377,6 @@ def test_license(tmp_path, license_type):
         assert has_line("**MIT License**")
 
     if license_type == "nengo":
-        assert has_line("**ABR License**")
         assert has_line("Dumdum is made available under a proprietary license")
 
     if license_type == "apache":
