@@ -45,6 +45,7 @@ Release History
 - Added support for changing the main branch name with the ``main_branch``
   config option. (`#145`_)
 - Added template for ``version.py``. (`#151`_)
+- Added ``apache`` license type. (`#160`_)
 
 **Changed**
 
@@ -95,6 +96,7 @@ Release History
 .. _#150: https://github.com/nengo/nengo-bones/pull/150
 .. _#151: https://github.com/nengo/nengo-bones/pull/151
 .. _#159: https://github.com/nengo/nengo-bones/pull/159
+.. _#160: https://github.com/nengo/nengo-bones/pull/160
 
 0.11.1 (April 13, 2020)
 =======================
