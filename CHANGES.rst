@@ -65,6 +65,8 @@ Release History
   (`#138`_)
 - Switched to new version of Codecov uploader and added checksum verification. (`#150`_)
 - Increased minimum ``black`` version to 21.12b0. (`#104`_, `#159`_)
+- License fields in ``setup.py`` are now set using ``license_rst.type``. (`#161`_)
+- Trove classifiers in ``setup.py`` are now sorted alphabetically. (`#161`_)
 
 **Fixed**
 
@@ -97,6 +99,7 @@ Release History
 .. _#151: https://github.com/nengo/nengo-bones/pull/151
 .. _#159: https://github.com/nengo/nengo-bones/pull/159
 .. _#160: https://github.com/nengo/nengo-bones/pull/160
+.. _#161: https://github.com/nengo/nengo-bones/pull/161
 
 0.11.1 (April 13, 2020)
 =======================

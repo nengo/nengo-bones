@@ -182,7 +182,6 @@ setup_py:
     - "Development Status :: 4 - Beta"
     - "Framework :: Nengo"
     - "Intended Audience :: Developers"
-    - "License :: Free for non-commercial use"
     - "Operating System :: Microsoft :: Windows"
     - "Operating System :: POSIX :: Linux"
     - "Programming Language :: Python"

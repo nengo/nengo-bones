@@ -101,9 +101,21 @@ def fill_defaults(config):  # noqa: C901
         cfg = config["license_rst"]
         cfg.setdefault("type", "nengo")
 
+    license_type = config.get("license_rst", {}).get("type", "nengo")
+    license_string = {
+        "apache": "Apache 2.0 license",
+        "mit": "MIT license",
+        "nengo": "Free for non-commercial use",
+    }[license_type]
+    license_classifier = {
+        "apache": "License :: OSI Approved :: Apache Software License",
+        "mit": "License :: OSI Approved :: MIT License",
+        "nengo": "License :: Free for non-commercial use",
+    }[license_type]
+
     if "setup_py" in config:
         cfg = config["setup_py"]
-        cfg.setdefault("license", "Free for non-commercial use")
+        cfg.setdefault("license", license_string)
         cfg.setdefault("python_requires", f">={config['min_python']}")
         cfg.setdefault("include_package_data", False)
         org_name, repo_name = config["repo_name"].split("/")
@@ -113,6 +125,9 @@ def fill_defaults(config):  # noqa: C901
             "abr": "https://www.appliedbrainresearch.com",
         }.get(org_name, "https://www.nengo.ai")
         cfg.setdefault("url", f"{domain}/{repo_name}")
+        classifiers = cfg.get("classifiers", [])
+        classifiers.append(license_classifier)
+        cfg["classifiers"] = list(sorted(classifiers))
 
     if "setup_cfg" in config:
         cfg = config["setup_cfg"]
@@ -130,9 +145,7 @@ def fill_defaults(config):  # noqa: C901
 
     if "contributors_rst" in config:
         cfg = config["contributors_rst"]
-        cfg.setdefault(
-            "nengo_list", config.get("license_rst", {}).get("type", "") == "nengo"
-        )
+        cfg.setdefault("nengo_list", license_type == "nengo")
 
     if "version_py" in config:
         cfg = config["version_py"]
@@ -189,6 +202,23 @@ def validate_setup_cfg_config(config):
             check_list(pytest, "plt_filename_drop")
 
 
+def validate_setup_py_config(config):
+    """
+    Validates the ``setup_py`` section of the config.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary containing configuration values.
+    """
+    if "setup_py" in config:
+        classifiers = config["setup_py"].get("classifiers", [])
+        if any(c.startswith("License") for c in classifiers):
+            raise ValueError(
+                "License classifier is set automatically, remove manual entry"
+            )
+
+
 def validate_config(config):  # noqa: C901
     """
     Validates a populated config dict.
@@ -218,12 +248,17 @@ def validate_config(config):  # noqa: C901
 
                 raise KeyError(f"Config file must define {entry}") from e
 
+    license_type = config.get("license_rst", {}).get("type", "nengo")
+    if license_type not in ["nengo", "mit", "apache"]:
+        raise ValueError('license.type must be "nengo", "mit", or "apache"')
+
     if "ci_scripts" in config:
         for ci_config in config["ci_scripts"]:
             validate_ci_config(ci_config)
 
     validate_black_config(config)
     validate_setup_cfg_config(config)
+    validate_setup_py_config(config)
 
     # TODO: check that there aren't unused config options in yml
 

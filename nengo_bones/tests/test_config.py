@@ -51,6 +51,20 @@ def test_validate_config():
 
     init_cfg["ci_scripts"] = {}
 
+    # error when license type is not recognized
+    test_cfg = {"type": "bsd"}
+    init_cfg["license_rst"] = test_cfg
+    with pytest.raises(ValueError, match='must be "nengo", "mit", or "apache"'):
+        config.validate_config(init_cfg)
+    del init_cfg["license_rst"]
+
+    # error when license classifier manually specified
+    test_cfg = {"classifiers": ["License :: Cool license"]}
+    init_cfg["setup_py"] = test_cfg
+    with pytest.raises(ValueError, match="remove manual entry"):
+        config.validate_config(init_cfg)
+    del init_cfg["setup_py"]
+
     # error when template not defined
     test_cfg = {}
     init_cfg["ci_scripts"] = [test_cfg]
@@ -122,6 +136,7 @@ def test_load_config(tmp_path):
             "python_requires": ">=3.6",
             "include_package_data": False,
             "url": "https://www.appliedbrainresearch.com/dummy",
+            "classifiers": ["License :: Free for non-commercial use"],
         },
     }
 
