@@ -54,7 +54,7 @@ def test_validate_config():
     # error when license type is not recognized
     test_cfg = {"type": "bsd"}
     init_cfg["license_rst"] = test_cfg
-    with pytest.raises(ValueError, match='must be "nengo", "mit", or "apache"'):
+    with pytest.raises(ValueError, match='must be "nengo", "proprietary", "mit"'):
         config.validate_config(init_cfg)
     del init_cfg["license_rst"]
 

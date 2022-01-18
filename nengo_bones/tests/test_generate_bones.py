@@ -335,7 +335,7 @@ def test_ci_script_custom_template(tmp_path):
     assert "; then\n\n    this is a custom message\n\nelif" in data
 
 
-@pytest.mark.parametrize("license_type", ["nengo", "mit", "apache"])
+@pytest.mark.parametrize("license_type", ["nengo", "proprietary", "mit", "apache"])
 def test_license(tmp_path, license_type):
     write_file(
         tmp_path=tmp_path,
@@ -378,6 +378,11 @@ def test_license(tmp_path, license_type):
 
     if license_type == "nengo":
         assert has_line("Dumdum is made available under a proprietary license")
+
+    if license_type == "proprietary":
+        assert has_line(
+            "All rights reserved. Contact sales@appliedbrainresearch.com for licensing."
+        )
 
     if license_type == "apache":
         assert has_line("**Apache License**")

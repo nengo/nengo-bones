@@ -46,6 +46,7 @@ Release History
   config option. (`#145`_)
 - Added template for ``version.py``. (`#151`_)
 - Added ``apache`` license type. (`#160`_)
+- Added ``proprietary`` license type. (`#162`_)
 
 **Changed**
 
@@ -100,6 +101,7 @@ Release History
 .. _#159: https://github.com/nengo/nengo-bones/pull/159
 .. _#160: https://github.com/nengo/nengo-bones/pull/160
 .. _#161: https://github.com/nengo/nengo-bones/pull/161
+.. _#162: https://github.com/nengo/nengo-bones/pull/162
 
 0.11.1 (April 13, 2020)
 =======================

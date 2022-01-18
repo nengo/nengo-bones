@@ -106,11 +106,13 @@ def fill_defaults(config):  # noqa: C901
         "apache": "Apache 2.0 license",
         "mit": "MIT license",
         "nengo": "Free for non-commercial use",
+        "proprietary": "Proprietary",
     }[license_type]
     license_classifier = {
         "apache": "License :: OSI Approved :: Apache Software License",
         "mit": "License :: OSI Approved :: MIT License",
         "nengo": "License :: Free for non-commercial use",
+        "proprietary": "License :: Other/Proprietary License",
     }[license_type]
 
     if "setup_py" in config:
@@ -249,8 +251,10 @@ def validate_config(config):  # noqa: C901
                 raise KeyError(f"Config file must define {entry}") from e
 
     license_type = config.get("license_rst", {}).get("type", "nengo")
-    if license_type not in ["nengo", "mit", "apache"]:
-        raise ValueError('license.type must be "nengo", "mit", or "apache"')
+    if license_type not in ["nengo", "proprietary", "mit", "apache"]:
+        raise ValueError(
+            'license.type must be "nengo", "proprietary", "mit", or "apache"'
+        )
 
     if "ci_scripts" in config:
         for ci_config in config["ci_scripts"]:
