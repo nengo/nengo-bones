@@ -298,8 +298,8 @@ def test_ci_script_custom_template(tmp_path):
         """,
     )
 
+    saved = os.getcwd()
     try:
-        saved = os.getcwd()
         os.chdir(tmp_path)
         result = CliRunner().invoke(generate_bones.main, ["ci-scripts"])
     finally:
