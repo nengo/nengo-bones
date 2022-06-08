@@ -116,7 +116,6 @@ disable =
     arguments-differ,
     assignment-from-no-return,
     attribute-defined-outside-init,
-    bad-continuation,
     blacklisted-name,
     comparison-with-callable,
     duplicate-code,

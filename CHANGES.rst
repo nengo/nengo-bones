@@ -80,6 +80,7 @@ Release History
   deeper folder shares the same name. (`#132`_)
 - Fixed an issue in which CI scripts did not have access to the same configuration
   options as other templates. (`#144`_)
+- Removed pylint disable for ``bad-continuation`` as it no longer exists. (`#163`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
@@ -106,6 +107,7 @@ Release History
 .. _#160: https://github.com/nengo/nengo-bones/pull/160
 .. _#161: https://github.com/nengo/nengo-bones/pull/161
 .. _#162: https://github.com/nengo/nengo-bones/pull/162
+.. _#163: https://github.com/nengo/nengo-bones/pull/163
 
 0.11.1 (April 13, 2020)
 =======================
