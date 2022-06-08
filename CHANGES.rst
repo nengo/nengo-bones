@@ -81,6 +81,7 @@ Release History
 - Fixed an issue in which CI scripts did not have access to the same configuration
   options as other templates. (`#144`_)
 - Removed pylint disable for ``bad-continuation`` as it no longer exists. (`#163`_)
+- Removed pylint disable for ``no-self-use`` as it is now optional. (`#163`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
