@@ -82,6 +82,7 @@ Release History
   options as other templates. (`#144`_)
 - Removed pylint disable for ``bad-continuation`` as it no longer exists. (`#163`_)
 - Removed pylint disable for ``no-self-use`` as it is now optional. (`#163`_)
+- Static checks will not try to check ``docs`` directory if it doesn't exist. (`#165`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
@@ -109,6 +110,7 @@ Release History
 .. _#161: https://github.com/nengo/nengo-bones/pull/161
 .. _#162: https://github.com/nengo/nengo-bones/pull/162
 .. _#163: https://github.com/nengo/nengo-bones/pull/163
+.. _#165: https://github.com/nengo/nengo-bones/pull/165
 
 0.11.1 (April 13, 2020)
 =======================
