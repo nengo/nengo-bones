@@ -6,7 +6,7 @@ requires = ["setuptools", "wheel"]
 [tool.black]
 target-version = ['py{{ min_python | replace(".", "") }}']
 {% if exclude %}
-exclude = '''
+extend_exclude = '''
 (
     {% for pattern in exclude %}
     {{ "" }}{% if not loop.first %}| {% endif %}{{ pattern }}

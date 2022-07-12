@@ -6,7 +6,7 @@ repos:
     hooks:
     - id: black
       files: \.py$
-      exclude: |
+      extend_exclude: |
           (?x)(
               tests/ignoreme/ignoreme.py
               | tests/ignoreme/ignoreme.py
