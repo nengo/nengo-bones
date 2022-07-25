@@ -1,0 +1,114 @@
+name: CI testing
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+      - release-candidate-*
+    tags:
+      - v*
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        description: Run the build with SSH debugging enabled
+        required: false
+        default: false
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./actions/setup
+      - uses: ./actions/generate-and-check
+      - uses: ./actions/run-script
+        with:
+          name: static
+  test:
+    needs:
+      - static
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        include:
+          - script: docs
+          - script: examples
+          - script: test
+            test_local_var: test local var val
+            test_args: --test-arg --test-arg
+          - script: remote
+            remote-id: 0
+          - script: remote-test
+            coverage-name: remote-test
+            remote-id: 1
+          - script: test-coverage
+            test_local_var: test local var val
+            test_args: --test-arg
+            coverage-name: test-coverage
+          - script: test-coverage
+            test_local_var: test local var val
+            test_args: --test-arg
+            python: "3.6"
+            coverage-name: test-coverage-3.6
+          - script: test-nengo
+            test_local_var: test local var val
+            test_args: --test-arg
+            python: "3.9"
+      fail-fast: false
+    env:
+      SCRIPT: ${{ matrix.script }}
+      TEST_GLOBAL_VAR: test global var val
+      TEST_LOCAL_VAR: ${{ matrix.test_local_var || 'this val will be overwritten' }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
+      TEST_ARGS: ${{ matrix.test_args }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      JOB_SUFFIX: ${{ matrix.remote-id }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: action-checkout
+      - uses: ./action-checkout/actions/setup
+        with:
+          path: nengo-bones
+          python-version: ${{ matrix.python || '3.7' }}
+      - uses: ./action-checkout/actions/generate-and-check
+        with:
+          path: nengo-bones
+      - uses: ./action-checkout/actions/run-script
+        with:
+          name: ${{ matrix.script }}
+          path: nengo-bones
+      - uses: actions/upload-artifact@v3
+        if: ${{ always() && matrix.coverage-name }}
+        with:
+          name: coverage-${{ matrix.coverage-name }}
+          path: nengo-bones/.coverage
+  coverage:
+    if: ${{ always() }}
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./actions/coverage-report
+        with:
+          min-coverage: 95
+  auto-update:
+    needs:
+      - test
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./actions/setup
+      - uses: ./actions/generate-and-check
+      - uses: ./actions/run-script
+        with:
+          name: auto-update

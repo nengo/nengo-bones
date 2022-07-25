@@ -35,8 +35,8 @@ shopt -s globstar
     fi
     exe black --check {{ pkg_name }}
     exe codespell -q 3
+    exe shellcheck "$SCRIPT_DIR"/*.sh
 
-    exe shellcheck -e SC2087 .ci/*.sh
     # undo single-branch cloning
     git config --replace-all remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
     git fetch origin {{ main_branch }}

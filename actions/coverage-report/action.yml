@@ -1,0 +1,40 @@
+name: Coverage report
+description: Generate and upload coverage report by combining coverage files
+inputs:
+  min-coverage:
+    description: Minimum coverage percentage to be considered a pass
+    required: false
+    default: 100
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    - name: Install coverage
+      shell: bash
+      run: |
+        pip install coverage
+    - uses: actions/download-artifact@v3
+      id: download
+    - name: Combine coverage and generate report
+      shell: bash
+      run: |
+        coverage combine $(find ${{ steps.download.outputs.download-path }} -type f -name ".coverage")
+        coverage html
+        coverage report --show-missing --fail-under=${{ inputs.min-coverage }}
+    - uses: actions/upload-artifact@v3
+      if: ${{ always() }}
+      with:
+        name: coverage-report
+        path: htmlcov
+    - uses: ewjoachim/python-coverage-comment-action@v2
+      if: ${{ always() }}
+      with:
+        GITHUB_TOKEN: ${{ github.token }}
+        COMMENT_TEMPLATE: |
+          {% extends "base" %}
+          {% block coverage_single_file_title %}
+          ### {{ filename }}
+          {% endblock %}

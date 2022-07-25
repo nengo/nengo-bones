@@ -10,6 +10,7 @@ all_files = 1
 {% block coverage_run %}
 [coverage:run]
 source = ./
+relative_files = True
 {% endblock %}
 
 {% block coverage_report %}

@@ -157,7 +157,7 @@ class BonesTemplate:
             assert "pkg_name" in data
             output_name = output_name.replace("pkg/", f"{data['pkg_name']}/")
         output_path = pathlib.Path(output_dir, output_name)
-        output_path.parent.mkdir(exist_ok=True)
+        output_path.parent.mkdir(exist_ok=True, parents=True)
         output_path.write_text(self.render(**data), encoding="utf-8")
 
         # We mark all `.sh` files as executable

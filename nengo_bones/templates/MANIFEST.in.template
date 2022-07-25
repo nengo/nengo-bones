@@ -27,6 +27,7 @@ prune .github
 prune .tox
 prune .eggs
 prune .ci
+prune bones-scripts
 {% if py_typed is defined %}
 prune .mypy_cache
 {% endif %}

@@ -1,0 +1,27 @@
+name: Setup python job
+description: Common setup steps for a Python job
+inputs:
+  path:
+    description: Relative path under github workspace in which to place the repository
+    required: false
+    default: null
+  python-version:
+    description: Python version (passed to actions/setup-python)
+    required: false
+    default: "3.x"
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        path: ${{ inputs.path }}
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+        cache: pip
+        cache-dependency-path: '**/setup.py'
+    - name: Update pip
+      shell: bash
+      run: |
+        pip install pip wheel --upgrade
+        pip --version

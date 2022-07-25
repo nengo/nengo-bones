@@ -47,6 +47,11 @@ Release History
 - Added template for ``version.py``. (`#151`_)
 - Added ``apache`` license type. (`#160`_)
 - Added ``proprietary`` license type. (`#162`_)
+- Added several actions for use with Github Actions:
+  ``setup`` initializes  a python environment,
+  ``generate-and-check`` runs ``bones-generate`` and ``bones-check``,
+  ``run-script`` runs a CI script such as ``static.sh``, and
+  ``coverage-report`` generates combined coverage reports. (`#166`_)
 
 **Changed**
 
@@ -71,6 +76,13 @@ Release History
 - Updated Nengo license and renamed to ABR license. (`#157`_)
 - The license type is now specified through a ``license`` key at the top level.
   If not specified, it defaults to ``proprietary``. (`#157`_)
+- All CI scripts now support running either through Github Actions or TravisCI.
+  (`#166`_)
+
+**Removed**
+
+- Removed ``before_script``, ``before_cache``, ``before_deploy``, and ``after_deploy``
+  steps from CI scripts (they weren't actually used anywhere). (`#166`_)
 
 **Fixed**
 
@@ -83,6 +95,8 @@ Release History
 - Removed pylint disable for ``bad-continuation`` as it no longer exists. (`#163`_)
 - Removed pylint disable for ``no-self-use`` as it is now optional. (`#163`_)
 - Static checks will not try to check ``docs`` directory if it doesn't exist. (`#165`_)
+- Static checks will no longer assume that CI scripts are in a folder named ``.ci``
+  (it will look for any scripts in the same folder as the static script). (`#166`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
@@ -111,6 +125,7 @@ Release History
 .. _#162: https://github.com/nengo/nengo-bones/pull/162
 .. _#163: https://github.com/nengo/nengo-bones/pull/163
 .. _#165: https://github.com/nengo/nengo-bones/pull/165
+.. _#166: https://github.com/nengo/nengo-bones/pull/166
 
 0.11.1 (April 13, 2020)
 =======================

@@ -2,17 +2,14 @@
 
 {#
 
-Setup instructions
-==================
+General setup instructions
+==========================
 
 Run all the following commands in a new empty folder.
-Make sure you have the Travis CLI installed
-and logged in with `travis login --com`
-(see https://github.com/travis-ci/travis.rb#installation).
 
 1. Set up an SSH key with no passphrase with the remote host.
 
-       ssh-keygen -f id_rsa -N "" -C "TravisCI"
+       ssh-keygen -f id_rsa -N "" -C "CI"
        ssh-copy-id -i id_rsa.pub <hostname>
 
 2. Ensure it works.
@@ -27,6 +24,20 @@ and logged in with `travis login --com`
            StrictHostKeyChecking no
 
    While most options are optional, `StrictHostKeyChecking` must be `no`.
+
+When the script is run, it will assume that there is an environment variable named
+`SSH_KEY` containing the contents of `id_rsa` and a variable named SSH_CONFIG containing
+the contents of `config`. These can be set in the appropriate sections of the CI
+configuration (e.g. the `env:` section for Github Actions).
+
+TravisCI setup instructions
+===========================
+
+Make sure you have the Travis CLI installed
+and logged in with `travis login --com`
+(see https://github.com/travis-ci/travis.rb#installation).
+
+Begin with steps 1--3 from the general instructions above
 
 4. Add all these files to a tar file. If you have other files that
    should be encrypted, also add those files to this tar file.
@@ -59,14 +70,19 @@ See https://docs.travis-ci.com/user/encrypting-files/ for more details.
 
 {% block install %}
 {{ super() }}
+    exe mkdir -p ~/.ssh
+    {% if travis_var_key %}
     exe openssl aes-256-cbc \
         -K "${encrypted_{{ travis_var_key }}_key:?}" \
         -iv "${encrypted_{{ travis_var_key }}_iv:?}" \
         -in .ci/secret.tar.enc \
         -out .ci/secret.tar \
         -d
-    exe mkdir -p ~/.ssh
     exe tar xvf .ci/secret.tar -C ~/.ssh --overwrite
+    {% else %}
+    echo "$SSH_KEY" > ~/.ssh/id_rsa
+    echo "$SSH_CONFIG" > ~/.ssh/config
+    {% endif %}
     exe chmod 600 ~/.ssh/id_rsa
 
     {% if azure_name %}
@@ -86,12 +102,14 @@ See https://docs.travis-ci.com/user/encrypting-files/ for more details.
 
 {% block script %}
 {{ super() }}
-    BUILD_DIR="tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER"
+    BUILD_DIR="tmp/{{ pkg }}-$JOB_NUMBER"
+    PYTHON_VERSION="$(python -c "import sys; print(f'{sys.version_info[0]}.{sys.version_info[1]}')")"
+
     exe ssh {{ host }} -q "mkdir -p tmp"
     exe rsync -azh "$(pwd)" "{{ host }}:./$BUILD_DIR/"
     exe ssh {{ host }} -q << EOF
         REMOTE_STATUS=0
-        cd ~/"$BUILD_DIR"
+        cd ~/"$BUILD_DIR" || exit 1
         {% block remote_install %}
         echo "$ ({{ host }}) Installing miniconda"
         wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh --quiet -O miniconda.sh || exit 1
@@ -106,12 +124,13 @@ See https://docs.travis-ci.com/user/encrypting-files/ for more details.
             fi
         done
         export PATH="\$PWD/miniconda/bin:\$PATH"
-        conda create -y -n travis-ci-"$TRAVIS_JOB_NUMBER" python="$TRAVIS_PYTHON_VERSION" || REMOTE_STATUS=1
-        source activate travis-ci-"$TRAVIS_JOB_NUMBER" || REMOTE_STATUS=1
+        conda create -y -n travis-ci-"$JOB_NUMBER" python="$PYTHON_VERSION" || REMOTE_STATUS=1
+        source activate travis-ci-"$JOB_NUMBER" || REMOTE_STATUS=1
         if [ "\$REMOTE_STATUS" -gt 0 ]; then
             echo "({{ host }}) Failed to create conda environment. Exiting.";
             exit \$REMOTE_STATUS;
         fi
+
         cd {{ pkg }} || REMOTE_STATUS=1
         echo "$ ({{ host }}) Installing {{ pkg }}"
         {% endblock %}

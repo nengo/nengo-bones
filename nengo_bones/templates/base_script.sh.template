@@ -6,6 +6,21 @@
 NAME=$0
 COMMAND=$1
 STATUS=0  # used to exit with non-zero status if any command fails
+# shellcheck disable=SC2034
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+# set some useful environment variables for interoperability between github actions
+# and travis ci
+export JOB_NUMBER="${GITHUB_RUN_ID:-$TRAVIS_JOB_NUMBER}"
+if [[ -n "$JOB_SUFFIX" ]]; then
+    export JOB_NUMBER="$JOB_NUMBER-$JOB_SUFFIX"
+fi
+export GIT_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}}}"
+if [[ -n "$TRAVIS_TAG" ]]; then
+    export GIT_TAG="$TRAVIS_TAG"
+elif [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+    export GIT_TAG="$GIT_BRANCH"
+fi
 
 exe() {
     echo "\$ $*";
@@ -33,10 +48,6 @@ if [[ "$COMMAND" == "install" ]]; then
 
     {% endif %}
     {% endblock %}
-elif [[ "$COMMAND" == "before_script" ]]; then
-    {% block before_script %}
-    :
-    {% endblock %}
 elif [[ "$COMMAND" == "script" ]]; then
     {% if pre_commands %}
     {% for cmd in pre_commands %}
@@ -53,24 +64,12 @@ elif [[ "$COMMAND" == "script" ]]; then
     exe {{ cmd }}
     {% endfor %}
     {% endif %}
-elif [[ "$COMMAND" == "before_cache" ]]; then
-    {% block before_cache %}
-    :
-    {% endblock %}
 elif [[ "$COMMAND" == "after_success" ]]; then
     {% block after_success %}
     :
     {% endblock %}
 elif [[ "$COMMAND" == "after_failure" ]]; then
     {% block after_failure %}
-    :
-    {% endblock %}
-elif [[ "$COMMAND" == "before_deploy" ]]; then
-    {% block before_deploy %}
-    :
-    {% endblock %}
-elif [[ "$COMMAND" == "after_deploy" ]]; then
-    {% block after_deploy %}
     :
     {% endblock %}
 elif [[ "$COMMAND" == "after_script" ]]; then

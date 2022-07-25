@@ -1,0 +1,52 @@
+name: Run script
+description: Run a NengoBones script
+inputs:
+  name:
+    description: Script name
+    required: true
+  path:
+    description: Path to project directory (if not the current directory)
+    required: false
+    default: null
+  scripts-dir:
+    description: Path to folder containing generated scripts
+    required: false
+    default: bones-scripts
+runs:
+  using: composite
+  steps:
+    - name: Install
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        ${{ inputs.scripts-dir }}/${{ inputs.name }}.sh install
+    - name: Display environment information
+      shell: bash
+      run: |
+        pip freeze
+    - name: Open debugging ssh session
+      uses: lhotari/action-upterm@v1
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+    - name: Script
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        ${{ inputs.scripts-dir }}/${{ inputs.name }}.sh script
+    - name: After success
+      if: ${{ success() }}
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        ${{ inputs.scripts-dir }}/${{ inputs.name }}.sh after_success
+    - name: After failure
+      if: ${{ failure() }}
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        ${{ inputs.scripts-dir }}/${{ inputs.name }}.sh after_failure
+    - name: After script
+      if: ${{ always() }}
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        ${{ inputs.scripts-dir }}/${{ inputs.name }}.sh after_script

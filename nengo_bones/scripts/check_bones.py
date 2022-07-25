@@ -24,8 +24,7 @@ def main(root_dir, conf_file, verbose):
     Validates auto-generated project files.
 
     Note: This does not check the ci scripts, because those are generated
-    on-the-fly in TravisCI (so any ci files we do find are likely local
-    artifacts).
+    on-the-fly during CI (so any ci files we do find are likely local artifacts).
     """
 
     config = load_config(conf_file)

@@ -3,9 +3,9 @@
 {% set env_vars %}
 {% block env_vars %}
         # copy environment variables into remote environment
-        export TRAVIS_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
-        export TRAVIS_BRANCH="$TRAVIS_BRANCH"
-        export TRAVIS_TAG="$TRAVIS_TAG"
+        export JOB_NUMBER="$JOB_NUMBER"
+        export GIT_BRANCH="$GIT_BRANCH"
+        export GIT_TAG="$GIT_TAG"
         export TEST_ARGS="$TEST_ARGS"
         {% if remote_vars %}
         {% for var, val in remote_vars.items() %}
@@ -39,18 +39,18 @@
         (
             flock -x -w 540 200 || exit 1
             bash .ci/{{ remote_script }}.sh script || exit 1
-        ) 200>/var/lock/.travis-ci.exclusivelock."$DEVICE_ID" || REMOTE_STATUS=1
+        ) 200>/var/lock/.ci.exclusivelock."$DEVICE_ID" || REMOTE_STATUS=1
 {% endblock %}
 
 {% block after_script %}
     {% if remote_script == "docs" %}
-    REMOTE_FAILED_FILE="tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}/$TRAVIS_JOB_NUMBER.failed"
+    REMOTE_FAILED_FILE="tmp/{{ pkg }}-$JOB_NUMBER/{{ pkg }}/$JOB_NUMBER.failed"
     ssh -q {{ host }} [[ -e "$REMOTE_FAILED_FILE" ]] && exe scp {{ host }}:"$REMOTE_FAILED_FILE" .
-    exe rsync -azh "{{ host }}:./tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}-docs" ..
+    exe rsync -azh "{{ host }}:./tmp/{{ pkg }}-$JOB_NUMBER/{{ pkg }}-docs" ..
     {% elif coverage %}
-    COVERAGE_FILE="tmp/{{ pkg }}-$TRAVIS_JOB_NUMBER/{{ pkg }}/coverage.xml"
+    COVERAGE_FILE="tmp/{{ pkg }}-$JOB_NUMBER/{{ pkg }}/{% if codecov_yml %}coverage.xml{% else %}.coverage{% endif %}"
     exe scp {{ host }}:"$COVERAGE_FILE" .
     {% endif %}
-    exe bash .ci/{{ remote_script }}.sh after_script
+    exe bash "$SCRIPT_DIR/{{ remote_script }}.sh" after_script
 {{ super() }}
 {% endblock %}

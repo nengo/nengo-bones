@@ -24,5 +24,6 @@ htmlcov
 .pytest_cache/
 .ci/*.sh
 .ci/secret.tar
+bones-scripts/*.sh
 docs/examples/*
 !docs/examples/**/*.ipynb

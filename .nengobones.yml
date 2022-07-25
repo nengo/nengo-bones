@@ -2,72 +2,21 @@ project_name: NengoBones
 pkg_name: nengo_bones
 repo_name: nengo/nengo-bones
 license: abr-free
-main_branch: master
+main_branch: main
 
 description: Tools for managing Nengo projects
 copyright_start: 2018
 
-travis_yml:
-  python: 3.7
-  global_vars:
-    TEST_GLOBAL_VAR: test global var val
-    TEST_LOCAL_VAR: this val will be overwritten
-  jobs:
-    - script: static
-    - script: docs
-    - script: examples
-    - script: test
-      cache: false
-      env:
-        TEST_LOCAL_VAR: test local var val
-      test_args: --test-arg --test-arg
-    - script: remote
-    - script: remote-test
-    - script: test-coverage
-      env:
-        TEST_LOCAL_VAR: test local var val
-      test_args: --test-arg
-    - script: test-coverage
-      env:
-        TEST_LOCAL_VAR: test local var val
-      test_args: --test-arg
-      python: 3.6
-    - script: test-nengo
-      env:
-        TEST_LOCAL_VAR: test local var val
-      test_args: --test-arg
-      python: 3.9
-      dist: bionic
-    - stage: autoupdate
-      script: auto-update
-      if: type = push AND branch = master
-  pypi_user: __token__
-  deploy_dists:
-    - sdist
-    - bdist_wheel
-  bones_install: git+https://github.com/nengo/nengo-bones.git@$BRANCH_NAME
-  slack_notifications: "VVTPPxCrl53OAZeUojRa2SkG8JWdRbn/Lzfd1oVgMGZ1nKzBJsldWIvQX6pZHJ\
-    88h6MJrEvc/xOzhCSqLQURnahElw5HqzUbTRCTJ7La6/X1Xow238bby1ZTIDgcVhl8tWX6dWrwiTUEDhSg\
-    eSWcfQFLFnoY3uY8aiqvCXio/9+c8Ged3bA1bgfJRFwXcLvNWciYSK0KPMMHT8sXNrCPDzsJARXqmZN5dX\
-    1XtLCgPNzC68ocsKv/kvp4jaj1BuNhdRMxdLIHDdQOhAx2VJGNSdY+/qjvEbomR+KYWAOusNIMYyEdoJdN\
-    l4poCmaENs/YpxeP/qchNNPMsiDIi8WNphS3+A/VfdwzseOFWnkpH1+hAgEg0ZwNuYrW7+WL3TyJnV0uWD\
-    xhnLUzdbNsZx0FxkjTYz29OgcybalwGYiBWzUAl2/V1iRV4U0zlcb2mAT/knGZuU9DIb7IkynOc0aoOfuL\
-    Cul3a48Og3ehUujiTTFq11euYdBJghxsVCdivmBO9cfZN0hfIUO0fs63MvyM/a63KOUpDvVR4lOkq44/Xf\
-    j2uvHUHRmoapkdy27pcSdbk5lnCqUOuAIvO6eA6u82XFUskEBZETB+2CfjRUDGRUVNx2vMgBlETW/Q3qDb\
-    AywKqbMx1DLyAxzBcKHZOh9sfcdGfamW05q3ZrdjGrhj6uI="
-
-codecov_yml: {}
-
 ci_scripts:
   - template: static
     pre_commands:
-      - cat .ci/static.sh
+      - cat bones-scripts/static.sh
     post_commands:
       - "[ -f 'docs/tests/ignore-me.py' ]"
       - "[ ! -f 'docs/tests/test-example.py' ]"
   - template: test
     pre_commands:
-      - cat .ci/test.sh
+      - cat bones-scripts/test.sh
       - export TEST_PRE_COMMANDS=True
     post_commands:
       - export TEST_POST_COMMANDS=True
@@ -75,7 +24,7 @@ ci_scripts:
     output_name: test-coverage
     coverage: true
     pre_commands:
-      - cat .ci/test-coverage.sh
+      - cat bones-scripts/test-coverage.sh
       - export TEST_PRE_COMMANDS=True
       - . "$HOME/.nvm/nvm.sh"
       - nvm install 17
@@ -92,44 +41,42 @@ ci_scripts:
     pip_install:
       - nengo[tests]
     pre_commands:
-      - cat .ci/test-nengo.sh
+      - cat bones-scripts/test-nengo.sh
       - export TEST_PRE_COMMANDS=True
     post_commands:
       - export TEST_POST_COMMANDS=True
   - template: remote
     pre_commands:
-      - cat .ci/remote.sh
-    travis_var_key: 2895d60e3414
+      - cat bones-scripts/remote.sh
     host: gl
   - template: test
     pre_commands:
-      - cat .ci/test-for-remote.sh
+      - cat bones-scripts/test-for-remote.sh
     output_name: test-for-remote
     coverage: true
   - template: remote-script
     pre_commands:
-      - cat .ci/remote-test.sh
+      - cat bones-scripts/remote-test.sh
     remote_script: test-for-remote
     output_name: remote-test
-    travis_var_key: 2895d60e3414
     host: gl
     coverage: true
   - template: docs
     pre_commands:
-      - cat .ci/docs.sh
+      - cat bones-scripts/docs.sh
     pip_install:
       - sphinx-click>=2.0.1
   - template: examples
     pre_commands:
-      - cat .ci/examples.sh
+      - cat bones-scripts/examples.sh
     pip_install:
       - mock
   - template: deploy
     pre_commands:
-      - cat .ci/deploy.sh
+      - cat bones-scripts/deploy.sh
   - template: auto-update
     pre_commands:
-      - cat .ci/auto-update.sh
+      - cat bones-scripts/auto-update.sh
     repos:
       - nengo/keras-lmu
       - nengo/keras-spiking
@@ -139,6 +86,9 @@ ci_scripts:
       - nengo/nengo-de1
       - nengo/nengo-de1-hw
       - nengo/nengo-dl
+      - nengo/nengo-edge
+      - nengo/nengo-edge-device-plugins
+      - nengo/nengo-edge-server
       - nengo/nengo-fpga
       - nengo/nengo-interfaces
       - nengo/nengo-loihi
@@ -177,7 +127,6 @@ setup_py:
     - jinja2>=2.11
     - jupyter>=1.0.0
     - pylint>=2.5.1
-    - astroid!=2.8.5  # see https://github.com/PyCQA/astroid/issues/1239
     - pyyaml>=5.1
     - requests>=2.21
   classifiers:

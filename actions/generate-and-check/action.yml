@@ -1,0 +1,39 @@
+name: Generate and check
+description: Generate NengoBones scripts and check all templated files
+inputs:
+  path:
+    description: Path to project directory (if not the current directory)
+    required: false
+    default: null
+outputs:
+  scripts-dir:
+    description: Path to folder containing generated scripts
+    value: ${{ steps.generate-scripts.outputs.dir }}
+runs:
+  using: composite
+  steps:
+    - name: Install NengoBones
+      shell: bash
+      env:
+        # note: special case code here for when we're running these actions locally in
+        # the nengo-bones CI itself (in which case the github.action* contexts don't get
+        # populated)
+        REF: ${{ github.action_ref || github.head_ref || github.ref_name }}
+      # TODO: change this so that nengo-bones is installed in an isolated environment,
+      #  rather than the environment of the caller (this will require changes
+      #  in downstream actions, many of which are currently assuming that nengo-bones
+      #  dependencies are installed in order for tests/static checks to work)
+      run: |
+        pip install "git+https://github.com/nengo/nengo-bones@$REF#egg=nengo-bones"
+    - name: Generate scripts
+      id: generate-scripts
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        bones-generate --output-dir bones-scripts ci-scripts
+        echo "::set-output name=dir::$(pwd)/bones-scripts"
+    - name: Check templated files
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        bones-check --verbose

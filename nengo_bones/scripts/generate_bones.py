@@ -89,7 +89,7 @@ def main(ctx, conf_file, output_dir):
 @main.command()
 @click.pass_context
 def ci_scripts(ctx):
-    """Generate TravisCI shell scripts."""
+    """Generate CI shell scripts."""
 
     config = ctx.obj["config"]
     for params in config["ci_scripts"]:
