@@ -14,9 +14,10 @@
     if git diff HEAD --exit-code; then
         echo "No changes to {{ repo }}"
     else
+        exe git checkout -b bones-autoupdate
         exe git add --all
         exe git commit -m "Automatic update to NengoBones $COMMIT_HASH" -m "$COMMIT_MSG"
-        exe git push -fq "https://$GH_TOKEN@github.com/{{ repo }}" {{ main_branch }}:bones-autoupdate
+        exe git push -fq "https://$GH_TOKEN@github.com/{{ repo }}"
         echo "Updated {{ repo }}:bones-autoupdate"
     fi
     cd ../.. || exit
