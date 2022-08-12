@@ -102,8 +102,9 @@ See https://docs.travis-ci.com/user/encrypting-files/ for more details.
 
 {% block script %}
 {{ super() }}
-    BUILD_DIR="tmp/{{ pkg }}-$JOB_NUMBER"
+    export BUILD_DIR="tmp/{{ pkg }}-$JOB_NUMBER"
     PYTHON_VERSION="$(python -c "import sys; print(f'{sys.version_info[0]}.{sys.version_info[1]}')")"
+    export PYTHON_VERSION
 
     exe ssh {{ host }} -q "mkdir -p tmp"
     exe rsync -azh "$(pwd)" "{{ host }}:./$BUILD_DIR/"
