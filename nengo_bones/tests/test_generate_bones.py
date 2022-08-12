@@ -121,7 +121,7 @@ def test_ci_scripts(tmp_path):
     assert has_line(
         ".ci/docs.sh",
         "exe git clone -b gh-pages-release "
-        "https://github.com/dummy/dummy_repo.git ../dummy_repo-docs",
+        '"https://$GH_TOKEN@github.com/dummy/dummy_repo.git" ../dummy_repo-docs',
     )
 
     assert has_line(".ci/deploy.sh", 'exe python -c "from dummy import version')

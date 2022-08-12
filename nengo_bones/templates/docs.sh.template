@@ -16,7 +16,7 @@
 
 {% block script %}
     if [ -d "{{ docs_dir }}" ]; then exe rm -Rf {{ docs_dir }}; fi
-    exe git clone -b gh-pages-release https://github.com/{{ repo_name }}.git {{ docs_dir }}
+    exe git clone -b gh-pages-release "https://$GH_TOKEN@github.com/{{ repo_name }}.git" {{ docs_dir }}
     RELEASES=$(find {{ docs_dir }} -maxdepth 1 -type d -name "v[0-9].*" -printf "%f,")
 
     FAILED_FILE="$JOB_NUMBER.failed"
