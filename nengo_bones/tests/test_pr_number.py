@@ -10,7 +10,7 @@ from nengo_bones.scripts import pr_number
 from nengo_bones.tests.utils import assert_exit, make_has_line, write_file
 
 
-def mocked_requests_get(url, repo=None, number=None):
+def mocked_requests_get(url, repo=None, number=None, **_):
     """Used to mock out github requests so that we don't get timed out."""
 
     class MockResponse:

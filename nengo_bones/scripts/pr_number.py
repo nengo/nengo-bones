@@ -10,7 +10,7 @@ def get_issue_count(repo):
     """Count the number of issues and PRs in a repository."""
 
     response = requests.get(
-        f"https://api.github.com/repos/{repo}/issues?state=all&sort=created"
+        f"https://api.github.com/repos/{repo}/issues?state=all&sort=created", timeout=60
     )
     return int(response.json()[0]["number"])
 
