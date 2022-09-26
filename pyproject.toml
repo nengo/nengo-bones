@@ -15,3 +15,8 @@ extend_exclude = '''
 [tool.isort]
 profile = "black"
 src_paths = ["nengo_bones"]
+
+[tool.docformatter]
+wrap-summaries = 88
+wrap-descriptions = 81
+pre-summary-newline = true

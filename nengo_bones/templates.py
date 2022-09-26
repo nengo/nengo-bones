@@ -2,6 +2,7 @@
 
 import pathlib
 import stat
+import subprocess
 import warnings
 from collections import defaultdict
 
@@ -69,7 +70,6 @@ class BonesTemplate:
            def add_my_new_template_data(data):
                data["attr"] = "val"
                ...
-
         """
 
         def _add_render_data(func):
@@ -118,7 +118,7 @@ class BonesTemplate:
         """
         rendered = self.env.get_template(self.template_file).render(**data)
 
-        # Format Python templates with black
+        # Format Python templates with black and docformatter
         if self.output_file.endswith(".py"):
             black_mode = FileMode(
                 target_versions={
@@ -128,6 +128,15 @@ class BonesTemplate:
                 }
             )
             rendered = format_str(rendered, mode=black_mode)
+
+            for tool in ["docformatter", "isort"]:
+                rendered = subprocess.run(
+                    [tool, "-"],
+                    input=rendered,
+                    stdout=subprocess.PIPE,
+                    encoding="utf-8",
+                    check=True,
+                ).stdout
 
         return rendered
 

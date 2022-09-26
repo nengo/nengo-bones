@@ -2,12 +2,13 @@
 
 # pylint: disable=consider-using-f-string,bad-string-format-type
 
-"""NengoBones version information.
+"""
+NengoBones version information.
 
-We use calendar versioning (see https://calver.org/)
-and conform to PEP440 (see https://www.python.org/dev/peps/pep-0440/).
-'.dev0' will be added to the version unless the code base represents
-a release version. Release versions are git tagged with the version.
+We use calendar versioning (see https://calver.org/) and conform to PEP440 (see
+https://www.python.org/dev/peps/pep-0440/). '.dev0' will be added to the version
+unless the code base represents a release version. Release versions are git
+tagged with the version.
 """
 
 from datetime import date

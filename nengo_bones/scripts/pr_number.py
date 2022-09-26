@@ -19,7 +19,8 @@ def get_issue_count(repo):
 @click.argument("repo", required=False, default=None)
 @click.option("--conf-file", default=None, help="Filepath for config file")
 def main(repo, conf_file):
-    """Get the next available PR number for a repository.
+    """
+    Get the next available PR number for a repository.
 
     When writing a CHANGELOG entry, it helpful to predict the PR number for the
     branch before the PR has actually been made. This script counts the issues

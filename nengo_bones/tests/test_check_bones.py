@@ -19,7 +19,7 @@ def _write_nengo_yml(tmp_path, nengo_yml=None):
 
 
 def _generate_valid_file(tmp_path):
-    """Generate a valid contributors.rst with bones-generate"""
+    """Generate a valid contributors.rst with bones-generate."""
     result = CliRunner().invoke(
         generate_bones.main,
         [

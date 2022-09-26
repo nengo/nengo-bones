@@ -34,7 +34,8 @@ def render_template(ctx, output_file):
 @click.option("--output-dir", default=".", help="Output directory for scripts")
 @click.pass_context
 def main(ctx, conf_file, output_dir):
-    """Loads config file and sets up template environment.
+    """
+    Loads config file and sets up template environment.
 
     By default, this updates all templated files that are
     to be committed to the repository.
@@ -58,7 +59,6 @@ def main(ctx, conf_file, output_dir):
        Additional license info
        =======================
        ...
-
     """
 
     ctx.ensure_object(dict)

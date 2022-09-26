@@ -52,6 +52,8 @@ Release History
   ``generate-and-check`` runs ``bones-generate`` and ``bones-check``,
   ``run-script`` runs a CI script such as ``static.sh``, and
   ``coverage-report`` generates combined coverage reports. (`#166`_)
+- Added support for ``docformatter`` (and static checks will now enforce that
+  docformatter has been applied). (`#168`_)
 
 **Changed**
 
@@ -126,6 +128,7 @@ Release History
 .. _#163: https://github.com/nengo/nengo-bones/pull/163
 .. _#165: https://github.com/nengo/nengo-bones/pull/165
 .. _#166: https://github.com/nengo/nengo-bones/pull/166
+.. _#168: https://github.com/nengo/nengo-bones/pull/168
 
 0.11.1 (April 13, 2020)
 =======================

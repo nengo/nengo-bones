@@ -28,7 +28,7 @@ def assert_exit(result, status):
 
 
 def make_has_line(lines, strip=False, regex=False):
-    """Create a function to check file or output lines in order"""
+    """Create a function to check file or output lines in order."""
 
     idx = 0
 

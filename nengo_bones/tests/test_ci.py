@@ -1,8 +1,8 @@
 # pylint: disable=missing-docstring
 
 """
-These tests are designed to be executed during CI, to test that the ci scripts
-are working correctly.
+These tests are designed to be executed during CI, to test that the ci scripts are
+working correctly.
 
 They will not pass when run locally.
 """
