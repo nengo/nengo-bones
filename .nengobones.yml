@@ -149,12 +149,10 @@ setup_cfg:
     norecursedirs:
       - tests/ignoreme
     markers:
-      test-marker:
-        Not a real
+      test-marker: Not a real
         marker
     nengo_test_unsupported:
-      "*":
-        All tests are
+      "*": All tests are
         unsupported
   coverage:
     exclude_lines:
@@ -184,7 +182,6 @@ docs_conf_py:
     - sphinx_click.ext
   intersphinx_mapping:
     click: https://click.palletsprojects.com/en/7.x
-  tagmanager_id: GTM-KWCR2HN
   doctest_setup:
     - "# Testing that doctest_setup works"
     - "# with multiple lines"

@@ -25,9 +25,6 @@ Release History
 **Added**
 
 - Added support for new ``one_page`` option in ``nengo-sphinx-theme``. (`#101`_)
-- Added ``tagmanager_id`` option to ``docs_conf.py.template``,
-  which will enable Google Tag Manager tracking. This option takes precedence
-  over ``analytics_id`` if both are specified. (`#114`_)
 - Added the ``bones-format-notebook`` script to apply automated formatting, cleanup,
   and static checking to Jupyter notebooks. (`#32`_)
 - Static script will now check that ``bones-format-notebook`` has been applied to all
@@ -85,6 +82,9 @@ Release History
 
 - Removed ``before_script``, ``before_cache``, ``before_deploy``, and ``after_deploy``
   steps from CI scripts (they weren't actually used anywhere). (`#166`_)
+- Removed ``analytics_id`` option for ``docs/conf.py``. Create a custom ``docs/conf.py``
+  template and override the ``analytics`` block if you need to customize analytics
+  tracking. (`#169`_)
 
 **Fixed**
 
@@ -129,6 +129,7 @@ Release History
 .. _#165: https://github.com/nengo/nengo-bones/pull/165
 .. _#166: https://github.com/nengo/nengo-bones/pull/166
 .. _#168: https://github.com/nengo/nengo-bones/pull/168
+.. _#169: https://github.com/nengo/nengo-bones/pull/169
 
 0.11.1 (April 13, 2020)
 =======================

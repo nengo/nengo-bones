@@ -3,7 +3,6 @@
 import pathlib
 import stat
 import subprocess
-import warnings
 from collections import defaultdict
 
 import jinja2
@@ -173,19 +172,6 @@ class BonesTemplate:
         if output_path.suffix == ".sh":
             st = output_path.stat()
             output_path.chmod(st.st_mode | stat.S_IEXEC)
-
-
-@BonesTemplate.add_render_data("docs_conf_py")
-def add_docs_conf_py_data(data):
-    """Run checks on the docs/conf.py-specific entries in the 'data' dict."""
-    tagmanager_id = data["docs_conf_py"].get("tagmanager_id", None)
-    if tagmanager_id is not None and not (
-        tagmanager_id.startswith("GTM-") and len(tagmanager_id) == 11
-    ):
-        warnings.warn(
-            "'tagmanager_id' looks strange. It should look like "
-            f"'GTM-XXXXXXX'; got '{tagmanager_id}'"
-        )
 
 
 @BonesTemplate.add_render_data("travis_yml")
