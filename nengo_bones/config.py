@@ -138,6 +138,7 @@ def fill_defaults(config):  # noqa: C901
         cfg.setdefault("flake8", {})
         cfg.setdefault("coverage", {})
         cfg.setdefault("codespell", {})
+        cfg.setdefault("mypy", {})
         cfg["pytest"].setdefault("xfail_strict", False)
 
     if "docs_conf_py" in config:
@@ -203,6 +204,9 @@ def validate_setup_cfg_config(config):
             check_list(pylint, "disable")
             check_list(pylint, "ignore")
             check_list(pylint, "known_third_party")
+        if "mypy" in config["setup_cfg"]:
+            mypy = config["setup_cfg"]["mypy"]
+            check_list(mypy, "ignore_missing_imports")
 
 
 def validate_setup_py_config(config):

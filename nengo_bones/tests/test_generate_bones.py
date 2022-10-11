@@ -551,6 +551,10 @@ def test_setup_cfg(tmp_path):
               - zz-some-thing
             known_third_party:
               - zz-my-third-party
+          mypy:
+            ignore_missing_imports:
+              - no-type-pkg
+        py_typed: {}
         """,
     )
 
@@ -598,6 +602,8 @@ def test_setup_cfg(tmp_path):
     assert has_line("    zz-some-thing")
     assert has_line("known-third-party =")
     assert has_line("    zz-my-third-party")
+    assert has_line("[mypy-no-type-pkg.*]")
+    assert has_line("ignore_missing_imports = True")
 
 
 def test_setup_cfg_valueerror(tmp_path):

@@ -185,5 +185,13 @@ ignore-words-list = {{ codespell.ignore_words | join(",") }}
 {% block mypy %}
 [mypy]
 python_version = {{ min_python }}
+disallow_untyped_calls = True
+disallow_untyped_defs = True
+plugins = numpy.typing.mypy_plugin
+
+{% for ignore in mypy.ignore_missing_imports %}
+[mypy-{{ ignore }}.*]
+ignore_missing_imports = True
+{% endfor %}
 {% endblock %}
 {% endif %}

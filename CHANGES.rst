@@ -77,6 +77,7 @@ Release History
   If not specified, it defaults to ``proprietary``. (`#157`_)
 - All CI scripts now support running either through Github Actions or TravisCI.
   (`#166`_)
+- Added additional config options to mypy ``setup.cfg`` template. (`#170`_)
 
 **Removed**
 
@@ -130,6 +131,7 @@ Release History
 .. _#166: https://github.com/nengo/nengo-bones/pull/166
 .. _#168: https://github.com/nengo/nengo-bones/pull/168
 .. _#169: https://github.com/nengo/nengo-bones/pull/169
+.. _#170: https://github.com/nengo/nengo-bones/pull/170
 
 0.11.1 (April 13, 2020)
 =======================
