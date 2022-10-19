@@ -31,7 +31,7 @@ runs:
       working-directory: ${{ inputs.path }}
       run: |
         bones-generate --output-dir bones-scripts ci-scripts
-        echo "::set-output name=dir::$(pwd)/bones-scripts"
+        echo "dir=$(pwd)/bones-scripts" >> "$GITHUB_OUTPUT"
     - name: Check templated files
       shell: bash
       working-directory: ${{ inputs.path }}
