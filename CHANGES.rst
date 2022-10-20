@@ -100,6 +100,8 @@ Release History
 - Static checks will not try to check ``docs`` directory if it doesn't exist. (`#165`_)
 - Static checks will no longer assume that CI scripts are in a folder named ``.ci``
   (it will look for any scripts in the same folder as the static script). (`#166`_)
+- Black will now ignore excluded files even if that filename is passed directly
+  to black (e.g. when running through a precommit hook or IDE plugin). (`#161`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
@@ -132,6 +134,7 @@ Release History
 .. _#168: https://github.com/nengo/nengo-bones/pull/168
 .. _#169: https://github.com/nengo/nengo-bones/pull/169
 .. _#170: https://github.com/nengo/nengo-bones/pull/170
+.. _#171: https://github.com/nengo/nengo-bones/pull/171
 
 0.11.1 (April 13, 2020)
 =======================
