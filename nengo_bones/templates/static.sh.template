@@ -13,7 +13,6 @@ shopt -s globstar
         "pylint>=2.5.1" \
         "codespell>=2.0.0" \
         "gitlint>=0.1.2" \
-        "collective.checkdocs>=0.2" \
         "flake8>=3.7.7" \
         {# see https://github.com/PyCQA/astroid/issues/1239 #}
         "astroid!=2.8.5" \
@@ -32,7 +31,7 @@ shopt -s globstar
     exe flake8 {{ pkg_name }}
     exe isort {{ pkg_name }} --check
     if [[ -d docs ]]; then
-        exe bones-format-notebook docs --verbose --check
+        exe bones format-notebook docs --verbose --check
     fi
     exe black --check {{ pkg_name }}
     exe codespell -q 3
@@ -49,5 +48,4 @@ shopt -s globstar
             | grep -v '^Co-authored-by:' \
             | gitlint -vvv || STATUS=1
     done
-    exe python setup.py checkdocs
 {% endblock %}

@@ -10,7 +10,7 @@
     # Update {{ repo }}
     exe git clone "https://$GH_TOKEN@github.com/{{ repo }}" {{ repo }}
     cd {{ repo }} || exit
-    exe bones-generate
+    exe bones generate
     if git diff HEAD --exit-code; then
         echo "No changes to {{ repo }}"
     else

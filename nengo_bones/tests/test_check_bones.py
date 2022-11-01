@@ -2,7 +2,7 @@
 
 from click.testing import CliRunner
 
-from nengo_bones.scripts import check_bones, generate_bones
+from nengo_bones.scripts.base import bones
 from nengo_bones.tests.utils import assert_exit, write_file
 
 
@@ -19,10 +19,11 @@ def _write_nengo_yml(tmp_path, nengo_yml=None):
 
 
 def _generate_valid_file(tmp_path):
-    """Generate a valid contributors.rst with bones-generate."""
+    """Generate a valid contributors.rst with bones generate."""
     result = CliRunner().invoke(
-        generate_bones.main,
+        bones,
         [
+            "generate",
             "--conf-file",
             str(tmp_path / ".nengobones.yml"),
             "--output-dir",
@@ -35,13 +36,14 @@ def _generate_valid_file(tmp_path):
 
 def _run_check_bones(tmp_path):
     cmdline_args = [
+        "check",
         "--root-dir",
         str(tmp_path),
         "--conf-file",
         str(tmp_path / ".nengobones.yml"),
         "--verbose",
     ]
-    return CliRunner().invoke(check_bones.main, cmdline_args)
+    return CliRunner().invoke(bones, cmdline_args)
 
 
 def test_success(tmp_path):
@@ -56,7 +58,7 @@ def test_no_file(tmp_path):
     _write_nengo_yml(tmp_path)
     result = _run_check_bones(tmp_path)
     assert_exit(result, 0)
-    assert ".travis.yml:\n  File not found" in result.output
+    assert "MANIFEST.in:\n  File not found" in result.output
 
 
 def test_modified_file(tmp_path):

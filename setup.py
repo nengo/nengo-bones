@@ -43,7 +43,9 @@ install_req = [
 ]
 docs_req = []
 optional_req = []
-tests_req = []
+tests_req = [
+    "check-manifest>=0.48",
+]
 
 setup(
     name="nengo-bones",
@@ -67,10 +69,7 @@ setup(
     python_requires=">=3.6",
     entry_points={
         "console_scripts": [
-            "bones-generate=nengo_bones.scripts.generate_bones:main",
-            "bones-check=nengo_bones.scripts.check_bones:main",
-            "bones-pr-number=nengo_bones.scripts.pr_number:main",
-            "bones-format-notebook=nengo_bones.scripts.format_notebook:main",
+            "bones=nengo_bones.scripts.base:bones",
         ],
     },
     classifiers=[

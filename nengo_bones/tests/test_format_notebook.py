@@ -8,6 +8,7 @@ from click.testing import CliRunner
 from nbconvert.preprocessors import ExecutePreprocessor
 
 from nengo_bones.scripts import format_notebook
+from nengo_bones.scripts.base import bones
 from nengo_bones.tests.utils import assert_exit
 
 
@@ -96,14 +97,14 @@ def test_format_notebook(tmp_path):
 
     # verify that --check correctly detects that notebooks are not formatted
     result = CliRunner().invoke(
-        format_notebook.main, [str(tmp_path), "--check", "--verbose"]
+        bones, ["format-notebook", str(tmp_path), "--check", "--verbose"]
     )
 
     assert_exit(result, 1)
     assert '-    "Title   \\n",\n+    "Title\\n",' in result.output
 
     # run the format-notebook script on the whole directory
-    result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--verbose"])
+    result = CliRunner().invoke(bones, ["format-notebook", str(tmp_path), "--verbose"])
     assert_exit(result, 0)
 
     # check that all files were found
@@ -115,7 +116,7 @@ def test_format_notebook(tmp_path):
         assert all(check_notebook(path, correct))
 
     # verify that --check correctly detects that notebooks are now formatted
-    result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--check"])
+    result = CliRunner().invoke(bones, ["format-notebook", str(tmp_path), "--check"])
     assert_exit(result, 0)
 
 
@@ -134,7 +135,7 @@ def test_format_notebook_prettier(tmp_path):
         nbformat.write(nb, f)
 
     result = CliRunner().invoke(
-        format_notebook.main, [str(tmp_path), "--verbose", "--prettier"]
+        bones, ["format-notebook", str(tmp_path), "--verbose", "--prettier"]
     )
     assert_exit(result, 0)
 
@@ -146,7 +147,7 @@ def test_format_notebook_prettier(tmp_path):
 def test_format_notebook_noprettier_error(tmp_path, monkeypatch):
     monkeypatch.setattr(format_notebook, "HAS_PRETTIER", False)
 
-    result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--prettier"])
+    result = CliRunner().invoke(bones, ["format-notebook", str(tmp_path), "--prettier"])
     assert_exit(result, 1)
     assert isinstance(result.exception, ValueError) and (
         re.match("Cannot format.*Prettier.*not installed", str(result.exception))
@@ -164,7 +165,7 @@ def test_format_notebook_static(tmp_path):
     with (tmp_path / "test.ipynb").open("w", encoding="utf-8") as f:
         nbformat.write(nb, f)
 
-    result = CliRunner().invoke(format_notebook.main, [str(tmp_path), "--verbose"])
+    result = CliRunner().invoke(bones, ["format-notebook", str(tmp_path), "--verbose"])
     assert_exit(result, 1)
 
     # check that pylint/flake8 errors were detected
@@ -185,7 +186,7 @@ def test_format_dir_ignore(tmpdir):
     rootdir.mkdir("_build")
     rootdir.mkdir("my.ipynb_checkpoints")
     rootdir.mkdir("format_this_dir")
-    result = CliRunner().invoke(format_notebook.main, [str(rootdir)])
+    result = CliRunner().invoke(bones, ["format-notebook", str(rootdir)])
     assert re.search("Ignoring directory '[^']*_build'", result.output)
     assert re.search(r"Ignoring directory '[^']*my\.ipynb_checkpoints'", result.output)
     assert not re.search(r"Ignoring directory '[^']*format_this_dir'", result.output)

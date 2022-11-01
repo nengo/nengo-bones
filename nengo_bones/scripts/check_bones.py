@@ -8,10 +8,11 @@ import click
 
 from nengo_bones import __version__, all_files
 from nengo_bones.config import load_config
+from nengo_bones.scripts.base import bones
 from nengo_bones.templates import BonesTemplate, load_env
 
 
-@click.command()
+@bones.command(name="check")
 @click.option(
     "--root-dir", default=".", help="Directory containing files to be checked"
 )
@@ -83,7 +84,7 @@ def main(root_dir, conf_file, verbose):
         if len(diff) > 0:
             click.secho(
                 f"  Content does not match nengo-bones (version {__version__});\n"
-                "  please update by running `bones-generate` from\n"
+                "  please update by running `bones generate` from\n"
                 "  the root directory.",
                 fg="red",
             )
@@ -100,7 +101,3 @@ def main(root_dir, conf_file, verbose):
 
     if not passed:
         sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()  # pragma: no cover pylint: disable=no-value-for-parameter

@@ -76,22 +76,6 @@ def fill_defaults(config):  # noqa: C901
     config.setdefault("main_branch", "master")
     config.setdefault("license", "proprietary")
 
-    if "travis_yml" in config:
-        cfg = config["travis_yml"]
-        cfg.setdefault("python", "3.6")
-        cfg.setdefault("global_vars", {})
-        cfg.setdefault("pypi_user", None)
-        cfg.setdefault("deploy_dists", ["sdist"])
-        cfg.setdefault(
-            "bones_install", "git+https://github.com/nengo/nengo-bones#egg=nengo-bones"
-        )
-
-        for job in cfg["jobs"]:
-            if job.get("script", "").startswith("docs"):
-                job.setdefault("apt_install", ["pandoc"])
-            elif job.get("script", "").startswith("examples"):
-                job.setdefault("services", ["xvfb"])
-
     if "codecov_yml" in config:
         cfg = config["codecov_yml"]
         cfg.setdefault("skip_appveyor", True)
@@ -232,7 +216,6 @@ mandatory_entries = [
     "project_name",
     "pkg_name",
     "repo_name",
-    "travis_yml.jobs",
     "version_py.release",
 ]
 

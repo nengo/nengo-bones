@@ -2,25 +2,23 @@
 
 {% block install %}
 {{ super() }}
-    exe pip install "check-manifest>=0.37" "collective.checkdocs>=0.2" "pygments>=2.3.1"
+    exe pip install \
+        "check-manifest>=0.37" \
+        "pygments>=2.3.1" \
+        "twine>=4.0.1"
     exe pip install -e .
 {% endblock %}
 
 {% block script %}
-    exe check-manifest
-    exe python setup.py checkdocs
-    if [[ "$TRAVIS_TAG" == "" ]]; then
-        TAG=v$(cut -d'-' -f3 <<<"$TRAVIS_BRANCH")
+    exe bones check-deploy
+    exe python setup.py sdist{% if wheel %} bdist_wheel{% endif +%}
+    exe twine check dist/*
+{% endblock %}
+
+{% block after_success %}
+    if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+        exe twine upload dist/*
     else
-        TAG="$TRAVIS_TAG"
+        exe twine upload -r testpypi dist/*
     fi
-    exe python -c "from {{ pkg_name }} import version; \
-        assert version.dev is None, 'this is a dev version'"
-    exe python -c "from {{ pkg_name }} import version; \
-        assert 'v' + version.version == '$TAG', 'version does not match tag'"
-    exe python -c "from {{ pkg_name }} import version; \
-        assert any(line.startswith(version.version) \
-        and 'unreleased' not in line \
-        for line in open('CHANGES.rst').readlines()), \
-        'changelog not updated'"
 {% endblock %}

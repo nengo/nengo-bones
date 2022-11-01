@@ -22,7 +22,7 @@
         # generate CI scripts on remote device
         # ensure nengo-bones version is the same as the one installed on host
         pip install $(pip freeze | grep nengo-bones | awk '{print $(NF)}')
-        bones-generate --output-dir .ci ci-scripts || REMOTE_STATUS=1
+        bones generate --output-dir .ci ci-scripts || REMOTE_STATUS=1
 
         {% for line in remote_setup %}
         {{ line }}

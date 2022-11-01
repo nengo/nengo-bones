@@ -7,6 +7,7 @@ import click
 
 from nengo_bones import __version__, all_sections
 from nengo_bones.config import load_config
+from nengo_bones.scripts.base import bones
 from nengo_bones.templates import BonesTemplate, load_env
 
 
@@ -29,7 +30,7 @@ def render_template(ctx, output_file):
     )
 
 
-@click.group(invoke_without_command=True)
+@bones.group(name="generate", invoke_without_command=True)
 @click.option("--conf-file", default=None, help="Filepath for config file")
 @click.option("--output-dir", default=".", help="Output directory for scripts")
 @click.pass_context
@@ -101,14 +102,6 @@ def ci_scripts(ctx):
             # pass top-level config and script-specific params
             **{**config, **params},
         )
-
-
-@main.command()
-@click.pass_context
-def travis_yml(ctx):
-    """Generate TravisCI config file."""
-
-    render_template(ctx, ".travis.yml")
 
 
 @main.command()
@@ -205,7 +198,3 @@ def version_py(ctx):
     """Generate {{ pkg_name }}/version.py file."""
 
     render_template(ctx, "pkg/version.py")
-
-
-if __name__ == "__main__":
-    main(obj={})  # pragma: no cover pylint: disable=no-value-for-parameter

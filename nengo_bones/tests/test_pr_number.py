@@ -7,6 +7,7 @@ import pytest
 from click.testing import CliRunner
 
 from nengo_bones.scripts import pr_number
+from nengo_bones.scripts.base import bones
 from nengo_bones.tests.utils import assert_exit, make_has_line, write_file
 
 
@@ -47,16 +48,16 @@ def test_pr_number(monkeypatch, tmp_path, mode):
         )
 
     if mode == "repo":
-        result = CliRunner().invoke(pr_number.main, [repo])
+        result = CliRunner().invoke(bones, ["pr-number", repo])
     elif mode == "conf-arg":
         result = CliRunner().invoke(
-            pr_number.main, ["--conf-file", str(tmp_path / ".nengobones.yml")]
+            bones, ["pr-number", "--conf-file", str(tmp_path / ".nengobones.yml")]
         )
     else:
         original_dir = os.getcwd()
         os.chdir(tmp_path)
         try:
-            result = CliRunner().invoke(pr_number.main)
+            result = CliRunner().invoke(bones, ["pr-number"])
         finally:
             os.chdir(original_dir)
 

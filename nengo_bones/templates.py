@@ -174,19 +174,6 @@ class BonesTemplate:
             output_path.chmod(st.st_mode | stat.S_IEXEC)
 
 
-@BonesTemplate.add_render_data("travis_yml")
-def add_travis_data(data):
-    """Add travis.yml-specific entries to the 'data' dict."""
-    jobs = data["travis_yml"]["jobs"]
-    for job in jobs:
-        # shortcuts for setting environment variables
-        if "env" not in job:
-            job["env"] = {}
-        for var in ("script", "test_args"):
-            if var in job:
-                job["env"][var] = job.pop(var)
-
-
 @BonesTemplate.add_render_data("manifest_in")
 def add_manifest_data(data):
     """Add MANIFEST.in-specific entries to the 'data' dict."""

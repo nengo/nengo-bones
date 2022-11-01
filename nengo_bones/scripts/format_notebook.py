@@ -11,6 +11,8 @@ import black
 import click
 import nbformat
 
+from nengo_bones.scripts.base import bones
+
 HAS_PRETTIER = (
     subprocess.run(
         "npx --no-install --quiet prettier --version ",
@@ -302,7 +304,7 @@ def format_file(fname, target_version=4, verbose=False, check=False, prettier=No
 
         if len(diff) > 0:
             click.secho(
-                f"{fname} has not been formatted; please run `bones-format-notebook`",
+                f"{fname} has not been formatted; please run `bones format-notebook`",
                 fg="red",
             )
             if verbose:
@@ -352,7 +354,7 @@ def format_paths(fnames, **kwargs):
     return passed
 
 
-@click.command()
+@bones.command(name="format-notebook")
 @click.argument("files", required=True, nargs=-1)
 @click.option("--target-version", default=4, help="Version of notebook format to save.")
 @click.option(

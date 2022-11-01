@@ -3,7 +3,8 @@
 import click
 import requests
 
-import nengo_bones
+from nengo_bones.config import load_config
+from nengo_bones.scripts.base import bones
 
 
 def get_issue_count(repo):
@@ -15,7 +16,7 @@ def get_issue_count(repo):
     return int(response.json()[0]["number"])
 
 
-@click.command()
+@bones.command(name="pr-number")
 @click.argument("repo", required=False, default=None)
 @click.option("--conf-file", default=None, help="Filepath for config file")
 def main(repo, conf_file):
@@ -31,7 +32,7 @@ def main(repo, conf_file):
     """
 
     if repo is None:
-        config = nengo_bones.config.load_config(conf_file)
+        config = load_config(conf_file)
         repo = config["repo_name"]
 
     click.echo(f"Asking GitHub for information about {repo}...")
@@ -40,7 +41,3 @@ def main(repo, conf_file):
     click.echo(f"If you open a PR now it will be assigned #{next_num}")
     click.echo("Use this link for the changelog entry:")
     click.echo(f"https://github.com/{repo}/pull/{next_num}")
-
-
-if __name__ == "__main__":
-    main()  # pragma: no cover pylint: disable=no-value-for-parameter

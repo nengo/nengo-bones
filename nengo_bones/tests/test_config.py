@@ -16,19 +16,10 @@ def test_find_config():
 def test_fill_defaults():
     init_cfg = {
         "repo_name": "test_org/test_repo",
-        "travis_yml": {"jobs": [{"script": "docs-test"}, {"script": "examples-test"}]},
         "codecov_yml": {},
         "setup_py": {},
     }
     config.fill_defaults(init_cfg)
-
-    assert init_cfg["travis_yml"]["python"] == "3.6"
-    assert init_cfg["travis_yml"]["global_vars"] == {}
-    assert init_cfg["travis_yml"]["pypi_user"] is None
-    assert init_cfg["travis_yml"]["deploy_dists"] == ["sdist"]
-
-    assert init_cfg["travis_yml"]["jobs"][0]["apt_install"] == ["pandoc"]
-    assert init_cfg["travis_yml"]["jobs"][1]["services"] == ["xvfb"]
 
     assert init_cfg["codecov_yml"]["skip_appveyor"]
     assert init_cfg["codecov_yml"]["abs_target"] == "auto"
@@ -41,7 +32,7 @@ def test_fill_defaults():
 
 
 def test_validate_config():
-    init_cfg = {"travis_yml": {}, "version_py": {}}
+    init_cfg = {"version_py": {}}
     for entry in config.mandatory_entries:
         with pytest.raises(KeyError, match=f"must define {entry}"):
             config.validate_config(init_cfg)
@@ -123,14 +114,6 @@ def test_load_config(tmp_path):
         "ci_scripts": [
             {"template": "static", "pip_install": ["static_pip0", "static_pip1"]}
         ],
-        "travis_yml": {
-            "python": "6.0",
-            "global_vars": {"TEST_VAR": "test var val"},
-            "pypi_user": "dummy_pypi_user",
-            "deploy_dists": ["sdist", "bdist_wheel"],
-            "jobs": [{"script": "static", "language": "generic"}],
-            "bones_install": "git+https://github.com/nengo/nengo-bones#egg=nengo-bones",
-        },
         "codecov_yml": {
             "skip_appveyor": False,
             "abs_target": "test_abs",
@@ -162,18 +145,6 @@ def test_load_config(tmp_path):
             pip_install:
               - static_pip0
               - static_pip1
-
-        travis_yml:
-          python: "6.0"
-          global_vars:
-            TEST_VAR: test var val
-          pypi_user: dummy_pypi_user
-          deploy_dists:
-            - sdist
-            - bdist_wheel
-          jobs:
-            - script: static
-              language: generic
 
         codecov_yml:
           skip_appveyor: false

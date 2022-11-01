@@ -44,7 +44,7 @@
         exit 1
     fi
 
-    if [[ "$GITHUB_EVENT_NAME" == "schedule" || "$TRAVIS_EVENT_TYPE" == "cron" ]]; then
+    if [[ "$GITHUB_EVENT_NAME" == "schedule" ]]; then
         echo "Skipping docs upload because this is a cron build"
         exit 0
     fi

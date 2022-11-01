@@ -30,10 +30,10 @@ runs:
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
-        bones-generate --output-dir bones-scripts ci-scripts
+        bones generate --output-dir bones-scripts ci-scripts
         echo "dir=$(pwd)/bones-scripts" >> "$GITHUB_OUTPUT"
     - name: Check templated files
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
-        bones-check --verbose
+        bones check --verbose

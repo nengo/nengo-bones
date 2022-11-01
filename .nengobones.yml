@@ -72,6 +72,7 @@ ci_scripts:
     pip_install:
       - mock
   - template: deploy
+    wheel: true
     pre_commands:
       - cat bones-scripts/deploy.sh
   - template: auto-update
@@ -112,10 +113,7 @@ manifest_in: {}
 setup_py:
   entry_points:
     console_scripts:
-      - bones-generate=nengo_bones.scripts.generate_bones:main
-      - bones-check=nengo_bones.scripts.check_bones:main
-      - bones-pr-number=nengo_bones.scripts.pr_number:main
-      - bones-format-notebook=nengo_bones.scripts.format_notebook:main
+      - bones=nengo_bones.scripts.base:bones
   include_package_data: True
   # note: docs/tests_req are intentionally empty to test that the correct
   # requirements are built into the ci scripts
@@ -130,6 +128,8 @@ setup_py:
     - pylint>=2.5.1
     - pyyaml>=5.1
     - requests>=2.21
+  tests_req:
+    - check-manifest>=0.48
   classifiers:
     - "Development Status :: 4 - Beta"
     - "Framework :: Nengo"

@@ -51,6 +51,10 @@ Release History
   ``coverage-report`` generates combined coverage reports. (`#166`_)
 - Added support for ``docformatter`` (and static checks will now enforce that
   docformatter has been applied). (`#168`_)
+- Added support for building and releasing Python projects through the
+  ``deploy`` CI script. (`#172`_)
+- Added a ``bones check-deploy`` script that checks several items that we
+  depend on for releases. (`#172`_)
 
 **Changed**
 
@@ -80,6 +84,11 @@ Release History
 - Added additional config options to mypy ``setup.cfg`` template. (`#170`_)
 - Restrict setuptools version to <64 (fixes issues with various code inspection tools
   like mypy, pylint, IDE integrations). (`#173`_)
+- Removed the ``deploy_dists`` configuration option for the ``deploy`` script,
+  and replaced it with a boolean ``wheel`` option. (`#172`_)
+- Consolidated all scripts under a single ``bones`` command. Subcommands have the
+  same names as before, without the ``bones-`` prefix (e.g., ``bones-generate``
+  is now ``bones generate``). (`#172`_)
 
 **Removed**
 
@@ -88,6 +97,8 @@ Release History
 - Removed ``analytics_id`` option for ``docs/conf.py``. Create a custom ``docs/conf.py``
   template and override the ``analytics`` block if you need to customize analytics
   tracking. (`#169`_)
+- Removed support for TravisCI in CI scripts. All downstream repositories should
+  switch to use Github Actions. (`#172`_)
 
 **Fixed**
 
@@ -137,6 +148,7 @@ Release History
 .. _#169: https://github.com/nengo/nengo-bones/pull/169
 .. _#170: https://github.com/nengo/nengo-bones/pull/170
 .. _#171: https://github.com/nengo/nengo-bones/pull/171
+.. _#172: https://github.com/nengo/nengo-bones/pull/172
 .. _#173: https://github.com/nengo/nengo-bones/pull/173
 
 0.11.1 (April 13, 2020)
