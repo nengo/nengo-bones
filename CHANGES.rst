@@ -78,6 +78,8 @@ Release History
 - All CI scripts now support running either through Github Actions or TravisCI.
   (`#166`_)
 - Added additional config options to mypy ``setup.cfg`` template. (`#170`_)
+- Restrict setuptools version to <64 (fixes issues with various code inspection tools
+  like mypy, pylint, IDE integrations). (`#173`_)
 
 **Removed**
 
@@ -135,6 +137,7 @@ Release History
 .. _#169: https://github.com/nengo/nengo-bones/pull/169
 .. _#170: https://github.com/nengo/nengo-bones/pull/170
 .. _#171: https://github.com/nengo/nengo-bones/pull/171
+.. _#173: https://github.com/nengo/nengo-bones/pull/173
 
 0.11.1 (April 13, 2020)
 =======================
