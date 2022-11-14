@@ -109,7 +109,9 @@ contributors_rst: {}
 
 license_rst: {}
 
-manifest_in: {}
+manifest_in:
+  recursive-include:
+    - actions *.yml
 
 setup_py:
   entry_points:
