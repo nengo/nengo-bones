@@ -115,6 +115,7 @@ Release History
   (it will look for any scripts in the same folder as the static script). (`#166`_)
 - Black will now ignore excluded files even if that filename is passed directly
   to black (e.g. when running through a precommit hook or IDE plugin). (`#161`_)
+- Only delete remote build directories more than a day old. (`#172`_)
 
 .. _#32: https://github.com/nengo/nengo-bones/pull/32
 .. _#101: https://github.com/nengo/nengo-bones/pull/101
