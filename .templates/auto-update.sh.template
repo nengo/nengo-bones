@@ -11,7 +11,7 @@
     exe git clone "https://$GH_TOKEN@github.com/{{ repo }}" {{ repo }}
     cd {{ repo }} || exit
     exe bones generate
-    if git diff HEAD --exit-code; then
+    if git diff HEAD --quiet; then
         echo "No changes to {{ repo }}"
     else
         exe git checkout -b bones-autoupdate

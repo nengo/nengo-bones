@@ -87,8 +87,9 @@ ci_scripts:
       - nengo/nengo-de1
       - nengo/nengo-de1-hw
       - nengo/nengo-dl
-      - nengo/nengo-edge
       - nengo/nengo-edge-device-plugins
+      - nengo/nengo-edge-hw
+      - nengo/nengo-edge-models
       - nengo/nengo-edge-server
       - nengo/nengo-fpga
       - nengo/nengo-interfaces
