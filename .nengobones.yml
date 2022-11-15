@@ -203,4 +203,4 @@ pyproject_toml:
 
 version_py:
   type: calver
-  release: true
+  release: false

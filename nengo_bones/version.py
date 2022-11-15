@@ -17,7 +17,7 @@ today = date.today()
 version_info = (today.year - 2000, today.month, today.day)
 
 name = "nengo-bones"
-dev = None
+dev = 0
 
 # use old string formatting, so that this can still run in Python <= 3.5
 # (since this file is parsed in setup.py, before python_requires is applied)
