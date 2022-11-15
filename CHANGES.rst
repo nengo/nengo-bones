@@ -19,8 +19,8 @@ Release History
    - Removed
    - Fixed
 
-20.5 (unreleased)
-=================
+22.11.15 (November 15, 2022)
+============================
 
 **Added**
 
