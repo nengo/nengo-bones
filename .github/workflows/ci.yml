@@ -28,7 +28,6 @@ jobs:
   test:
     needs:
       - static
-    runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       matrix:
@@ -51,12 +50,14 @@ jobs:
             test_local_var: test local var val
             test_args: --test-arg
             python: "3.6"
+            runs-on: ubuntu-20.04
             coverage-name: test-coverage-3.6
           - script: test-nengo
             test_local_var: test local var val
             test_args: --test-arg
             python: "3.9"
       fail-fast: false
+    runs-on: ${{ matrix.runs-on || 'ubuntu-latest' }}
     env:
       SCRIPT: ${{ matrix.script }}
       TEST_GLOBAL_VAR: test global var val
