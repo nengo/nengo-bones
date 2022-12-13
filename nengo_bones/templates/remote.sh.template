@@ -108,9 +108,14 @@ EOF
           flock -x -w 540 200 || exit 1
           echo "$ Obtained cleanup lock"
           {% block remote_cleanup %}
-          find . -mtime +1 -type d | grep '{{ pkg }}-' | xargs -I {} rm -r -- {}
+          if [ $(df -B1 -P . | tail -1 | awk '{print $4}') -lt '5368709120' ]; then
+            echo "$ ({{ host }}) < 5G disk space left, clearing ~/tmp"
+            find . -mindepth 1 -maxdepth 1 -mmin +59 -exec rm -r -- {} +
+          else
+            find . -maxdepth 1 -mtime +1 -type d -name '{{ pkg }}-*' -exec rm -r -- {} +
+          fi
           {% endblock %}
-        ) 200>cleanup.lock
+        ) 200>../tmpcleanup.lock
         exit \$?
 EOF
 {% endblock %}
