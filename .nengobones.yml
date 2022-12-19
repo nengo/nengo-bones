@@ -161,8 +161,8 @@ setup_cfg:
     exclude_lines:
       - "if __name__ == .__main__.:"
     omit_files:
-      - nengo_bones/tests/utils.py
-      - nengo_bones/tests/ignoreme/*
+      - "*/tests/utils.py"
+      - "*/tests/ignoreme/*"
   flake8:
     exclude:
       - nengo_bones/tests/ignoreme
