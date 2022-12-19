@@ -42,7 +42,6 @@ class BonesTemplate:
     extra_render_data = defaultdict(list)
 
     def __init__(self, output_file, env):
-
         self.output_file = output_file
         self.env = env
 
