@@ -26,7 +26,7 @@ runs:
         pip freeze
     - name: Open debugging ssh session
       uses: lhotari/action-upterm@v1
-      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled == 'true' }}
     - name: Script
       shell: bash
       working-directory: ${{ inputs.path }}
