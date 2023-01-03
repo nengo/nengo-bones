@@ -121,7 +121,7 @@ setup_py:
   # note: docs/tests_req are intentionally empty to test that the correct
   # requirements are built into the ci scripts
   install_req:
-    - black>=21.12b0
+    - black>=22.1.0
     - click>=7.0
     - codespell>=2.0.0
     - docformatter>=1.5.0,!=1.5.1
