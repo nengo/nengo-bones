@@ -6,10 +6,9 @@
 {{ super() }}
     exe sudo apt install -y pandoc
     exe pip install \
-        "sphinx>=3.1.2" \
         "jupyter>=1.0.0" \
-        "nbsphinx>=0.2.13" \
-        "numpydoc>=0.6.0" \
+        "nbsphinx>=0.8.11" \
+        "numpydoc>=1.4.0" \
         "git+https://github.com/nengo/nengo-sphinx-theme#egg=nengo-sphinx-theme"
     exe pip install -e ".[docs]"
 {% endblock %}

@@ -22,6 +22,12 @@ Release History
 22.11.16 (unreleased)
 =====================
 
+**Changed**
+
+- Updated minimum version of dependencies in CI scripts. (`#178`_)
+
+.. _#178: https://github.com/nengo/nengo-bones/pull/178
+
 22.11.15 (November 15, 2022)
 ============================
 

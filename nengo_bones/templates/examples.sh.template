@@ -2,7 +2,7 @@
 
 {% block install %}
 {{ super() }}
-    exe pip install "pytest>=3.6.0" "nbval>=0.6.0"
+    exe pip install "pytest>=7.0.0" "nbval>=0.9.6"
     exe pip install -e ".[docs]"
 {% endblock %}
 
