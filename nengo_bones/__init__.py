@@ -7,7 +7,6 @@ from .version import copyright as __copyright__
 from .version import version as __version__
 
 all_sections = [
-    "codecov_yml",
     "docs_conf_py",
     "setup_cfg",
     "setup_py",
@@ -22,7 +21,6 @@ all_sections = [
 ]
 
 all_files = [
-    ".codecov.yml",
     "docs/conf.py",
     "setup.cfg",
     "setup.py",

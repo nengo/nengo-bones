@@ -16,14 +16,9 @@ def test_find_config():
 def test_fill_defaults():
     init_cfg = {
         "repo_name": "test_org/test_repo",
-        "codecov_yml": {},
         "setup_py": {},
     }
     config.fill_defaults(init_cfg)
-
-    assert init_cfg["codecov_yml"]["skip_appveyor"]
-    assert init_cfg["codecov_yml"]["abs_target"] == "auto"
-    assert init_cfg["codecov_yml"]["diff_target"] == "100%"
 
     assert init_cfg["setup_py"]["license_string"] == "Proprietary"
     assert init_cfg["setup_py"]["classifiers"] == [
@@ -114,11 +109,6 @@ def test_load_config(tmp_path):
         "ci_scripts": [
             {"template": "static", "pip_install": ["static_pip0", "static_pip1"]}
         ],
-        "codecov_yml": {
-            "skip_appveyor": False,
-            "abs_target": "test_abs",
-            "diff_target": "test_diff",
-        },
         "setup_py": {
             "license_string": "Proprietary",
             "python_requires": ">=3.6",
@@ -145,11 +135,6 @@ def test_load_config(tmp_path):
             pip_install:
               - static_pip0
               - static_pip1
-
-        codecov_yml:
-          skip_appveyor: false
-          abs_target: test_abs
-          diff_target: test_diff
 
         setup_py: {}
         """,

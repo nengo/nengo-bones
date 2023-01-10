@@ -48,7 +48,7 @@
     ssh -q {{ host }} [[ -e "$REMOTE_FAILED_FILE" ]] && exe scp {{ host }}:"$REMOTE_FAILED_FILE" .
     exe rsync -azh "{{ host }}:./tmp/{{ pkg }}-$JOB_NUMBER/{{ pkg }}-docs" ..
     {% elif coverage %}
-    COVERAGE_FILE="tmp/{{ pkg }}-$JOB_NUMBER/{{ pkg }}/{% if codecov_yml %}coverage.xml{% else %}.coverage{% endif %}"
+    COVERAGE_FILE="tmp/{{ pkg }}-$JOB_NUMBER/{{ pkg }}/.coverage"
     exe scp {{ host }}:"$COVERAGE_FILE" .
     {% endif %}
     exe bash "$SCRIPT_DIR/{{ remote_script }}.sh" after_script

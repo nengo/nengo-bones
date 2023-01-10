@@ -106,14 +106,6 @@ def ci_scripts(ctx):
 
 @main.command()
 @click.pass_context
-def codecov_yml(ctx):
-    """Generate codecov config file."""
-
-    render_template(ctx, ".codecov.yml")
-
-
-@main.command()
-@click.pass_context
 def license_rst(ctx):
     """Generate LICENSE.rst file."""
 

@@ -139,60 +139,6 @@ def test_ci_scripts(tmp_path):
     assert has_line(".ci/remote-docs.sh", 'REMOTE_FAILED_FILE="tmp/dummy')
 
 
-def test_codecov_yml(tmp_path):
-    write_nengobones(tmp_path=tmp_path, contents="codecov_yml: {}")
-
-    result = CliRunner().invoke(
-        bones,
-        [
-            "generate",
-            "--conf-file",
-            str(tmp_path / ".nengobones.yml"),
-            "--output-dir",
-            str(tmp_path),
-            "codecov-yml",
-        ],
-    )
-    assert_exit(result, 0)
-
-    with (tmp_path / ".codecov.yml").open() as f:
-        data = f.read()
-
-    assert "!ci.appveyor.com" in data
-    assert "target: auto" in data
-    assert "target: 100%" in data
-
-    write_nengobones(
-        tmp_path=tmp_path,
-        contents="""
-            codecov_yml:
-              skip_appveyor: false
-              abs_target: abs
-              diff_target: diff
-            """,
-    )
-
-    result = CliRunner().invoke(
-        bones,
-        [
-            "generate",
-            "--conf-file",
-            str(tmp_path / ".nengobones.yml"),
-            "--output-dir",
-            str(tmp_path),
-            "codecov-yml",
-        ],
-    )
-    assert_exit(result, 0)
-
-    with (tmp_path / ".codecov.yml").open() as f:
-        data = f.read()
-
-    assert "!ci.appveyor.com" not in data
-    assert "target: abs" in data
-    assert "target: diff" in data
-
-
 def test_ci_script_custom_template(tmp_path):
     (tmp_path / ".templates").mkdir()
     write_file(

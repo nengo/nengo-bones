@@ -6,10 +6,6 @@
   :target: https://pypi.org/project/nengo-bones
   :alt: Python versions
 
-.. image:: https://img.shields.io/codecov/c/github/nengo/nengo-bones/master.svg
-  :target: https://codecov.io/gh/nengo/nengo-bones
-  :alt: Test coverage
-
 **********
 NengoBones
 **********

@@ -76,12 +76,6 @@ def fill_defaults(config):  # noqa: C901
     config.setdefault("main_branch", "master")
     config.setdefault("license", "proprietary")
 
-    if "codecov_yml" in config:
-        cfg = config["codecov_yml"]
-        cfg.setdefault("skip_appveyor", True)
-        cfg.setdefault("abs_target", "auto")
-        cfg.setdefault("diff_target", "100%")
-
     if "setup_py" in config:
         cfg = config["setup_py"]
         cfg.setdefault("python_requires", f">={config['min_python']}")
