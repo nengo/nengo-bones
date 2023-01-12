@@ -68,21 +68,14 @@ configuration (e.g. the `env:` section for Github Actions).
         REMOTE_STATUS=0
         cd ~/"$BUILD_DIR" || exit 1
         {% block remote_install %}
-        echo "$ ({{ host }}) Installing miniconda"
-        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh --quiet -O miniconda.sh || exit 1
-        for i in \$(seq 1 5); do
-            [ -d "./miniconda" ] && rm -rf ./miniconda;
-            bash miniconda.sh -b -p ./miniconda && break;
-            if [ "\$i" = 5 ]; then
-                echo "({{ host }}) Failed to install miniconda after \$i tries. Exiting.";
-                exit 1;
-            else
-                echo "({{ host }}) Retrying miniconda installation (attempt \$i)";
-            fi
-        done
-        export PATH="\$PWD/miniconda/bin:\$PATH"
-        conda create -y -n ci-"$JOB_NUMBER" python="$PYTHON_VERSION" || REMOTE_STATUS=1
-        source activate ci-"$JOB_NUMBER" || REMOTE_STATUS=1
+        echo "$ ({{ host }}) Installing micromamba"
+        curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+        export MAMBA_EXE="\$(pwd)/bin/micromamba"
+        eval "\$(./bin/micromamba shell hook --shell=bash)"
+        micromamba create -y -p ./env || REMOTE_STATUS=1
+        micromamba activate ./env || REMOTE_STATUS=1
+        echo "channels: [conda-forge]" > ./env/.mambarc
+        micromamba install -y python="$PYTHON_VERSION" || REMOTE_STATUS=1
         if [ "\$REMOTE_STATUS" -gt 0 ]; then
             echo "({{ host }}) Failed to create conda environment. Exiting.";
             exit \$REMOTE_STATUS;

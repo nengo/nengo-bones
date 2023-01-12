@@ -25,12 +25,14 @@ Release History
 **Changed**
 
 - Updated minimum version of dependencies in CI scripts. (`#178`_)
+- Switched to ``micromamba`` instead of ``miniconda`` for remote environments. (`#179`_)
 
 **Removed**
 
 - Removed codecov support. (`#178`_)
 
 .. _#178: https://github.com/nengo/nengo-bones/pull/178
+.. _#179: https://github.com/nengo/nengo-bones/pull/179
 
 22.11.15 (November 15, 2022)
 ============================
