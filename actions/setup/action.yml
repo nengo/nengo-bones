@@ -23,5 +23,5 @@ runs:
     - name: Update pip
       shell: bash
       run: |
-        pip install pip wheel --upgrade
+        python -m pip install pip wheel --upgrade
         pip --version
