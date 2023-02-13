@@ -4,6 +4,7 @@ import pathlib
 import stat
 import subprocess
 from collections import defaultdict
+from datetime import date
 
 import jinja2
 from black import FileMode, TargetVersion, format_str
@@ -221,6 +222,12 @@ def add_setup_cfg_data(data):
             "xfail_strict": "str",
         },
     )
+
+
+@BonesTemplate.add_render_data("version_py")
+def add_version_py_data(data):
+    """Add version.py-specific entries to the 'data' dict."""
+    data["today"] = date.today()
 
 
 def load_env():

@@ -11,10 +11,7 @@ unless the code base represents a release version. Release versions are git
 tagged with the version.
 """
 
-from datetime import date
-
-today = date.today()
-version_info = (today.year - 2000, today.month, today.day)
+version_info = (23, 2, 14)  # bones: ignore
 
 name = "nengo-bones"
 dev = 0

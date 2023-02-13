@@ -22,6 +22,11 @@ Release History
 22.11.16 (unreleased)
 =====================
 
+**Added**
+
+- Added the ability to ignore differences in a generated file by having the
+  string ``'# bones: ignore'`` in the line to be ignored. (`#183`_)
+
 **Changed**
 
 - Updated minimum version of dependencies in CI scripts. (`#178`_)
@@ -31,8 +36,14 @@ Release History
 
 - Removed codecov support. (`#178`_)
 
+**Fixed**
+
+- Version info in version.py is now set statically with calver, which fixes an
+  issue in which pip would refuse to install projects using calver. (`#183`_)
+
 .. _#178: https://github.com/nengo/nengo-bones/pull/178
 .. _#179: https://github.com/nengo/nengo-bones/pull/179
+.. _#183: https://github.com/nengo/nengo-bones/pull/183
 
 22.11.15 (November 15, 2022)
 ============================
