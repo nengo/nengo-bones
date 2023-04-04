@@ -33,7 +33,7 @@ install_req = [
     "black>=22.1.0",
     "click>=7.0",
     "codespell>=2.0.0",
-    "docformatter>=1.5.0,!=1.5.1",
+    "docformatter==1.5.0",
     "flake8>=3.7.7",
     "jinja2>=2.11",
     "jupyter>=1.0.0",

@@ -18,7 +18,7 @@ shopt -s globstar
         "mypy>=0.991" \
         {% endif %}
         "isort>=5.10.1" \
-        "docformatter>=1.5.0,!=1.5.1"
+        "docformatter==1.5.0"
 {% endblock %}
 
 {% block script %}
