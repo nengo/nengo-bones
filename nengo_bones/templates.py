@@ -1,10 +1,10 @@
 """Handles the processing of nengo-bones templates using jinja2."""
 
+import datetime
 import pathlib
 import stat
 import subprocess
 from collections import defaultdict
-from datetime import date
 
 import jinja2
 from black import FileMode, TargetVersion, format_str
@@ -227,7 +227,9 @@ def add_setup_cfg_data(data):
 @BonesTemplate.add_render_data("version_py")
 def add_version_py_data(data):
     """Add version.py-specific entries to the 'data' dict."""
-    data["today"] = date.today()
+    data["today"] = datetime.datetime.now(
+        tz=datetime.timezone(datetime.timedelta(hours=-5))
+    )
 
 
 def load_env():
