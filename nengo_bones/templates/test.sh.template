@@ -4,7 +4,7 @@
 {{ super() }}
     {# TODO: switch to templating requirements in setup.py, then remove these #}
     exe pip install "pytest>=7.0.0"
-    exe pip install "pytest-xdist>=3.0.0"
+    exe pip install "pytest-xdist>=3.2.0"
     {% if coverage %}
     exe pip install "pytest-cov>=4.0.0"
     {% endif %}
@@ -13,10 +13,10 @@
 
 {% block script %}
     # shellcheck disable=SC2086
-    exe pytest {{ pkg_name }} -v -n 2 --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-report=term-missing{%- endif %} $TEST_ARGS
+    exe pytest {{ pkg_name }} -v -n 3 --dist worksteal --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-report=term-missing{%- endif %} $TEST_ARGS
 
     {% if nengo_tests %}
     # shellcheck disable=SC2086
-    exe pytest --pyargs nengo -v -n 2 --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-append --cov-report=term-missing{%- endif %} $TEST_ARGS
+    exe pytest --pyargs nengo -v -n 3 --dist worksteal --color=yes --durations 20 {%- if coverage %} --cov={{ pkg_name }} --cov-append --cov-report=term-missing{%- endif %} $TEST_ARGS
     {% endif %}
 {% endblock %}
