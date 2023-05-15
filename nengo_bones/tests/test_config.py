@@ -99,7 +99,7 @@ def test_load_config(tmp_path):
         "project_name": "Dummy",
         "pkg_name": "dummy",
         "repo_name": "abr/dummy",
-        "min_python": "3.6",
+        "min_python": "3.8",
         "main_branch": "master",
         "author": "A Dummy",
         "author_email": "dummy@dummy.com",
@@ -111,7 +111,7 @@ def test_load_config(tmp_path):
         ],
         "setup_py": {
             "license_string": "Proprietary",
-            "python_requires": ">=3.6",
+            "python_requires": ">=3.8",
             "include_package_data": False,
             "url": "https://www.appliedbrainresearch.com/dummy",
             "classifiers": ["License :: Other/Proprietary License"],

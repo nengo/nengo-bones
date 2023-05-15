@@ -36,6 +36,7 @@ Release History
 **Removed**
 
 - Removed codecov support. (`#178`_)
+- Dropped support for Python 3.6 and 3.7. (`#186`_)
 
 **Fixed**
 

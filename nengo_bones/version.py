@@ -11,7 +11,7 @@ unless the code base represents a release version. Release versions are git
 tagged with the version.
 """
 
-version_info = (23, 4, 19)  # bones: ignore
+version_info = (23, 5, 15)  # bones: ignore
 
 name = "nengo-bones"
 dev = 0

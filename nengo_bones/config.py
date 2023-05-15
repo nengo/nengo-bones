@@ -72,7 +72,7 @@ def fill_defaults(config):  # noqa: C901
     config.setdefault("author_email", "info@appliedbrainresearch.com")
     config.setdefault("copyright_start", datetime.datetime.now().year)
     config.setdefault("copyright_end", datetime.datetime.now().year)
-    config.setdefault("min_python", "3.6")
+    config.setdefault("min_python", "3.8")
     config.setdefault("main_branch", "master")
     config.setdefault("license", "proprietary")
 
