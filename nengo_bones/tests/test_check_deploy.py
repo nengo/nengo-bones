@@ -128,11 +128,24 @@ def test_subject(tmp_path, monkeypatch):
     assert "Commit subject should be 'Release v1.2.3'" in result.output
 
 
-def test_pypirc(tmp_path, monkeypatch):
+def test_no_pypirc(tmp_path, monkeypatch):
     _monkeypatch(tmp_path, monkeypatch)
     result = _write_repo_and_check(tmp_path, pypirc=False)
-    assert_exit(result, 1)
+    assert_exit(result, 0)
     assert "Cannot find ~/.pypirc. Make one" in result.output
+
+
+def test_pypirc_exists(tmp_path, monkeypatch):
+    _monkeypatch(tmp_path, monkeypatch)
+    result = _write_repo_and_check(tmp_path, pypirc=True)
+    assert_exit(result, 0)
+
+
+def test_pypirc_invalid(tmp_path, monkeypatch):
+    _monkeypatch(tmp_path, monkeypatch)
+    write_file(tmp_path=tmp_path, filename=".pypirc", contents="")
+    result = _write_repo_and_check(tmp_path, pypirc=False)
+    assert_exit(result, 1)
     assert "[pypi] section not found in ~/.pypirc" in result.output
     assert "[testpypi] section not found in ~/.pypirc" in result.output
 

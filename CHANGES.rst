@@ -32,6 +32,7 @@ Release History
 - Updated minimum version of dependencies in CI scripts. (`#178`_)
 - Switched to ``micromamba`` instead of ``miniconda`` for remote environments. (`#179`_)
 - Tests now default to using the ``worksteal`` xdist option, with 3 workers. (`#186`_)
+- Modified ``check-deploy`` to skip checks when no ``.pypirc`` file present. (`#187`_)
 
 **Removed**
 
@@ -47,6 +48,7 @@ Release History
 .. _#179: https://github.com/nengo/nengo-bones/pull/179
 .. _#183: https://github.com/nengo/nengo-bones/pull/183
 .. _#186: https://github.com/nengo/nengo-bones/pull/186
+.. _#187: https://github.com/nengo/nengo-bones/pull/187
 
 22.11.15 (November 15, 2022)
 ============================

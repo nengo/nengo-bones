@@ -56,10 +56,8 @@ def main(conf_file):
         f"Commit subject should be 'Release v{version.version}'",
     )
 
-    check(
-        pypirc.exists(),
-        "Cannot find ~/.pypirc. Make one to store PyPI credentials.",
-    )
+    if not pypirc.exists():
+        click.echo("Cannot find ~/.pypirc. Make one to store PyPI credentials.")
 
     changelog = Path(root_dir) / "CHANGES.rst"
     if changelog.exists():
@@ -74,7 +72,8 @@ def main(conf_file):
             f"Version '{version.version}' does not match git branch '{git_branch}'",
         )
         check(
-            "[testpypi]\n" in pypirc_text, "[testpypi] section not found in ~/.pypirc"
+            not pypirc.exists() or "[testpypi]\n" in pypirc_text,
+            "[testpypi] section not found in ~/.pypirc",
         )
 
     if release:
@@ -82,7 +81,10 @@ def main(conf_file):
             f"v{version.version}" == git_tag,
             f"Version '{version.version}' does not match git tag '{git_tag}'",
         )
-        check("[pypi]\n" in pypirc_text, "[pypi] section not found in ~/.pypirc")
+        check(
+            not pypirc.exists() or "[pypi]\n" in pypirc_text,
+            "[pypi] section not found in ~/.pypirc",
+        )
 
     output = subprocess.run(
         ["check-manifest", root_dir],
