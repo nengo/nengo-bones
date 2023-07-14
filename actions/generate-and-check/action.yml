@@ -13,7 +13,7 @@ runs:
   using: composite
   steps:
     - name: Install NengoBones
-      shell: bash
+      shell: bash -el {0}
       env:
         # note: special case code here for when we're running these actions locally in
         # the nengo-bones CI itself (in which case the github.action* contexts don't get
@@ -27,13 +27,13 @@ runs:
         pip install "git+https://github.com/nengo/nengo-bones@$REF#egg=nengo-bones"
     - name: Generate scripts
       id: generate-scripts
-      shell: bash
+      shell: bash -el {0}
       working-directory: ${{ inputs.path }}
       run: |
         bones generate --output-dir bones-scripts ci-scripts
         echo "dir=$(pwd)/bones-scripts" >> "$GITHUB_OUTPUT"
     - name: Check templated files
-      shell: bash
+      shell: bash -el {0}
       working-directory: ${{ inputs.path }}
       run: |
         bones check --verbose

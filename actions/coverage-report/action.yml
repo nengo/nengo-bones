@@ -13,13 +13,13 @@ runs:
       with:
         python-version: 3.9
     - name: Install coverage
-      shell: bash
+      shell: bash -el {0}
       run: |
         pip install coverage
     - uses: actions/download-artifact@v3
       id: download
     - name: Combine coverage and generate report
-      shell: bash
+      shell: bash -el {0}
       run: |
         coverage combine $(find ${{ steps.download.outputs.download-path }} -type f -name ".coverage")
         coverage html

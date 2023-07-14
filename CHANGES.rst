@@ -33,6 +33,7 @@ Release History
 - Switched to ``micromamba`` instead of ``miniconda`` for remote environments. (`#179`_)
 - Tests now default to using the ``worksteal`` xdist option, with 3 workers. (`#186`_)
 - Modified ``check-deploy`` to skip checks when no ``.pypirc`` file present. (`#187`_)
+- Use micromamba to set up python environments. (`#188`_)
 
 **Removed**
 
@@ -49,6 +50,7 @@ Release History
 .. _#183: https://github.com/nengo/nengo-bones/pull/183
 .. _#186: https://github.com/nengo/nengo-bones/pull/186
 .. _#187: https://github.com/nengo/nengo-bones/pull/187
+.. _#188: https://github.com/nengo/nengo-bones/pull/188
 
 22.11.15 (November 15, 2022)
 ============================
