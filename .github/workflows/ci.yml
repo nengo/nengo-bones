@@ -101,8 +101,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./actions/coverage-report
-        with:
-          min-coverage: 95
   auto-update:
     needs:
       - test

@@ -610,3 +610,23 @@ def test_version_py(version_type, release, tmp_path):
         )
         version_info = (today.year - 2000, today.month, today.day)
         assert version == ".".join(str(x) for x in version_info)
+
+
+def test_no_config(tmp_path):
+    write_nengobones(tmp_path=tmp_path, contents="")
+
+    result = CliRunner().invoke(
+        bones,
+        [
+            "generate",
+            "--conf-file",
+            str(tmp_path / ".nengobones.yml"),
+            "--output-dir",
+            str(tmp_path),
+            "setup-py",
+        ],
+    )
+    assert_exit(result, 1)
+
+    assert not (tmp_path / "setup.py").exists()
+    assert "No config entry detected for setup_py" in result.output

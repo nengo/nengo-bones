@@ -75,7 +75,7 @@ def main(ctx, conf_file, output_dir):
     def check_cfg(name):
         name = name.replace("-", "_")
         if name not in config:
-            print(f"No config entry detected for {name}, skipping")
+            click.echo(f"No config entry detected for {name}, skipping")
             return False
         return True
 
@@ -84,7 +84,7 @@ def main(ctx, conf_file, output_dir):
             if check_cfg(cfg_name):
                 ctx.invoke(globals()[cfg_name])
     elif not check_cfg(ctx.invoked_subcommand):
-        sys.exit()
+        sys.exit(1)
 
 
 @main.command()
