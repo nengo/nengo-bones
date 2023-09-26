@@ -83,6 +83,10 @@ jobs:
       - uses: ./action-checkout/actions/generate-and-check
         with:
           path: nengo-bones
+      - name: Docs setup
+        if: ${{ matrix.script == 'docs' }}
+        run: |
+          micromamba install pandoc
       - uses: ./action-checkout/actions/run-script
         with:
           name: ${{ matrix.script }}
