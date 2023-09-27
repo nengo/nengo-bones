@@ -1,13 +1,14 @@
 """Scripts for auto-generating nengo-bones files."""
 
-import pathlib
 import sys
+from pathlib import Path
 
 import click
 
 from nengo_bones import __version__, all_sections
 from nengo_bones.config import load_config
 from nengo_bones.scripts.base import bones
+from nengo_bones.scripts.check_notice import check_notice
 from nengo_bones.templates import BonesTemplate, load_env
 
 
@@ -66,7 +67,7 @@ def main(ctx, conf_file, output_dir):
 
     config = load_config(conf_file)
 
-    pathlib.Path(output_dir).mkdir(exist_ok=True)
+    Path(output_dir).mkdir(exist_ok=True)
 
     ctx.obj["config"] = config
     ctx.obj["output_dir"] = output_dir
@@ -110,6 +111,9 @@ def license_rst(ctx):
     """Generate LICENSE.rst file."""
 
     render_template(ctx, "LICENSE.rst")
+
+    if ctx.obj["config"]["license_rst"]["add_to_files"]:
+        check_notice(Path.cwd(), ctx.obj["config"]["license_rst"]["text"], fix=True)
 
 
 @main.command()

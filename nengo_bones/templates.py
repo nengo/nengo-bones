@@ -117,8 +117,13 @@ class BonesTemplate:
         """
         rendered = self.env.get_template(self.template_file).render(**data)
 
-        # Format Python templates with black and docformatter
+        # Apply additional formatting to python files
         if self.output_file.endswith(".py"):
+            # Add license notice
+            if "license_rst" in data and data["license_rst"]["add_to_files"]:
+                rendered = add_notice(data["license_rst"]["text"], rendered)
+
+            # Format with black
             black_mode = FileMode(
                 target_versions={
                     TargetVersion.PY36,
@@ -128,6 +133,7 @@ class BonesTemplate:
             )
             rendered = format_str(rendered, mode=black_mode)
 
+            # Format with docformatter/isort
             for tool in ["docformatter", "isort"]:
                 rendered = subprocess.run(
                     [tool, "-"],
@@ -255,3 +261,10 @@ def load_env():
     env.filters["rstrip"] = lambda s, chars: s.rstrip(chars)
 
     return env
+
+
+def add_notice(license_text, current_text):
+    """Add license text to file contents."""
+
+    license_text = "\n".join(f"# {line}".strip() for line in license_text.splitlines())
+    return f"{license_text}\n\n{current_text}"

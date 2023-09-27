@@ -227,9 +227,7 @@ def test_license(tmp_path, license_type):
         assert has_line("**MIT License**")
 
     if license_type == "proprietary":
-        assert has_line(
-            "All rights reserved. Contact sales@appliedbrainresearch.com for licensing."
-        )
+        assert has_line("All information contained herein is and remains the property")
 
     if license_type == "apache":
         assert has_line("**Apache License**")
@@ -630,3 +628,33 @@ def test_no_config(tmp_path):
 
     assert not (tmp_path / "setup.py").exists()
     assert "No config entry detected for setup_py" in result.output
+
+
+def test_license_notice(tmp_path, monkeypatch):
+    write_nengobones(
+        tmp_path,
+        """
+        project_name: Dumdum
+        pkg_name: dummy
+        repo_name: dummy_org/dummy
+
+        license_rst:
+          add_to_files: true
+
+        version_py:
+          type: calver
+          release: false
+        """,
+    )
+    (tmp_path / "file.py").touch()
+
+    monkeypatch.chdir(tmp_path)
+    result = CliRunner().invoke(bones, ["generate"])
+    assert_exit(result, 0)
+    assert "Fixed" in result.stdout
+    assert "All information contained herein" in (tmp_path / "file.py").read_text()
+
+    assert (
+        "All information contained herein"
+        in (tmp_path / "dummy" / "version.py").read_text()
+    )

@@ -126,3 +126,22 @@ def test_bones_ignore_comment(tmp_path):
     result = _run_check_bones(tmp_path)
     assert_exit(result, 0)
     assert "version.py:\n  Up to date" in result.output
+
+
+def test_license_check(tmp_path):
+    _write_nengo_yml(
+        tmp_path,
+        nengo_yml="""
+            project_name: Dumdum
+            pkg_name: dummy
+            repo_name: dummy_org/dummy
+
+            license_rst:
+              add_to_files: true
+        """,
+    )
+    (tmp_path / "file.py").touch()
+
+    result = _run_check_bones(tmp_path)
+    assert_exit(result, 1)
+    assert "Missing" in result.output

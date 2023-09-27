@@ -105,6 +105,7 @@ def test_load_config(tmp_path):
         "author_email": "dummy@dummy.com",
         "copyright_start": 0,
         "copyright_end": 1,
+        "notice": "dummy notice",
         "license": "proprietary",
         "ci_scripts": [
             {"template": "static", "pip_install": ["static_pip0", "static_pip1"]}
@@ -129,6 +130,7 @@ def test_load_config(tmp_path):
         author_email: dummy@dummy.com
         copyright_start: 0
         copyright_end: 1
+        notice: dummy notice
 
         ci_scripts:
           - template: static

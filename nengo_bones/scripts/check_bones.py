@@ -1,13 +1,14 @@
 """Applies validation to auto-generated files."""
 
 import difflib
-import pathlib
 import sys
+from pathlib import Path
 
 import click
 
 from nengo_bones import __version__, all_files
 from nengo_bones.config import load_config
+from nengo_bones.scripts import check_notice
 from nengo_bones.scripts.base import bones
 from nengo_bones.templates import BonesTemplate, load_env
 
@@ -94,7 +95,7 @@ def main(root_dir, conf_file, verbose):
 
     config = load_config(conf_file)
     env = load_env()
-    path = pathlib.Path(root_dir)
+    path = Path(root_dir)
 
     click.echo("*" * 50)
     click.echo("Checking content of nengo-bones generated files:")
@@ -103,6 +104,11 @@ def main(root_dir, conf_file, verbose):
         _check_file(filename, config=config, env=env, path=path, verbose=verbose)
         for filename in all_files
     ]
+
+    if "license_rst" in config and config["license_rst"]["add_to_files"]:
+        _, missing = check_notice.check_notice(path, config["license_rst"]["text"])
+        passed.append(missing == 0)
+
     click.echo("*" * 50)
 
     if not all(passed):

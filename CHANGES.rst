@@ -26,6 +26,9 @@ Release History
 
 - Added the ability to ignore differences in a generated file by having the
   string ``'# bones: ignore'`` in the line to be ignored. (`#183`_)
+- Added ``add_to_files`` option to the ``license_rst`` config. If set to True the
+  license text will be added to the top of all python files, and ``bones check`` will
+  check for the existence of that text. (`#189`_)
 
 **Changed**
 
@@ -51,6 +54,7 @@ Release History
 .. _#186: https://github.com/nengo/nengo-bones/pull/186
 .. _#187: https://github.com/nengo/nengo-bones/pull/187
 .. _#188: https://github.com/nengo/nengo-bones/pull/188
+.. _#189: https://github.com/nengo/nengo-bones/pull/189
 
 22.11.15 (November 15, 2022)
 ============================
