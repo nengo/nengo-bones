@@ -26,6 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./actions/setup
+        with:
+          python-version: "3.11"
       - uses: ./actions/generate-and-check
       - uses: ./actions/run-script
         with:
@@ -116,6 +118,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./actions/setup
+        with:
+          python-version: "3.11"
       - uses: ./actions/generate-and-check
       - uses: ./actions/run-script
         with:
