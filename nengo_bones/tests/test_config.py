@@ -1,7 +1,7 @@
 # pylint: disable=missing-docstring
 
 import os
-import pathlib
+from pathlib import Path
 
 import pytest
 
@@ -10,7 +10,7 @@ from nengo_bones.tests import utils
 
 
 def test_find_config():
-    assert config.find_config() == pathlib.Path.cwd() / ".nengobones.yml"
+    assert config.find_config() == Path(__file__).parents[2] / ".nengobones.yml"
 
 
 def test_fill_defaults():
@@ -89,9 +89,10 @@ def test_validate_config():
     del init_cfg["pyproject_toml"]["exclude"]
 
 
-def test_missing_config(tmp_path):
-    with pytest.raises(RuntimeError, match="Could not find conf_file"):
-        config.load_config(tmp_path / ".does-not-exist.yml")
+def test_missing_config(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    with pytest.raises(RuntimeError, match="Could not find .nengobones.yml"):
+        config.find_config()
 
 
 def test_load_config(tmp_path):
@@ -154,7 +155,7 @@ def test_load_config(tmp_path):
         raise
 
     # check loading from cwd
-    cwd = pathlib.Path.cwd()
+    cwd = Path.cwd()
     os.chdir(tmp_path)
     try:
         loaded = config.load_config()

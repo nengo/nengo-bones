@@ -1,13 +1,14 @@
 """Handles the processing of nengo-bones templates using jinja2."""
 
 import datetime
-import pathlib
 import stat
 import subprocess
 from collections import defaultdict
+from pathlib import Path
 
 import jinja2
-from black import FileMode, TargetVersion, format_str
+
+from nengo_bones.config import find_config
 
 
 class BonesTemplate:
@@ -123,24 +124,14 @@ class BonesTemplate:
             if "license_rst" in data and data["license_rst"]["add_to_files"]:
                 rendered = add_notice(data["license_rst"]["text"], rendered)
 
-            # Format with black
-            black_mode = FileMode(
-                target_versions={
-                    TargetVersion.PY36,
-                    TargetVersion.PY37,
-                    TargetVersion.PY38,
-                }
-            )
-            rendered = format_str(rendered, mode=black_mode)
-
-            # Format with docformatter/isort
-            for tool in ["docformatter", "isort"]:
+            for tool in ["black -q -", "docformatter -", "isort -"]:
                 rendered = subprocess.run(
-                    [tool, "-"],
+                    tool.split(),
                     input=rendered,
                     stdout=subprocess.PIPE,
                     encoding="utf-8",
                     check=True,
+                    cwd=find_config().parent,
                 ).stdout
 
         return rendered
@@ -170,7 +161,7 @@ class BonesTemplate:
         if output_name.startswith("pkg/"):
             assert "pkg_name" in data
             output_name = output_name.replace("pkg/", f"{data['pkg_name']}/")
-        output_path = pathlib.Path(output_dir, output_name)
+        output_path = Path(output_dir, output_name)
         output_path.parent.mkdir(exist_ok=True, parents=True)
         output_path.write_text(self.render(**data), encoding="utf-8")
 
@@ -241,7 +232,7 @@ def add_version_py_data(data):
 def load_env():
     """Creates a jinja environment for loading/rendering templates."""
 
-    bones_toplevel = pathlib.Path(__file__).parent
+    bones_toplevel = Path(__file__).parent
 
     # Load overridden templates first.
     # Builtins are referenced with templates/*.template

@@ -6,7 +6,7 @@ from pathlib import Path
 import click
 
 from nengo_bones import __version__, all_sections
-from nengo_bones.config import load_config
+from nengo_bones.config import find_config, load_config
 from nengo_bones.scripts.base import bones
 from nengo_bones.scripts.check_notice import check_notice
 from nengo_bones.templates import BonesTemplate, load_env
@@ -113,7 +113,9 @@ def license_rst(ctx):
     render_template(ctx, "LICENSE.rst")
 
     if ctx.obj["config"]["license_rst"]["add_to_files"]:
-        check_notice(Path.cwd(), ctx.obj["config"]["license_rst"]["text"], fix=True)
+        check_notice(
+            find_config().parent, ctx.obj["config"]["license_rst"]["text"], fix=True
+        )
 
 
 @main.command()

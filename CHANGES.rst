@@ -47,6 +47,10 @@ Release History
 
 - Version info in version.py is now set statically with calver, which fixes an
   issue in which pip would refuse to install projects using calver. (`#183`_)
+- Improved robustness of ``.nengobones.yml`` file detection. (`#189`_)
+- External tools (such as black/isort) will now run from the same directory as the
+  ``.nengobones.yml`` file, which should improve the robustness of their config file
+  detection. (`#189`_)
 
 .. _#178: https://github.com/nengo/nengo-bones/pull/178
 .. _#179: https://github.com/nengo/nengo-bones/pull/179

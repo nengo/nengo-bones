@@ -1,16 +1,16 @@
 """Applies standard formatting to Jupyter Notebook (.ipynb) files."""
 
 import difflib
-import pathlib
 import re
 import subprocess
 import sys
 import textwrap
+from pathlib import Path
 
-import black
 import click
 import nbformat
 
+from nengo_bones.config import find_config
 from nengo_bones.scripts.base import bones
 
 HAS_PRETTIER = (
@@ -186,7 +186,7 @@ def apply_black(source):
         source = source[: match.start(1)] + space + replacement + source[match.end(2) :]
 
     # run black
-    source = black.format_str(source, mode=black.FileMode())
+    source = run_command("black -q -", source).stdout
 
     # put magic functions back
     for magic, replacement in magic_pairs:
@@ -221,6 +221,7 @@ def run_command(command, inputs):
         stderr=subprocess.STDOUT,
         shell=True,
         check=False,
+        cwd=find_config().parent,
     )
 
 
@@ -345,7 +346,7 @@ def format_paths(fnames, **kwargs):
     passed = True
 
     for fname in fnames:
-        fname = pathlib.Path(fname)
+        fname = Path(fname)
         if fname.is_dir():
             passed &= format_dir(fname, **kwargs)
         else:

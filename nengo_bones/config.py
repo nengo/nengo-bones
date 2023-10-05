@@ -1,9 +1,10 @@
 """Handles the processing of nengo-bones configuration settings."""
 
 import datetime
-import pathlib
+from pathlib import Path
 from textwrap import dedent
 
+import black
 import yaml
 
 
@@ -53,8 +54,16 @@ def find_config():
     conf_file : `pathlib.Path`
         Path to the default config file.
     """
-    # for now, assume that config file is in cwd
-    conf_file = pathlib.Path.cwd() / ".nengobones.yml"
+    conf_file = Path.cwd() / ".nengobones.yml"
+    if not conf_file.exists():
+        # use black's logic for finding the root of a project
+        conf_file = black.find_project_root((Path.cwd(),))[0] / ".nengobones.yml"
+
+    if not conf_file.exists():
+        raise RuntimeError(
+            "Could not find .nengobones.yml file\n\nPerhaps you are "
+            "not in the project's root directory?"
+        )
 
     return conf_file
 
@@ -599,12 +608,6 @@ def load_config(conf_file=None):
 
     if conf_file is None:
         conf_file = find_config()
-
-    if not pathlib.Path(conf_file).exists():
-        raise RuntimeError(
-            f"Could not find conf_file: {conf_file}\n\nPerhaps you are "
-            "not in the project's root directory?"
-        )
 
     with open(conf_file, encoding="utf-8") as f:
         config = yaml.load(f, Loader=yaml.SafeLoader)
