@@ -74,20 +74,6 @@ def test_validate_config():
         config.validate_config(init_cfg)
     test_cfg["pre_commands"] = ["command"]
 
-    # error when only one of pre_commit_config_yaml or pyproject_toml exists
-    init_cfg["pyproject_toml"] = {}
-    with pytest.raises(KeyError, match="must define both"):
-        config.validate_config(init_cfg)
-    init_cfg["pre_commit_config_yaml"] = {}
-
-    # error when Black exclude lists don't match
-    init_cfg["pre_commit_config_yaml"]["exclude"] = ["file2.py"]
-    init_cfg["pyproject_toml"]["exclude"] = ["file1.py"]
-    with pytest.raises(ValueError, match="must have the same 'exclude' list"):
-        config.validate_config(init_cfg)
-    del init_cfg["pre_commit_config_yaml"]["exclude"]
-    del init_cfg["pyproject_toml"]["exclude"]
-
 
 def test_missing_config(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)

@@ -24,6 +24,7 @@ htmlcov
 .pytest_cache/
 .ci/*.sh
 .ci/secret.tar
+.pre-commit-config.yaml
 bones-scripts/*.sh
 docs/examples/*
 !docs/examples/**/*.ipynb

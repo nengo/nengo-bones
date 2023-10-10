@@ -168,14 +168,6 @@ def docs_conf_py(ctx):
 
 @main.command()
 @click.pass_context
-def pre_commit_config_yaml(ctx):
-    """Generate .pre-commit-config.yaml file."""
-
-    render_template(ctx, ".pre-commit-config.yaml")
-
-
-@main.command()
-@click.pass_context
 def pyproject_toml(ctx):
     """Generate pyproject.toml file."""
 

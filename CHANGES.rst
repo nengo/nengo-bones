@@ -42,6 +42,7 @@ Release History
 
 - Removed codecov support. (`#178`_)
 - Dropped support for Python 3.6 and 3.7. (`#186`_)
+- Removed ``.pre-commit-config.yaml`` from templated files. (`#191`_)
 
 **Fixed**
 
@@ -59,6 +60,7 @@ Release History
 .. _#187: https://github.com/nengo/nengo-bones/pull/187
 .. _#188: https://github.com/nengo/nengo-bones/pull/188
 .. _#189: https://github.com/nengo/nengo-bones/pull/189
+.. _#191: https://github.com/nengo/nengo-bones/pull/191
 
 22.11.15 (November 15, 2022)
 ============================

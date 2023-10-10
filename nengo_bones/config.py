@@ -443,36 +443,6 @@ def license_text(license, project_name):
     return dedent(text)
 
 
-def validate_black_config(config):
-    """
-    Validates aspects of the config related to Black.
-
-    Parameters
-    ----------
-    config : dict
-        Dictionary containing configuration values.
-    """
-
-    has_precommit = "pre_commit_config_yaml" in config
-    has_pyproject = "pyproject_toml" in config
-    if not (has_precommit or has_pyproject):
-        return
-    if not (has_pyproject and has_precommit):
-        raise KeyError(
-            "Config file must define both 'pyproject_toml' "
-            "and 'pre_commit_config_yaml' or neither"
-        )
-    precommit = config["pre_commit_config_yaml"]
-    pyproject = config["pyproject_toml"]
-    check_list(precommit, "exclude")
-    check_list(pyproject, "exclude")
-    if precommit.get("exclude", []) != pyproject.get("exclude", []):
-        raise ValueError(
-            "'pyproject_toml' and 'pre_commit_config_yaml' "
-            "must have the same 'exclude' list."
-        )
-
-
 def validate_setup_cfg_config(config):
     """
     Validates the ``setup_cfg`` section of the config.
@@ -557,7 +527,6 @@ def validate_config(config):  # noqa: C901
         for ci_config in config["ci_scripts"]:
             validate_ci_config(ci_config)
 
-    validate_black_config(config)
     validate_setup_cfg_config(config)
     validate_setup_py_config(config)
 

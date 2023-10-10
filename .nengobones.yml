@@ -183,11 +183,6 @@ docs_conf_py:
   html_redirects:
     changelog.html: changes.html
 
-pre_commit_config_yaml:
-  exclude:
-    - tests/ignoreme/ignoreme.py
-    - tests/ignoreme/ignoreme.py
-
 pyproject_toml:
   exclude:
     - tests/ignoreme/ignoreme.py
