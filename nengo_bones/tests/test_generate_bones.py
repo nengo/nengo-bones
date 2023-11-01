@@ -226,6 +226,10 @@ def test_license(tmp_path, license_type):
     if license_type == "mit":
         assert has_line("**MIT License**")
 
+    if license_type == "gpl-v2":
+        assert has_line("**GPL v2 License**")
+        assert has_line("This program is free software; you can redistribute it and/or")
+
     if license_type == "proprietary":
         assert has_line("All information contained herein is and remains the property")
 

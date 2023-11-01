@@ -29,6 +29,7 @@ Release History
 - Added ``add_to_files`` option to the ``license_rst`` config. If set to True the
   license text will be added to the top of all python files, and ``bones check`` will
   check for the existence of that text. (`#189`_)
+- Added ``gpl-v2`` license type. (`#192`_)
 
 **Changed**
 
@@ -61,6 +62,7 @@ Release History
 .. _#188: https://github.com/nengo/nengo-bones/pull/188
 .. _#189: https://github.com/nengo/nengo-bones/pull/189
 .. _#191: https://github.com/nengo/nengo-bones/pull/191
+.. _#192: https://github.com/nengo/nengo-bones/pull/192
 
 22.11.15 (November 15, 2022)
 ============================
