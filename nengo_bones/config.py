@@ -104,7 +104,6 @@ def fill_defaults(config):  # noqa: C901
         org_name, repo_name = config["repo_name"].split("/")
         domain = {
             "nengo": "https://www.nengo.ai",
-            "nengo-labs": "https://labs.nengo.ai",
             "abr": "https://www.appliedbrainresearch.com",
         }.get(org_name, "https://www.nengo.ai")
         cfg.setdefault("url", f"{domain}/{repo_name}")
