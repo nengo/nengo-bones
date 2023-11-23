@@ -164,7 +164,8 @@ def license_text(license, project_name):
             Academic and Personal Use Licenses for {project_name} are available at
             {'no' if license == 'abr-free' else 'a reduced'} cost.
             Both types of licences can be obtained from the
-            ABR store at `<https://www.appliedbrainresearch.com/store>`_.
+            ABR store at
+            `<https://appliedbrainresearch.myshopify.com/collections/all>`_.
 
             If you have any sales questions,
             please contact `<sales@appliedbrainresearch.com>`_.
