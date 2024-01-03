@@ -24,9 +24,20 @@ runs:
       shell: bash -el {0}
       run: |
         pip freeze
+    - name: Install ssh debugging requirements
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled == 'true' }}
+      shell: bash -el {0}
+      working-directory: ${{ inputs.path }}
+      run: |
+        sudo apt update -y
+        sudo apt install -y openssh-client
     - name: Open debugging ssh session
       uses: lhotari/action-upterm@v1
       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled == 'true' }}
+      env:
+        # Undo any changes to the LD_LIBRARY_PATH so that the action will use the
+        # versions installed with the openssh-client installation above
+        LD_LIBRARY_PATH: ""
     - name: Script
       shell: bash -el {0}
       working-directory: ${{ inputs.path }}
