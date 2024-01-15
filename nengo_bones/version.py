@@ -11,7 +11,7 @@ unless the code base represents a release version. Release versions are git
 tagged with the version.
 """
 
-version_info = (23, 11, 7)  # bones: ignore
+version_info = (24, 1, 15)  # bones: ignore
 
 name = "nengo-bones"
 dev = 0
@@ -22,4 +22,4 @@ version = ".".join(str(v) for v in version_info)
 if dev is not None:
     version += ".dev%d" % dev  # pragma: no cover
 
-copyright = "Copyright (c) 2018-2023 Applied Brain Research"
+copyright = "Copyright (c) 2018-2024 Applied Brain Research"
