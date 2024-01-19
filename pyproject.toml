@@ -15,6 +15,7 @@ force_exclude = '''
 [tool.isort]
 profile = "black"
 src_paths = ["nengo_bones"]
+skip_gitignore = true
 
 [tool.docformatter]
 wrap-summaries = 88

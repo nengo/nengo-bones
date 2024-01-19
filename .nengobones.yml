@@ -184,7 +184,7 @@ docs_conf_py:
     changelog.html: changes.html
 
 pyproject_toml:
-  exclude:
+  black_exclude:
     - tests/ignoreme/ignoreme.py
     - tests/ignoreme/ignoreme.py
 

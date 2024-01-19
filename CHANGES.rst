@@ -30,6 +30,8 @@ Release History
   license text will be added to the top of all python files, and ``bones check`` will
   check for the existence of that text. (`#189`_)
 - Added ``gpl-v2`` license type. (`#192`_)
+- Added ``isort_exclude`` option to the ``pyproject_toml`` config, which 
+  can be used by ``isort`` to skip files or directories via regex patterns. (`#196`_)
 
 **Changed**
 
@@ -38,6 +40,10 @@ Release History
 - Tests now default to using the ``worksteal`` xdist option, with 3 workers. (`#186`_)
 - Modified ``check-deploy`` to skip checks when no ``.pypirc`` file present. (`#187`_)
 - Use micromamba to set up python environments. (`#188`_)
+- Changed the ``exclude`` option to ``black_exclude`` in the ``pyproject_toml`` 
+  config. (`#196`_)
+- ``pyproject_toml`` config now sets ``skip_gitignore`` flag to true by default.
+  (`#196`_)
 
 **Removed**
 
@@ -63,6 +69,7 @@ Release History
 .. _#189: https://github.com/nengo/nengo-bones/pull/189
 .. _#191: https://github.com/nengo/nengo-bones/pull/191
 .. _#192: https://github.com/nengo/nengo-bones/pull/192
+.. _#196: https://github.com/nengo/nengo-bones/pull/196
 
 22.11.15 (November 15, 2022)
 ============================

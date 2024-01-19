@@ -8,10 +8,10 @@ requires = ["setuptools<64", "wheel"]
 {% block black %}
 [tool.black]
 target-version = ['py{{ min_python | replace(".", "") }}']
-{% if exclude %}
+{% if black_exclude %}
 force_exclude = '''
 (
-    {% for pattern in exclude %}
+    {% for pattern in black_exclude %}
     {{ "" }}{% if not loop.first %}| {% endif %}{{ pattern }}
     {% endfor %}
 )
@@ -23,6 +23,13 @@ force_exclude = '''
 [tool.isort]
 profile = "black"
 src_paths = ["{{ pkg_name }}"]
+skip_gitignore = true
+{% if isort_exclude %}
+extend_skip_glob = [
+    {% for pattern in isort_exclude %}
+    {{ "" }}{% if not loop.first %}, {% endif %}"{{ pattern }}"
+    {% endfor %}]
+{% endif %}
 {% endblock %}
 
 {% block docformatter %}
