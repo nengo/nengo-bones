@@ -1,6 +1,5 @@
 """Checks that license text is added to all .py files."""
 
-
 import click
 
 from nengo_bones.templates import add_notice
