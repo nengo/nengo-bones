@@ -8,15 +8,15 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: 3.9
     - name: Install coverage
       shell: bash -el {0}
       run: |
         pip install coverage
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       id: download
     - name: Combine coverage and generate report
       shell: bash -el {0}
@@ -24,7 +24,7 @@ runs:
         coverage combine $(find ${{ steps.download.outputs.download-path }} -type f -name ".coverage")
         coverage html
         coverage report --show-missing --fail-under=${{ inputs.min-coverage }}
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: ${{ always() }}
       with:
         name: coverage-report

@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./actions/setup
         with:
           python-version: "3.11"
@@ -75,7 +75,7 @@ jobs:
       JOB_SUFFIX: ${{ matrix.remote-id }}
       GH_TOKEN: ${{ secrets.PUBLIC_GH_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: action-checkout
       - uses: ./action-checkout/actions/setup
@@ -93,7 +93,7 @@ jobs:
         with:
           name: ${{ matrix.script }}
           path: nengo-bones
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ always() && matrix.coverage-name }}
         with:
           name: coverage-${{ matrix.coverage-name }}
@@ -105,7 +105,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./actions/coverage-report
   auto-update:
     needs:
@@ -116,7 +116,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.PUBLIC_GH_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./actions/setup
         with:
           python-version: "3.11"
@@ -136,7 +136,7 @@ jobs:
       - name: Write .pypirc to file
         run: |
           echo '${{ secrets.PYPIRC_FILE }}' > ~/.pypirc
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./actions/setup
         with:
           python-version: "3.10"
