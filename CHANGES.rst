@@ -32,6 +32,7 @@ Release History
 - Added ``gpl-v2`` license type. (`#192`_)
 - Added ``isort_exclude`` option to the ``pyproject_toml`` config, which 
   can be used by ``isort`` to skip files or directories via regex patterns. (`#196`_)
+- Added ``cache=False`` option to ``setup`` action. (`#198`_)
 
 **Changed**
 
@@ -70,6 +71,7 @@ Release History
 .. _#191: https://github.com/nengo/nengo-bones/pull/191
 .. _#192: https://github.com/nengo/nengo-bones/pull/192
 .. _#196: https://github.com/nengo/nengo-bones/pull/196
+.. _#198: https://github.com/nengo/nengo-bones/pull/198
 
 22.11.15 (November 15, 2022)
 ============================
