@@ -29,7 +29,7 @@ runs:
       with:
         name: coverage-report
         path: htmlcov
-    - uses: ewjoachim/python-coverage-comment-action@v2
+    - uses: ewjoachim/python-coverage-comment-action@v3
       if: ${{ always() }}
       with:
         GITHUB_TOKEN: ${{ github.token }}
