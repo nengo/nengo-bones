@@ -29,12 +29,7 @@ runs:
       with:
         name: coverage-report
         path: htmlcov
-    - uses: ewjoachim/python-coverage-comment-action@v3
+    - uses: py-cov-action/python-coverage-comment-action@v3
       if: ${{ always() }}
       with:
         GITHUB_TOKEN: ${{ github.token }}
-        COMMENT_TEMPLATE: |
-          {% extends "base" %}
-          {% block coverage_single_file_title %}
-          ### {{ filename }}
-          {% endblock %}
