@@ -92,6 +92,7 @@ jobs:
         with:
           name: coverage-${{ matrix.coverage-name }}
           path: nengo-bones/.coverage
+          include-hidden-files: true
   coverage:
     if: ${{ always() }}
     needs:
