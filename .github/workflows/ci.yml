@@ -44,11 +44,6 @@ jobs:
           - script: test
             test_local_var: test local var val
             test_args: --test-arg --test-arg
-          - script: remote
-            remote-id: 0
-          - script: remote-test
-            coverage-name: remote-test
-            remote-id: 1
           - script: test-coverage
             test_local_var: test local var val
             test_args: --test-arg
@@ -72,7 +67,6 @@ jobs:
       SSH_KEY: ${{ secrets.SSH_KEY }}
       SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
       TEST_ARGS: ${{ matrix.test_args }}
-      JOB_SUFFIX: ${{ matrix.remote-id }}
       GH_TOKEN: ${{ secrets.PUBLIC_GH_TOKEN }}
     steps:
       - uses: actions/checkout@v4

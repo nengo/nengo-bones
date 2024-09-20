@@ -58,17 +58,6 @@ def test_ci_scripts(tmp_path):
               - post command 1
           - template: docs
           - template: deploy
-          - template: remote-script
-            remote_script: test
-            output_name: remote-test
-            azure_name: azure-name
-            azure_group: azure-group
-            coverage: true
-          - template: remote-script
-            remote_script: docs
-            output_name: remote-docs
-            remote_vars:
-              remote_var: remote_val
     """,
     )
 
@@ -126,17 +115,6 @@ def test_ci_scripts(tmp_path):
     )
 
     assert has_line(".ci/deploy.sh", "exe bones check-deploy")
-
-    assert has_line(
-        ".ci/remote-test.sh",
-        "exe az vm start --resource-group azure-group --name azure-name",
-    )
-    assert has_line(".ci/remote-test.sh", "bash .ci/test.sh install")
-    assert has_line(".ci/remote-test.sh", 'COVERAGE_FILE="tmp/dummy')
-
-    assert has_line(".ci/remote-docs.sh", 'export remote_var="remote_val"')
-    assert has_line(".ci/remote-docs.sh", "bash .ci/docs.sh install")
-    assert has_line(".ci/remote-docs.sh", 'REMOTE_FAILED_FILE="tmp/dummy')
 
 
 def test_ci_script_custom_template(tmp_path):

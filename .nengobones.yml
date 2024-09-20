@@ -45,22 +45,6 @@ ci_scripts:
       - export TEST_PRE_COMMANDS=True
     post_commands:
       - export TEST_POST_COMMANDS=True
-  - template: remote
-    pre_commands:
-      - cat bones-scripts/remote.sh
-    host: gl
-  - template: test
-    pre_commands:
-      - cat bones-scripts/test-for-remote.sh
-    output_name: test-for-remote
-    coverage: true
-  - template: remote-script
-    pre_commands:
-      - cat bones-scripts/remote-test.sh
-    remote_script: test-for-remote
-    output_name: remote-test
-    host: gl
-    coverage: true
   - template: docs
     pre_commands:
       - cat bones-scripts/docs.sh
