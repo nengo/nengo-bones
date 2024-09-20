@@ -17,8 +17,8 @@
 | nengo\_bones/templates.py                    |       86 |        0 |     100% |           |
 | nengo\_bones/templates/pkg/py.typed.template |        0 |        0 |     100% |           |
 | nengo\_bones/tests/\_\_init\_\_.py           |        0 |        0 |     100% |           |
-| nengo\_bones/version.py                      |        7 |        0 |     100% |           |
-|                                    **TOTAL** |  **602** |    **0** | **100%** |           |
+| nengo\_bones/version.py                      |        6 |        0 |     100% |           |
+|                                    **TOTAL** |  **601** |    **0** | **100%** |           |
 
 
 ## Setup coverage badge
