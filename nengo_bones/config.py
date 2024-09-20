@@ -441,7 +441,8 @@ def license_text(license, project_name):
                See the License for the specific language governing permissions and
                limitations under the License.
         """
-    elif license == "gpl-v2":
+    else:
+        assert license == "gpl-v2"
         text = """\
             **GPL v2 License**
 
