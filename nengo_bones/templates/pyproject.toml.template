@@ -2,7 +2,8 @@
 
 {% block build_system %}
 [build-system]
-requires = ["setuptools<64", "wheel"]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
 {% endblock %}
 
 {% block black %}
