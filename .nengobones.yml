@@ -68,7 +68,6 @@ ci_scripts:
       - nengo/lmu
       - nengo/nengo
       - nengo/nengo-dl
-      - nengo/nengo-edge
       - nengo/nengo-fpga
       - nengo/nengo-interfaces
       - nengo/nengo-loihi
