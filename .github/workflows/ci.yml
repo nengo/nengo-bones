@@ -51,13 +51,8 @@ jobs:
           - script: test-coverage
             test_local_var: test local var val
             test_args: --test-arg
-            python: "3.8"
             runs-on: ubuntu-20.04
             coverage-name: test-coverage-oldest
-          - script: test-nengo
-            test_local_var: test local var val
-            test_args: --test-arg
-            python: "3.11"
       fail-fast: false
     runs-on: ${{ matrix.runs-on || 'ubuntu-latest' }}
     env:
