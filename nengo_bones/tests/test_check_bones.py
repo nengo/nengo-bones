@@ -145,3 +145,22 @@ def test_license_check(tmp_path):
     result = _run_check_bones(tmp_path)
     assert_exit(result, 1)
     assert "Missing" in result.output
+
+    _write_nengo_yml(
+        tmp_path,
+        nengo_yml="""
+                project_name: Dumdum
+                pkg_name: dummy
+                repo_name: dummy_org/dummy
+
+                license_rst:
+                  add_to_files: true
+                  exclude:
+                    - file.py
+            """,
+    )
+    (tmp_path / "file.py").touch()
+
+    result = _run_check_bones(tmp_path)
+    assert_exit(result, 0)
+    assert "Missing" not in result.output

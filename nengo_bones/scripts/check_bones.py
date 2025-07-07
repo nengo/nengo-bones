@@ -106,7 +106,11 @@ def main(root_dir, conf_file, verbose):
     ]
 
     if "license_rst" in config and config["license_rst"]["add_to_files"]:
-        _, missing = check_notice.check_notice(path, config["license_rst"]["text"])
+        _, missing = check_notice.check_notice(
+            path,
+            config["license_rst"]["text"],
+            exclude=config["license_rst"]["exclude"],
+        )
         passed.append(missing == 0)
 
     click.echo("*" * 50)
