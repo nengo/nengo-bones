@@ -5,12 +5,12 @@
 | Name                                         |    Stmts |     Miss |    Cover |   Missing |
 |--------------------------------------------- | -------: | -------: | -------: | --------: |
 | nengo\_bones/\_\_init\_\_.py                 |        6 |        0 |     100% |           |
-| nengo\_bones/config.py                       |      125 |        0 |     100% |           |
+| nengo\_bones/config.py                       |      126 |        0 |     100% |           |
 | nengo\_bones/scripts/\_\_init\_\_.py         |        1 |        0 |     100% |           |
 | nengo\_bones/scripts/base.py                 |        3 |        0 |     100% |           |
 | nengo\_bones/scripts/check\_bones.py         |       58 |        0 |     100% |           |
 | nengo\_bones/scripts/check\_deploy.py        |       49 |        0 |     100% |           |
-| nengo\_bones/scripts/check\_notice.py        |       21 |        0 |     100% |           |
+| nengo\_bones/scripts/check\_notice.py        |       24 |        0 |     100% |           |
 | nengo\_bones/scripts/format\_notebook.py     |      142 |        0 |     100% |           |
 | nengo\_bones/scripts/generate\_bones.py      |       84 |        0 |     100% |           |
 | nengo\_bones/scripts/pr\_number.py           |       20 |        0 |     100% |           |
@@ -18,7 +18,7 @@
 | nengo\_bones/templates/pkg/py.typed.template |        0 |        0 |     100% |           |
 | nengo\_bones/tests/\_\_init\_\_.py           |        0 |        0 |     100% |           |
 | nengo\_bones/version.py                      |        6 |        0 |     100% |           |
-|                                    **TOTAL** |  **601** |    **0** | **100%** |           |
+|                                    **TOTAL** |  **605** |    **0** | **100%** |           |
 
 
 ## Setup coverage badge

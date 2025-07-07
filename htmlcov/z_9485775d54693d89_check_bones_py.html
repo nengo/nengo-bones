@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Coverage for nengo_bones/scripts/check_bones.py: 100%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
-    <link rel="stylesheet" href="style_cb_8e611ae1.css" type="text/css">
+    <link rel="stylesheet" href="style_cb_81f8c14c.css" type="text/css">
     <script src="coverage_html_cb_6fb7b396.js" defer></script>
 </head>
 <body class="pyfile">
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_9485775d54693d89_check_deploy_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.4">coverage.py v7.6.4</a>,
-            created at 2025-03-18 17:51 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.9.2">coverage.py v7.9.2</a>,
+            created at 2025-07-07 19:37 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -188,13 +188,17 @@
     <p class="pln"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t">    <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t107" href="#t107">107</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t108" href="#t108">108</a></span><span class="t">    <span class="key">if</span> <span class="str">"license_rst"</span> <span class="key">in</span> <span class="nam">config</span> <span class="key">and</span> <span class="nam">config</span><span class="op">[</span><span class="str">"license_rst"</span><span class="op">]</span><span class="op">[</span><span class="str">"add_to_files"</span><span class="op">]</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t">        <span class="nam">_</span><span class="op">,</span> <span class="nam">missing</span> <span class="op">=</span> <span class="nam">check_notice</span><span class="op">.</span><span class="nam">check_notice</span><span class="op">(</span><span class="nam">path</span><span class="op">,</span> <span class="nam">config</span><span class="op">[</span><span class="str">"license_rst"</span><span class="op">]</span><span class="op">[</span><span class="str">"text"</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t110" href="#t110">110</a></span><span class="t">        <span class="nam">passed</span><span class="op">.</span><span class="nam">append</span><span class="op">(</span><span class="nam">missing</span> <span class="op">==</span> <span class="num">0</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t111" href="#t111">111</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t112" href="#t112">112</a></span><span class="t">    <span class="nam">click</span><span class="op">.</span><span class="nam">echo</span><span class="op">(</span><span class="str">"*"</span> <span class="op">*</span> <span class="num">50</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t113" href="#t113">113</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t114" href="#t114">114</a></span><span class="t">    <span class="key">if</span> <span class="key">not</span> <span class="nam">all</span><span class="op">(</span><span class="nam">passed</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t115" href="#t115">115</a></span><span class="t">        <span class="nam">sys</span><span class="op">.</span><span class="nam">exit</span><span class="op">(</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t">        <span class="nam">_</span><span class="op">,</span> <span class="nam">missing</span> <span class="op">=</span> <span class="nam">check_notice</span><span class="op">.</span><span class="nam">check_notice</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t110" href="#t110">110</a></span><span class="t">            <span class="nam">path</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t111" href="#t111">111</a></span><span class="t">            <span class="nam">config</span><span class="op">[</span><span class="str">"license_rst"</span><span class="op">]</span><span class="op">[</span><span class="str">"text"</span><span class="op">]</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t112" href="#t112">112</a></span><span class="t">            <span class="nam">exclude</span><span class="op">=</span><span class="nam">config</span><span class="op">[</span><span class="str">"license_rst"</span><span class="op">]</span><span class="op">[</span><span class="str">"exclude"</span><span class="op">]</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t113" href="#t113">113</a></span><span class="t">        <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t114" href="#t114">114</a></span><span class="t">        <span class="nam">passed</span><span class="op">.</span><span class="nam">append</span><span class="op">(</span><span class="nam">missing</span> <span class="op">==</span> <span class="num">0</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t115" href="#t115">115</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t116" href="#t116">116</a></span><span class="t">    <span class="nam">click</span><span class="op">.</span><span class="nam">echo</span><span class="op">(</span><span class="str">"*"</span> <span class="op">*</span> <span class="num">50</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t117" href="#t117">117</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t118" href="#t118">118</a></span><span class="t">    <span class="key">if</span> <span class="key">not</span> <span class="nam">all</span><span class="op">(</span><span class="nam">passed</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t">        <span class="nam">sys</span><span class="op">.</span><span class="nam">exit</span><span class="op">(</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -203,8 +207,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_9485775d54693d89_check_deploy_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.4">coverage.py v7.6.4</a>,
-            created at 2025-03-18 17:51 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.9.2">coverage.py v7.9.2</a>,
+            created at 2025-07-07 19:37 +0000
         </p>
     </div>
 </footer>
