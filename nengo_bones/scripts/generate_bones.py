@@ -114,7 +114,10 @@ def license_rst(ctx):
 
     if ctx.obj["config"]["license_rst"]["add_to_files"]:
         check_notice(
-            find_config().parent, ctx.obj["config"]["license_rst"]["text"], fix=True
+            find_config().parent,
+            ctx.obj["config"]["license_rst"]["text"],
+            fix=True,
+            exclude=ctx.obj["config"]["license_rst"]["exclude"],
         )
 
 

@@ -144,6 +144,7 @@ def fill_defaults(config):  # noqa: C901
         cfg = config["license_rst"]
         cfg.setdefault("add_to_files", False)
         cfg.setdefault("text", license_text(config["license"], config["project_name"]))
+        cfg.setdefault("exclude", None)
 
 
 def license_text(license, project_name):

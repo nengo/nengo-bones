@@ -1,11 +1,13 @@
 """Checks that license text is added to all .py files."""
 
+import re
+
 import click
 
 from nengo_bones.templates import add_notice
 
 
-def check_notice(root, text, fix=False, verbose=False):
+def check_notice(root, text, fix=False, verbose=False, exclude=None):
     """
     Check for license notices in all .py files.
 
@@ -19,6 +21,8 @@ def check_notice(root, text, fix=False, verbose=False):
         Add the notice to any file that is missing one.
     verbose : bool
         Print the name of all files checked.
+    exclude : list of str
+        Regex patterns for files to exclude from checking.
 
     Returns
     -------
@@ -33,6 +37,11 @@ def check_notice(root, text, fix=False, verbose=False):
     checked = 0
     missing = 0
     for path in root.rglob("*.py"):
+        if exclude is not None and any(
+            re.search(p, str(path)) is not None for p in exclude
+        ):
+            continue
+
         checked += 1
         current_text = path.read_text()
 
