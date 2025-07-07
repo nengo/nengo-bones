@@ -33,7 +33,6 @@ def make_has_line(lines, strip=False, regex=False):
     idx = 0
 
     def has_line(target, strip=strip, regex=regex, print_on_fail=True):
-        nonlocal lines
         nonlocal idx
 
         while idx < len(lines):
