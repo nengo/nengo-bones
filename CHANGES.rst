@@ -51,6 +51,7 @@ Release History
 - Removed codecov support. (`#178`_)
 - Dropped support for Python 3.6 and 3.7. (`#186`_)
 - Removed ``.pre-commit-config.yaml`` from templated files. (`#191`_)
+- Removed the analytics tracking code in generated ``docs/conf.py`` files.
 
 **Fixed**
 

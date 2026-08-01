@@ -4,7 +4,7 @@
 NengoBones license
 ******************
 
-Copyright (c) 2018-2025 Applied Brain Research
+Copyright (c) 2018-2026 Applied Brain Research
 
 **ABR License**
 
